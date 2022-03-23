@@ -1,0 +1,143 @@
+syntax = "proto3";
+package pb_gen;
+
+import "objects.proto";
+
+option go_package = "UNS/pb_gen/configs";
+
+// 资源管理器配置
+message RMConfiguration {
+  // 指定集群物理视图
+  Cluster cluster = 1;
+  // 指定多个调度器的配置
+  SchedulersConfiguration schedulersConfiguration = 2;
+}
+
+// 全部调度器的配置。目前包括针对每个partition的调度器配置
+message SchedulersConfiguration {
+  map<string, SchedulerConfiguration> partitionID2SchedulerConfiguration = 1;
+}
+
+// 针对单个调度器的配置。
+message SchedulerConfiguration {
+  SchedulerType schedulerType = 1;
+  oneof Configuration {
+    NaiveSchedulerConfiguration naiveSchedulerConfiguration = 2;
+    UNSSchedulerConfiguration unsSchedulerConfiguration = 3;
+    SJFSchedulerConfiguration sjfSchedulerConfiguration = 4;
+    EDFSchedulerConfiguration edfSchedulerConfiguration = 5;
+  }
+}
+
+// 调度器类型
+enum SchedulerType {
+  schedulerTypeNaive = 0;
+  schedulerTypeUNS = 1;
+  schedulerTypeSJF = 2;
+  schedulerTypeEDF = 3;
+}
+
+message NaiveSchedulerConfiguration {
+  string SchedulerID = 1;
+  string resourceManagerID = 2;
+  string partitionID = 3;
+  int64 intervalNano = 4;
+  bool syncMode = 5;
+  PredictorConfiguration predictorConfiguration = 6;
+  bool nonSpaceSharing = 7;
+}
+
+message SJFSchedulerConfiguration {
+  string SchedulerID = 1;
+  string resourceManagerID = 2;
+  string partitionID = 3;
+  int64 intervalNano = 4;
+  bool syncMode = 5;
+  PredictorConfiguration predictorConfiguration = 6;
+  bool nonSpaceSharing = 7;
+}
+
+message EDFSchedulerConfiguration {
+  string SchedulerID = 1;
+  string resourceManagerID = 2;
+  string partitionID = 3;
+  int64 intervalNano = 4;
+  bool syncMode = 5;
+  PredictorConfiguration predictorConfiguration = 6;
+  bool nonSpaceSharing = 7;
+}
+
+message UNSSchedulerConfiguration {
+  string SchedulerID = 1;
+  string resourceManagerID = 2;
+  string partitionID = 3;
+  int64 intervalNano = 4;
+  bool syncMode = 5;
+  PredictorConfiguration predictorConfiguration = 6;
+  bool nonSpaceSharing = 7;
+}
+
+// 任务执行时间预测器的配置
+message PredictorConfiguration {
+  PredictorType predictorType = 1;
+  oneof Configuration {
+    DLTPredictorRandomConfiguration DLTPredictorRandomConfiguration = 2;
+    DLTPredictorDataOrientedConfiguration DLTPredictorDataOrientedConfiguration = 3;
+  }
+}
+
+enum PredictorType {
+  predictorTypeUnknown = 0;
+  predictorTypeDLTRandom = 1;
+  predictorTypeDLTDataOriented = 2;
+}
+
+// 随机产生任务执行时间（仅测试用）
+message DLTPredictorRandomConfiguration {
+  // intentionally empty.
+}
+
+// 面向现有数据，预测任务执行时间
+message DLTPredictorDataOrientedConfiguration {
+  string dataSourcePath = 1;
+}
+
+message DLTPredictorDataOrientedDataFormat {
+  map<string, DLTJobData> jobID2DLTJobData = 1;
+}
+
+message DLTJobData {
+  Job job = 1;
+  int64 totalMiniBatches = 2;
+  message AcceleratorType2MiniBatchDurationNanoSecond {
+    map<string, int64> AccType2Duration = 1;
+  }
+  // acceleratorType2MiniBatchDuration 表示单独运行时的每个accType上的mini-batch运行时间
+  AcceleratorType2MiniBatchDurationNanoSecond acceleratorType2MiniBatchDuration = 3;
+  // spaceSharingMiniBatchDurations map<string, ...> key表示与它space sharing的jobID，当不为nil时，替代penalty生成方式。
+  map<string, AcceleratorType2MiniBatchDurationNanoSecond> spaceSharingMiniBatchDurations = 4;
+  float minSpaceSharingPenalty = 5;
+  float maxSpaceSharingPenalty = 6;
+  // consolidationLevel2MiniBatchDurations 当具体给定时，替代penalty生成方式
+  map<int64, AcceleratorType2MiniBatchDurationNanoSecond> consolidationLevel2MiniBatchDurations = 7;
+  map<int64, float> consolidationLevel2Penalties = 8;
+  int64 maximumAcceleratorMemoryCostBytes = 9;
+}
+
+enum ConsolidationLevel {
+  Unknown = 0;
+  NVLink = 1;
+  SameCPUSocket = 2;
+  DiffCPUSocket = 3;
+  DiffNode = 4;
+}
+
+
+// 模拟器配置
+message DLTSimulatorConfiguration {
+  string resourceManagerID = 1;
+  string partitionID = 2;
+  RMConfiguration rmConfiguration = 3;
+  PredictorConfiguration predictorConfiguration = 4;
+  repeated Job jobs = 5;
+}

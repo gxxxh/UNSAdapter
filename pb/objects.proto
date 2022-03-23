@@ -1,0 +1,255 @@
+syntax = "proto3";
+package pb_gen;
+
+option go_package = "UNS/pb_gen/objects";
+
+import "google/protobuf/wrappers.proto";
+
+// Job
+// 表示一个用户提交的一个任务。
+// 使用JobType表示任务类型，如：DLT
+message Job {
+  string jobID = 1;
+  JobType jobType = 2;
+  string description = 3;
+  TaskGroup taskGroup = 4;
+  int64 submitTimeNanoSecond = 5;
+  UserGroup userGroup = 6;
+  int64 deadline = 7;
+
+  bytes extra = 255;
+}
+
+enum JobType {
+  jobTypeUnknown = 0;
+  jobTypeDLT = 1;
+}
+
+message UserGroup {
+  string user = 1;
+  string group = 2;
+}
+
+message DLTJobExtra {
+  int64 totalMiniBatches = 1;
+}
+
+// TaskGroup
+// 表示这个任务包含的Task组，每个Task可理解为一个可执行程序（如容器）。
+message TaskGroup {
+  TaskGroupType taskGroupType = 1;
+  repeated Task tasks = 2;
+  oneof TaskGroupInfo {
+    SingleTaskGroup singleTaskGroupInfo = 3;
+    GangTaskGroup gangTaskGroupInfo = 4;
+  }
+}
+
+// Task
+// 表示一个可执行程序（如容器）
+message Task {
+  string taskID = 1;
+  string description = 2;
+
+  bytes extra = 255;
+}
+
+enum TaskGroupType {
+  taskGroupTypeUnknown = 0;
+  taskGroupTypeSingle = 1;
+  taskGroupTypeGang = 2;
+}
+
+message SingleTaskGroup {
+  bytes extra = 255;
+}
+
+message GangTaskGroup {
+  TaskGroupType taskGroupType = 1;
+
+  bytes extra = 255;
+}
+
+message GangTaskGroupDLTExtra {
+  DLTGangType DLTGangType = 1;
+}
+
+enum DLTGangType {
+  DLTGangTypeUnknown = 0;
+  DLTGangTypeDataParallel = 1;
+  DLTGangTypePipelineParallel = 2;
+}
+
+// Cluster
+// 集群的资源视图，每个集群对应一个资源管理器，所以包含一个resourceManagerID
+message Cluster {
+  string resourceManagerID = 1;
+  string description = 2;
+  repeated Partition partitions = 3;
+
+  bytes extra = 255;
+}
+
+// Partition
+// 一个资源管理器管理的全部资源可能被分为多个集群分区，
+// 它们分别使用不同的调度器进行调度。
+// 如100个节点组成的集群，前50个和后50个节点分别组成两个Partition。
+// 则他们可以互不影响的使用两个调度器进行调度。
+message Partition {
+  string resourceManagerID = 1;
+  string partitionID = 2;
+  string description = 3;
+  repeated Node nodes = 4;
+
+  bytes extra = 255;
+}
+
+// Node
+// 描述一个节点的资源视图。
+message Node {
+  string nodeID = 1;
+  string description = 2;
+  repeated CPUSocket CPUSockets = 3;
+
+  bytes extra = 255;
+}
+
+// CPUSocket
+// 描述一个CPU插槽，以及对应该CPU插槽的资源。
+// 包含CPU描述信息，主机内存，加速器（多个）
+message CPUSocket {
+  string CPUSocketID = 1;
+  string description = 2;
+  CPU CPU = 3;
+  HostMemory hostMemory = 4;
+  map<string, Accelerator> accelerators = 5;
+
+  bytes extra = 255;
+}
+
+message CPU {
+  string CPUID = 1;
+  string description = 2;
+
+  bytes extra = 255;
+}
+
+message HostMemory {
+  int64 bytesCapacity = 1;
+  float frequencyMHz = 2;
+  float bandwidthGBPerSec = 3;
+
+  bytes extra = 255;
+}
+
+message CPUMetaInfo {
+  string model = 1;
+  int64 cores = 2;
+  float frequencyGHz = 3;
+  float IPC = 4;
+
+  bytes extra = 255;
+}
+
+message Accelerator {
+  string acceleratorID = 1;
+  string description = 2;
+
+  AcceleratorMetaInfo acceleratorMetaInfo = 3;
+
+  bytes extra = 255;
+}
+
+message AcceleratorMetaInfo {
+  string briefType = 1;
+  AcceleratorMemory acceleratorMemory = 2;
+  float flops = 3;
+  string manufacturer = 4;
+
+  bytes extra = 255;
+}
+
+message AcceleratorMemory {
+  int64 bytesCapacity = 1;
+  float frequencyMHz = 2;
+  float bandwidthGBPerSec = 3;
+
+  bytes extra = 255;
+}
+
+// JobAllocation
+// 表示一个Job的全部Task分配得到的资源。
+message JobAllocation {
+  string jobID = 1;
+  string resourceManagerID = 2;
+  string partitionID = 3;
+  repeated TaskAllocation taskAllocations = 4;
+
+  bytes extra = 255;
+}
+
+// TaskAllocation
+// 表示Task所占用的内存，CPU，加速器等信息。
+message TaskAllocation {
+  string nodeID = 1;
+  string jobID = 2;
+  string taskID = 3;
+  // Nullable 表示一个任务的开始执行时间。
+  // 仅当RM向调度器发送该JobAllocation时，开始时间才有意义。
+  // 如果开始执行时间是Null，则它必须是一个placeholder，否则将会被认为是非法的JobAllocation
+  google.protobuf.Int64Value startExecutionTimeNanoSecond = 4;
+  // placeholder表示该task分配是具有占位符功能的，即等待需要的资源释放后，再让该task占用它需要的资源。
+  bool placeholder = 5;
+  // allocationTimeNanoSecond表示这个分配的开始时间。若是single的job，则allocation时间等于start时间
+  // 若是gang的job，当需要等待资源释放时（placeholder），则allocation时间早于start时间。
+  // 若gang的job可以直接运行（资源立刻拥有），则与single情况相同，allocation时间等于start时间。
+  int64 allocationTimeNanoSecond = 6;
+  HostMemoryAllocation hostMemoryAllocation = 7;
+  repeated CPUSocketAllocation CPUSocketAllocations = 8;
+  AcceleratorAllocation acceleratorAllocation = 9;
+
+  bytes extra = 255;
+}
+
+// JobExecutionHistory
+// 表示Job的执行历史
+message JobExecutionHistory {
+  string jobID = 1;
+  string resourceManagerID = 2;
+  string partitionID = 3;
+  repeated TaskExecutionHistory taskExecutionHistories = 4;
+}
+
+// TaskExecutionHistory
+// 表示Task的执行历史
+// 包含了该Task的执行环境（allocation），以及开始和结束时间
+message TaskExecutionHistory {
+  string executionID = 1;
+  string nodeID = 2;
+  string jobID = 3;
+  string taskID = 4;
+  int64 startExecutionTimeNanoSecond = 5;
+  int64 durationNanoSecond = 6;
+  HostMemoryAllocation hostMemoryAllocation = 7;
+  repeated CPUSocketAllocation CPUSocketAllocations = 8;
+  AcceleratorAllocation acceleratorAllocation = 9;
+}
+
+message CPUSocketAllocation {
+  string CPUSocketID = 1;
+  int64 cores = 2;
+
+  bytes extra = 255;
+}
+
+message HostMemoryAllocation {
+  int64 allocatedBytesCapacity = 1;
+
+  bytes extra = 255;
+}
+
+message AcceleratorAllocation {
+  string acceleratorID = 1;
+
+  bytes extra = 255;
+}
