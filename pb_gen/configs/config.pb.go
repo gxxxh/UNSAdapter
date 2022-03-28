@@ -7,7 +7,7 @@
 package configs
 
 import (
-	objects "UNS/pb_gen/objects"
+	objects "UNSAdapter/pb_gen/objects"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
 	reflect "reflect"

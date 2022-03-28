@@ -7,8 +7,8 @@
 package events
 
 import (
-	configs "UNS/pb_gen/configs"
-	objects "UNS/pb_gen/objects"
+	configs "UNSAdapter/pb_gen/configs"
+	objects "UNSAdapter/pb_gen/objects"
 	wrappers "github.com/golang/protobuf/ptypes/wrappers"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"

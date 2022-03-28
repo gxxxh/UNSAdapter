@@ -7,6 +7,7 @@ import "objects.proto";
 import "config.proto";
 import "google/protobuf/wrappers.proto";
 
+
 // RM prefix means an event initiated by Resource Manager
 
 // 同步事件：RM -> Service
