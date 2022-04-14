@@ -9,8 +9,7 @@ import (
 //todo 管理资源的占用
 type ClusterManager struct {
 	clusterID string
-	mu *sync.RWMutex
-	//resourceManager *local.ResourceManager
+	mu sync.RWMutex
 	clusterInfo *objects.Cluster
 	partitionID2PaititionManager map[string]*PartitionManager
 }
@@ -23,9 +22,17 @@ type ClusterManager struct {
 //}
 
 
-func NewClusterManager()(*ClusterManager){
-	//todo
-	return nil
+func NewClusterManager(clusterID string, clusterInfo *objects.Cluster)(*ClusterManager){
+	partitionID2Mgr := make(map[string]*PartitionManager)
+	for _, partitionInfo := range clusterInfo.GetPartitions(){
+		partitionID2Mgr[partitionInfo.GetPartitionID()] = NewPartitionManager(clusterID, partitionInfo)
+	}
+	return &ClusterManager{
+		clusterID:                    clusterID,
+		mu:                           sync.RWMutex{},
+		clusterInfo:                  clusterInfo,
+		partitionID2PaititionManager: partitionID2Mgr,
+	}
 }
 
 func (cm *ClusterManager)GetPartitionManager(partitionID string)(*PartitionManager, error){

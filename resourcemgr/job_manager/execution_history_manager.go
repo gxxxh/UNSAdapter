@@ -50,6 +50,12 @@ func (m *JobExecutionHistoryManager) BuildJobExecutionHistory(jobAllocation *obj
 		TaskExecutionHistories: taskExecutionHistories,
 	}
 }
+func (m *JobExecutionHistoryManager)GetJobExecutionHistory()(*objects.JobExecutionHistory){
+	m.mu.RLock()
+	defer m.mu.RUnlock()
+	return m.jobExecutionHistory
+}
+
 func (m *JobExecutionHistoryManager) GetTaskExecutionHistory(taskID string) (*objects.TaskExecutionHistory, error) {
 	m.mu.RLock()
 	defer m.mu.RUnlock()

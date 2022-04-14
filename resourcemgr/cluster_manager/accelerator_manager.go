@@ -16,9 +16,23 @@ type AcceleratorManager struct{
 	acceleratorUsing map[string]bool
 }
 
-func NewAcceleratorManager()(*AcceleratorManager){
-	return nil//todo
+func NewAcceleratorManager(nodeID string, partitionID string, clusterID string, acceleratroInfo []*objects.Accelerator)(*AcceleratorManager){
+	using  := make(map[string]bool, len(acceleratroInfo))
+	id2info := make(map[string]*objects.Accelerator, len(acceleratroInfo))
+	for _,accelerator := range acceleratroInfo{
+		using[accelerator.GetAcceleratorID()] = true
+		id2info[accelerator.GetAcceleratorID()] = accelerator
+	}
+	return &AcceleratorManager{
+		nodeID:                        nodeID,
+		PartitionID:                   partitionID,
+		clusterID:                     clusterID,
+		AcceleratorID2AcceleratorInfo: id2info,
+		mu:                            sync.RWMutex{},
+		acceleratorUsing:              using,
+	}
 }
+
 
 func (m *AcceleratorManager)GetAccelerator(acceleratorID string)(*objects.Accelerator, error){
 	m.mu.RLock()

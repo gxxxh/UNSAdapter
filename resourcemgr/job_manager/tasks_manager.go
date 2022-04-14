@@ -3,10 +3,13 @@ package job_manager
 import (
 	"UNSAdapter/pb_gen/objects"
 	"fmt"
+	"github.com/golang/protobuf/ptypes/wrappers"
 	"sync"
+	"time"
 )
 
 // using to check if task if finished
+//同时管理taskAllocation 的修改
 type TasksManager struct{
 	mu 	*sync.RWMutex
 	jobID string
@@ -14,6 +17,7 @@ type TasksManager struct{
 	finished map[string]bool
 	finishCnt int32 // finished job nums
 }
+
 
 func NewTasksManager(allocation *objects.JobAllocation)*TasksManager{
 	tasksMg:=  &TasksManager{
@@ -32,7 +36,7 @@ func NewTasksManager(allocation *objects.JobAllocation)*TasksManager{
 
 func (tm *TasksManager)GetTaskAllocation(taskID string)(*objects.TaskAllocation, error){
 	tm.mu.RLock()
-	tm.mu.RUnlock()
+	defer tm.mu.RUnlock()
 	taskAllocation, ok := tm.taskID2TaskAllocation[taskID]
 	if !ok{
 		errorMsg := fmt.Sprintf("no task allocation for taskID %s in Job %s\n", taskID, tm.jobID)
@@ -42,6 +46,28 @@ func (tm *TasksManager)GetTaskAllocation(taskID string)(*objects.TaskAllocation,
 
 }
 
+func (tm *TasksManager)GetTasksIDs()[]string{
+	tm.mu.RLock()
+	defer tm.mu.RUnlock()
+	tasksIDs := make([]string, 0, len(tm.taskID2TaskAllocation))
+	for ID := range(tm.taskID2TaskAllocation){
+		tasksIDs  = append(tasksIDs, ID)
+	}
+	return tasksIDs
+}
+
+func (tm *TasksManager)SetTaskAllocationStartExecutionTime(taskID string, now time.Time)error{
+	taskAl, err := tm.GetTaskAllocation(taskID)
+	if err!=nil{
+		return err
+	}
+	tm.mu.Lock()
+	defer tm.mu.Unlock()
+	taskAl.StartExecutionTimeNanoSecond = &wrappers.Int64Value{
+		Value: int64(now.Nanosecond()),
+	}
+	return nil
+}
 func (tm *TasksManager)Update(taskID string){
 	tm.mu.Lock()
 	defer tm.mu.Unlock()
@@ -51,6 +77,6 @@ func (tm *TasksManager)Update(taskID string){
 
 func (tm *TasksManager)IsFinished()(bool){
 	tm.mu.RLock()
-	defer tm.mu.Unlock()
+	defer tm.mu.RUnlock()
 	return tm.finishCnt >= int32(len(tm.finished))
 }

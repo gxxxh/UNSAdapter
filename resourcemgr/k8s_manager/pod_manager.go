@@ -1,8 +1,6 @@
 package k8s_manager
 
 import (
-	"UNSAdapter/pb_gen/objects"
-
 	"context"
 	"fmt"
 	v1 "k8s.io/api/core/v1"
@@ -18,6 +16,7 @@ import (
 //https://github.com/feiskyer/kubernetes-handbook/blob/master/examples/client/informer/informer.go
 //https://pkg.go.dev/k8s.io/client-go/informers
 type PodManager struct {
+	clientSet *kubernetes.Clientset
 	informerFactory informers.SharedInformerFactory
 	podInformer     coreinformer.PodInformer
 	podDeleteChan   chan map[string]string//delete pod info
@@ -28,9 +27,10 @@ func NewPodManager(clientset *kubernetes.Clientset, namesapce string) *PodManage
 	informerFactory := informers.NewSharedInformerFactoryWithOptions(clientset, time.Hour*24, informers.WithNamespace(namesapce)) //todo: resynctime ?
 	podInfomer := informerFactory.Core().V1().Pods()
 	c := &PodManager{
+		clientSet: clientset,
 		informerFactory: informerFactory,
 		podInformer:     podInfomer,
-		podDeleteChan: make(chan map[string]string),//todo chan size
+		podDeleteChan: make(chan map[string]string, 1024),//todo chan size
 	}
 	podInfomer.Informer().AddEventHandler(
 		cache.ResourceEventHandlerFuncs{
@@ -41,6 +41,7 @@ func NewPodManager(clientset *kubernetes.Clientset, namesapce string) *PodManage
 	)
 	return c
 }
+
 
 func (c *PodManager) Run(stopCh chan struct{}) error {
 	//start all infomer created by informerfactory
@@ -66,17 +67,17 @@ func (c *PodManager) handlePodUpdateEvent(old, new interface{}) {
 	//猜测，只有两次事件，old和new都是succeeded时删除
 	if newPod.Status.Phase == v1.PodSucceeded && oldPod.Status.Phase == v1.PodSucceeded {
 		//delete pod
-		c.DeletePod(newPod)
+		c.DeletePod(newPod.GetName(), newPod.GetNamespace(), newPod.GetAnnotations())
 	}
 	//check status delete pod
 }
 
 func (c *PodManager) handlePodDeleteEvent(obj interface{}) {
 	pod := obj.(*v1.Pod)
-	log.Printf("PodManager: pod %v deleted\n", pod.Name)
+	log.Printf("PodManager: pod %v deleted successfully\n", pod.Name)
 }
 
-func (pc *PodManager) StartPod(taskAllocation *objects.TaskAllocation) {
+func (pc *PodManager) StartPod(info map[string]string) error{
 	//pod spec
 	pdSpec := &v1.Pod{
 		TypeMeta: metav1.TypeMeta{
@@ -84,13 +85,13 @@ func (pc *PodManager) StartPod(taskAllocation *objects.TaskAllocation) {
 			APIVersion: "v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      taskAllocation.NodeID + "-" + taskAllocation.JobID + "-" + taskAllocation.TaskID,
-			Namespace: k8sAdapter.namespace,
+			Name:      info["jobID"] + "-" + info["taskID"],
+			Namespace: info["namespace"],
 			Labels:    nil,
 			Annotations: map[string]string{
-				"nodeID": taskAllocation.NodeID,
-				"jobID":  taskAllocation.JobID,
-				"taskID": taskAllocation.TaskID,
+				"nodeID": info["nodeID"],
+				"jobID":  info["jobID"],
+				"taskID": info["taskID"],
 			},
 		},
 		Spec: v1.PodSpec{
@@ -108,34 +109,46 @@ func (pc *PodManager) StartPod(taskAllocation *objects.TaskAllocation) {
 		Env: []v1.EnvVar{
 			{
 				Name:  "SLEEP_TIME",
-				Value: string(taskAllocation.AllocationTimeNanoSecond), //todo 运行时间多少?
+				Value: info["sleepTime"], //todo 运行时间多少?
 			},
 		},
 		ImagePullPolicy: "Never",
 	})
-	resp, err := k8sAdapter.clientSet.CoreV1().Pods(pdSpec.Namespace).
+	resp, err := pc.clientSet.CoreV1().Pods(pdSpec.Namespace).
 		Create(context.Background(), pdSpec, metav1.CreateOptions{})
 	if err != nil {
-		fmt.Println("create pod error, err=[%v]", err)
+		fmt.Println("create pod error, err=", err)
+		return err
 	}
 	log.Printf("Start Task %s from Job %s on Node %s, Pod status: %s \n",
-		taskAllocation.TaskID, taskAllocation.JobID, taskAllocation.NodeID, resp.Status.Phase)
-
+		info["taskID"], info["jobID"], info["nodeID"], resp.Status.Phase)
+	return nil
 }
 
-func (pc *PodManager) PodExist(pod *v1.Pod) bool {
-	k8sAdapter.clientSet.CoreV1().Pods(k8sAdapter.namespace).Get(context.Background(), pod.GetName(), metav1.GetOptions{})
+func (pc *PodManager) checkPodExist(podName string, namespace string) (bool) {
+	_, err := pc.clientSet.CoreV1().Pods(namespace).Get(context.Background(), podName, metav1.GetOptions{})
+	if err!=nil{
+		return false
+	}
 	return true
 }
-func (pc *PodManager) DeletePod(pod *v1.Pod) {
-	//todo check exist
-	err := k8sAdapter.clientSet.CoreV1().Pods(k8sAdapter.namespace).Delete(context.Background(), pod.GetName(), metav1.DeleteOptions{})
+func (pc *PodManager) DeletePod(podName string, namespace string, annotations map[string]string) {
+	if(pc.checkPodExist(podName, namespace)==false){
+		return
+	}
+	err := pc.clientSet.CoreV1().Pods(namespace).Delete(context.Background(), podName, metav1.DeleteOptions{})
 	if err != nil {
 		log.Println("Delete Pod error, err=", err)
+		return
 	}
-	//todo  如何通知resourceManager处理任务结束
-	//pc.resourceManager.HandleTaskFinish(pod.Annotations)
-	go func(){
-		pc.podDeleteChan<-pod.Annotations//todo go func for this or for delete pod
-	}()
+	// 通知resourcemgr处理pod对应内容
+	//不指明大小的话，发送者会阻塞到消息被接收。
+	//指明大小后，只要当前channel里元素总数不大于这个可缓冲容量，就不会被阻塞
+	pc.podDeleteChan<- annotations
+
+}
+
+func (pc *PodManager)GetDeletePodAnnoatations()map[string]string{
+	annotations := <- pc.podDeleteChan
+	return annotations
 }

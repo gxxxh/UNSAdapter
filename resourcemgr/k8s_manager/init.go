@@ -11,15 +11,13 @@ import (
 	"path/filepath"
 )
 
-type K8sAdapter struct {
-	clientSet     *kubernetes.Clientset
-	namespace     string
-	podController *PodManager
+type K8sManager struct {
+	clientSet  *kubernetes.Clientset
+	namespace  string
+	podManager *PodManager
 }
 
-var k8sAdapter K8sAdapter
-
-func Initk8sAdapter() {
+func NewK8sManager() *K8sManager {
 	//init client set
 	var kubeconfig *string
 	if home := homedir.HomeDir(); home != "" {
@@ -33,22 +31,24 @@ func Initk8sAdapter() {
 	if err != nil {
 		panic(err.Error())
 	}
-	k8sAdapter.clientSet, err = kubernetes.NewForConfig(config)
+	var k8sAdapterVar K8sManager
+	k8sAdapterVar.clientSet, err = kubernetes.NewForConfig(config)
 
 	if err != nil {
 		panic(err.Error())
 	}
-	initNamespace()
+	k8sAdapterVar.initNamespace()
 	//init pod controller
-	k8sAdapter.podController = NewPodManager(k8sAdapter.clientSet, k8sAdapter.namespace)
-	k8sAdapter.podController.Run(make(chan struct{}))
+	k8sAdapterVar.podManager = NewPodManager(k8sAdapterVar.clientSet, k8sAdapterVar.namespace)
+	k8sAdapterVar.podManager.Run(make(chan struct{}))
+	return &k8sAdapterVar
 }
 
-func initNamespace() {
-	k8sAdapter.namespace = "uns"
+func (k8sAdapterVar *K8sManager) initNamespace() {
+	k8sAdapterVar.namespace = "uns"
 	//find namespace
 	np := func(name string) bool {
-		nps, err := k8sAdapter.clientSet.CoreV1().Namespaces().List(context.Background(), metav1.ListOptions{})
+		nps, err := k8sAdapterVar.clientSet.CoreV1().Namespaces().List(context.Background(), metav1.ListOptions{})
 		if err != nil {
 			panic(err.Error())
 		}
@@ -58,7 +58,7 @@ func initNamespace() {
 			}
 		}
 		return false
-	}(k8sAdapter.namespace)
+	}(k8sAdapterVar.namespace)
 	//create namespace
 	if np == false {
 		//create task namespace
@@ -68,10 +68,21 @@ func initNamespace() {
 			Spec:       v1.NamespaceSpec{},
 			Status:     v1.NamespaceStatus{},
 		}
-		_, err := k8sAdapter.clientSet.CoreV1().Namespaces().Create(context.Background(), nsSpec, metav1.CreateOptions{})
+		_, err := k8sAdapterVar.clientSet.CoreV1().Namespaces().Create(context.Background(), nsSpec, metav1.CreateOptions{})
 		if err != nil {
 			panic(err.Error())
 		}
 	}
+}
 
+func (k8sAdapter *K8sManager) GetPodManager() *PodManager {
+	return k8sAdapter.podManager
+}
+
+func (k8sMg *K8sManager) GetNamespace() string {
+	return k8sMg.namespace
+}
+
+func (k8sMg *K8sManager) GetClientSet() *kubernetes.Clientset {
+	return k8sMg.clientSet
 }

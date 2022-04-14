@@ -1,12 +1,24 @@
 package main
 
-import "UNSAdapter/resourcemgr/k8s_manager"
-
+import (
+	"UNSAdapter/config"
+	"UNSAdapter/resourcemgr/k8s_manager"
+	"UNSAdapter/resourcemgr/local"
+	"UNSAdapter/resourcemgr/simulator"
+)
 func main(){
-	//config.InitConfig()
-	//grpc start run
-	k8s_manager.Initk8sAdapter()
-	k8s_manager.StartPod(1)
+	simulatorConfig := config.ReadSimulatorConfig()
+	//build resource manager from config
+	k8sManager := k8s_manager.NewK8sManager()
+	rm := local.NewResourceManager(simulatorConfig.GetResourceManagerID(), k8sManager)
+	rm.BuildClusterManager("cluster-ID", simulatorConfig.GetRmConfiguration().GetCluster())
+
+	// build job simulator to get job
+	js := simulator.NewJobSimulator(simulatorConfig.GetJobs())
+	rm.SetJobSimulator(js)
+	js.Run()
+
+	//
 	for{
 
 	}

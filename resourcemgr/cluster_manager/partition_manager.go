@@ -5,16 +5,25 @@ import (
 	"fmt"
 	"sync"
 )
-
+//管理一个partition
 type PartitionManager struct{
 	clusterID string
 	paritionInfo *objects.Partition
-	mu *sync.RWMutex
+	mu sync.RWMutex
 	nodeID2NodeManager map[string]*NodeManager
 }
 
-func NewPartitionManager()(manager *PartitionManager){
-	return nil
+func NewPartitionManager(clusterID string, partitionInfo *objects.Partition)(manager *PartitionManager){
+	nodeID2Mgr := make(map[string]*NodeManager, len(partitionInfo.GetNodes()))
+	for _, nodeInfo := range partitionInfo.GetNodes(){
+		nodeID2Mgr[nodeInfo.GetNodeID()] = NewNodeManager(clusterID, partitionInfo.GetPartitionID(), nodeInfo)
+	}
+	return &PartitionManager{
+		clusterID:          clusterID,
+		paritionInfo:       partitionInfo,
+		mu:                 sync.RWMutex{},
+		nodeID2NodeManager: nodeID2Mgr,
+	}
 }
 
 
@@ -31,7 +40,7 @@ func (m *PartitionManager)GetNodeManager(nodeID string)(*NodeManager, error){
 }
 func (m *PartitionManager) CheckTaskResources(allocation *objects.TaskAllocation)(bool, error){
 	nodeManager, err := m.GetNodeManager(allocation.NodeID)
-	if err!=nil{
+	if err!=nil {
 		return false, err
 	}
 	return nodeManager.CheckTaskResources(allocation)

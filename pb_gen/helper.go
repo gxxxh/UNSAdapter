@@ -1,8 +1,7 @@
 package pb_gen
 
 import (
-	"UNSAdapter/pb_gen/configs"
-	"UNSAdapter/pb_gen/objects"
+	"UNS/pb_gen/configs"
 )
 
 var extractSchedulerConfigurationMap = map[configs.SchedulerType]func(configuration *configs.SchedulerConfiguration) interface{}{
@@ -17,6 +16,12 @@ var extractSchedulerConfigurationMap = map[configs.SchedulerType]func(configurat
 	},
 	configs.SchedulerType_schedulerTypeEDF: func(configuration *configs.SchedulerConfiguration) interface{} {
 		return configuration.GetEdfSchedulerConfiguration()
+	},
+	configs.SchedulerType_schedulerTypeHydra: func(configuration *configs.SchedulerConfiguration) interface{} {
+		return configuration.GetHydraSchedulerConfiguration()
+	},
+	configs.SchedulerType_schedulerTypeEDFFast: func(configuration *configs.SchedulerConfiguration) interface{} {
+		return configuration.GetEdfFastSchedulerConfiguration()
 	},
 }
 
@@ -55,7 +60,7 @@ func ExtractPredictorConfiguration(configuration *configs.PredictorConfiguration
 	return c
 }
 
-func GetAllocatedAcceleratorIDs(allocation *objects.JobAllocation) []string {
+func GetAllocatedAcceleratorIDs(allocation *JobAllocation) []string {
 	acceleratorIDs := make([]string, 0)
 	for _, taskAllocation := range allocation.GetTaskAllocations() {
 		acceleratorIDs = append(acceleratorIDs, taskAllocation.GetAcceleratorAllocation().GetAcceleratorID())

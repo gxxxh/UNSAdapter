@@ -1,0 +1,837 @@
+{
+	"resourceManagerID": "RESOURCE_MANAGER_ID",
+	"partitionID": "PARTITION_ID",
+	"rmConfiguration": {
+		"cluster": {
+			"resourceManagerID": "RESOURCE_MANAGER_ID",
+			"partitions": [
+				{
+					"partitionID": "PARTITION_ID",
+					"nodes": [
+						{
+							"nodeID": "inst-1-replica-0",
+							"CPUSockets": [
+								{
+									"CPUSocketID": "inst-1-replica-0-cpusocket-0",
+									"accelerators": {
+										"inst-1-replica-0-cpusocket-0-acc-0": {
+											"acceleratorID": "inst-1-replica-0-cpusocket-0-acc-0",
+											"acceleratorMetaInfo": {
+												"briefType": "GTX 2080Ti",
+												"acceleratorMemory": {
+													"bytesCapacity": "17179869184"
+												}
+											}
+										},
+										"inst-1-replica-0-cpusocket-0-acc-1": {
+											"acceleratorID": "inst-1-replica-0-cpusocket-0-acc-1",
+											"acceleratorMetaInfo": {
+												"briefType": "GTX 2080Ti",
+												"acceleratorMemory": {
+													"bytesCapacity": "17179869184"
+												}
+											}
+										}
+									}
+								}
+							]
+						},
+						{
+							"nodeID": "inst-1-replica-1",
+							"CPUSockets": [
+								{
+									"CPUSocketID": "inst-1-replica-1-cpusocket-0",
+									"accelerators": {
+										"inst-1-replica-1-cpusocket-0-acc-0": {
+											"acceleratorID": "inst-1-replica-1-cpusocket-0-acc-0",
+											"acceleratorMetaInfo": {
+												"briefType": "GTX 2080Ti",
+												"acceleratorMemory": {
+													"bytesCapacity": "17179869184"
+												}
+											}
+										},
+										"inst-1-replica-1-cpusocket-0-acc-1": {
+											"acceleratorID": "inst-1-replica-1-cpusocket-0-acc-1",
+											"acceleratorMetaInfo": {
+												"briefType": "GTX 2080Ti",
+												"acceleratorMemory": {
+													"bytesCapacity": "17179869184"
+												}
+											}
+										}
+									}
+								}
+							]
+						},
+						{
+							"nodeID": "inst-2-replica-0",
+							"CPUSockets": [
+								{
+									"CPUSocketID": "inst-2-replica-0-cpusocket-0",
+									"accelerators": {
+										"inst-2-replica-0-cpusocket-0-acc-0": {
+											"acceleratorID": "inst-2-replica-0-cpusocket-0-acc-0",
+											"acceleratorMetaInfo": {
+												"briefType": "GTX 2080Ti",
+												"acceleratorMemory": {
+													"bytesCapacity": "17179869184"
+												}
+											}
+										},
+										"inst-2-replica-0-cpusocket-0-acc-1": {
+											"acceleratorID": "inst-2-replica-0-cpusocket-0-acc-1",
+											"acceleratorMetaInfo": {
+												"briefType": "GTX 2080Ti",
+												"acceleratorMemory": {
+													"bytesCapacity": "17179869184"
+												}
+											}
+										}
+									}
+								},
+								{
+									"CPUSocketID": "inst-2-replica-0-cpusocket-1",
+									"accelerators": {
+										"inst-2-replica-0-cpusocket-1-acc-0": {
+											"acceleratorID": "inst-2-replica-0-cpusocket-1-acc-0",
+											"acceleratorMetaInfo": {
+												"briefType": "V100",
+												"acceleratorMemory": {
+													"bytesCapacity": "34359738368"
+												}
+											}
+										},
+										"inst-2-replica-0-cpusocket-1-acc-1": {
+											"acceleratorID": "inst-2-replica-0-cpusocket-1-acc-1",
+											"acceleratorMetaInfo": {
+												"briefType": "V100",
+												"acceleratorMemory": {
+													"bytesCapacity": "34359738368"
+												}
+											}
+										}
+									}
+								}
+							]
+						},
+						{
+							"nodeID": "inst-2-replica-1",
+							"CPUSockets": [
+								{
+									"CPUSocketID": "inst-2-replica-1-cpusocket-0",
+									"accelerators": {
+										"inst-2-replica-1-cpusocket-0-acc-0": {
+											"acceleratorID": "inst-2-replica-1-cpusocket-0-acc-0",
+											"acceleratorMetaInfo": {
+												"briefType": "GTX 2080Ti",
+												"acceleratorMemory": {
+													"bytesCapacity": "17179869184"
+												}
+											}
+										},
+										"inst-2-replica-1-cpusocket-0-acc-1": {
+											"acceleratorID": "inst-2-replica-1-cpusocket-0-acc-1",
+											"acceleratorMetaInfo": {
+												"briefType": "GTX 2080Ti",
+												"acceleratorMemory": {
+													"bytesCapacity": "17179869184"
+												}
+											}
+										}
+									}
+								},
+								{
+									"CPUSocketID": "inst-2-replica-1-cpusocket-1",
+									"accelerators": {
+										"inst-2-replica-1-cpusocket-1-acc-0": {
+											"acceleratorID": "inst-2-replica-1-cpusocket-1-acc-0",
+											"acceleratorMetaInfo": {
+												"briefType": "V100",
+												"acceleratorMemory": {
+													"bytesCapacity": "34359738368"
+												}
+											}
+										},
+										"inst-2-replica-1-cpusocket-1-acc-1": {
+											"acceleratorID": "inst-2-replica-1-cpusocket-1-acc-1",
+											"acceleratorMetaInfo": {
+												"briefType": "V100",
+												"acceleratorMemory": {
+													"bytesCapacity": "34359738368"
+												}
+											}
+										}
+									}
+								}
+							]
+						},
+						{
+							"nodeID": "inst-3-replica-0",
+							"CPUSockets": [
+								{
+									"CPUSocketID": "inst-3-replica-0-cpusocket-0",
+									"accelerators": {
+										"inst-3-replica-0-cpusocket-0-acc-0": {
+											"acceleratorID": "inst-3-replica-0-cpusocket-0-acc-0",
+											"acceleratorMetaInfo": {
+												"briefType": "V100",
+												"acceleratorMemory": {
+													"bytesCapacity": "34359738368"
+												}
+											}
+										},
+										"inst-3-replica-0-cpusocket-0-acc-1": {
+											"acceleratorID": "inst-3-replica-0-cpusocket-0-acc-1",
+											"acceleratorMetaInfo": {
+												"briefType": "V100",
+												"acceleratorMemory": {
+													"bytesCapacity": "34359738368"
+												}
+											}
+										}
+									}
+								},
+								{
+									"CPUSocketID": "inst-3-replica-0-cpusocket-1",
+									"accelerators": {
+										"inst-3-replica-0-cpusocket-1-acc-0": {
+											"acceleratorID": "inst-3-replica-0-cpusocket-1-acc-0",
+											"acceleratorMetaInfo": {
+												"briefType": "V100",
+												"acceleratorMemory": {
+													"bytesCapacity": "34359738368"
+												}
+											}
+										},
+										"inst-3-replica-0-cpusocket-1-acc-1": {
+											"acceleratorID": "inst-3-replica-0-cpusocket-1-acc-1",
+											"acceleratorMetaInfo": {
+												"briefType": "V100",
+												"acceleratorMemory": {
+													"bytesCapacity": "34359738368"
+												}
+											}
+										}
+									}
+								}
+							]
+						},
+						{
+							"nodeID": "inst-3-replica-1",
+							"CPUSockets": [
+								{
+									"CPUSocketID": "inst-3-replica-1-cpusocket-0",
+									"accelerators": {
+										"inst-3-replica-1-cpusocket-0-acc-0": {
+											"acceleratorID": "inst-3-replica-1-cpusocket-0-acc-0",
+											"acceleratorMetaInfo": {
+												"briefType": "V100",
+												"acceleratorMemory": {
+													"bytesCapacity": "34359738368"
+												}
+											}
+										},
+										"inst-3-replica-1-cpusocket-0-acc-1": {
+											"acceleratorID": "inst-3-replica-1-cpusocket-0-acc-1",
+											"acceleratorMetaInfo": {
+												"briefType": "V100",
+												"acceleratorMemory": {
+													"bytesCapacity": "34359738368"
+												}
+											}
+										}
+									}
+								},
+								{
+									"CPUSocketID": "inst-3-replica-1-cpusocket-1",
+									"accelerators": {
+										"inst-3-replica-1-cpusocket-1-acc-0": {
+											"acceleratorID": "inst-3-replica-1-cpusocket-1-acc-0",
+											"acceleratorMetaInfo": {
+												"briefType": "V100",
+												"acceleratorMemory": {
+													"bytesCapacity": "34359738368"
+												}
+											}
+										},
+										"inst-3-replica-1-cpusocket-1-acc-1": {
+											"acceleratorID": "inst-3-replica-1-cpusocket-1-acc-1",
+											"acceleratorMetaInfo": {
+												"briefType": "V100",
+												"acceleratorMemory": {
+													"bytesCapacity": "34359738368"
+												}
+											}
+										}
+									}
+								}
+							]
+						},
+						{
+							"nodeID": "inst-4-replica-0",
+							"CPUSockets": [
+								{
+									"CPUSocketID": "inst-4-replica-0-cpusocket-0",
+									"accelerators": {
+										"inst-4-replica-0-cpusocket-0-acc-0": {
+											"acceleratorID": "inst-4-replica-0-cpusocket-0-acc-0",
+											"acceleratorMetaInfo": {
+												"briefType": "V100",
+												"acceleratorMemory": {
+													"bytesCapacity": "34359738368"
+												}
+											}
+										},
+										"inst-4-replica-0-cpusocket-0-acc-1": {
+											"acceleratorID": "inst-4-replica-0-cpusocket-0-acc-1",
+											"acceleratorMetaInfo": {
+												"briefType": "V100",
+												"acceleratorMemory": {
+													"bytesCapacity": "34359738368"
+												}
+											}
+										},
+										"inst-4-replica-0-cpusocket-0-acc-2": {
+											"acceleratorID": "inst-4-replica-0-cpusocket-0-acc-2",
+											"acceleratorMetaInfo": {
+												"briefType": "A100",
+												"acceleratorMemory": {
+													"bytesCapacity": "42949672960"
+												}
+											}
+										},
+										"inst-4-replica-0-cpusocket-0-acc-3": {
+											"acceleratorID": "inst-4-replica-0-cpusocket-0-acc-3",
+											"acceleratorMetaInfo": {
+												"briefType": "A100",
+												"acceleratorMemory": {
+													"bytesCapacity": "42949672960"
+												}
+											}
+										}
+									}
+								}
+							]
+						},
+						{
+							"nodeID": "inst-4-replica-1",
+							"CPUSockets": [
+								{
+									"CPUSocketID": "inst-4-replica-1-cpusocket-0",
+									"accelerators": {
+										"inst-4-replica-1-cpusocket-0-acc-0": {
+											"acceleratorID": "inst-4-replica-1-cpusocket-0-acc-0",
+											"acceleratorMetaInfo": {
+												"briefType": "V100",
+												"acceleratorMemory": {
+													"bytesCapacity": "34359738368"
+												}
+											}
+										},
+										"inst-4-replica-1-cpusocket-0-acc-1": {
+											"acceleratorID": "inst-4-replica-1-cpusocket-0-acc-1",
+											"acceleratorMetaInfo": {
+												"briefType": "V100",
+												"acceleratorMemory": {
+													"bytesCapacity": "34359738368"
+												}
+											}
+										},
+										"inst-4-replica-1-cpusocket-0-acc-2": {
+											"acceleratorID": "inst-4-replica-1-cpusocket-0-acc-2",
+											"acceleratorMetaInfo": {
+												"briefType": "A100",
+												"acceleratorMemory": {
+													"bytesCapacity": "42949672960"
+												}
+											}
+										},
+										"inst-4-replica-1-cpusocket-0-acc-3": {
+											"acceleratorID": "inst-4-replica-1-cpusocket-0-acc-3",
+											"acceleratorMetaInfo": {
+												"briefType": "A100",
+												"acceleratorMemory": {
+													"bytesCapacity": "42949672960"
+												}
+											}
+										}
+									}
+								}
+							]
+						},
+						{
+							"nodeID": "inst-4-replica-2",
+							"CPUSockets": [
+								{
+									"CPUSocketID": "inst-4-replica-2-cpusocket-0",
+									"accelerators": {
+										"inst-4-replica-2-cpusocket-0-acc-0": {
+											"acceleratorID": "inst-4-replica-2-cpusocket-0-acc-0",
+											"acceleratorMetaInfo": {
+												"briefType": "V100",
+												"acceleratorMemory": {
+													"bytesCapacity": "34359738368"
+												}
+											}
+										},
+										"inst-4-replica-2-cpusocket-0-acc-1": {
+											"acceleratorID": "inst-4-replica-2-cpusocket-0-acc-1",
+											"acceleratorMetaInfo": {
+												"briefType": "V100",
+												"acceleratorMemory": {
+													"bytesCapacity": "34359738368"
+												}
+											}
+										},
+										"inst-4-replica-2-cpusocket-0-acc-2": {
+											"acceleratorID": "inst-4-replica-2-cpusocket-0-acc-2",
+											"acceleratorMetaInfo": {
+												"briefType": "A100",
+												"acceleratorMemory": {
+													"bytesCapacity": "42949672960"
+												}
+											}
+										},
+										"inst-4-replica-2-cpusocket-0-acc-3": {
+											"acceleratorID": "inst-4-replica-2-cpusocket-0-acc-3",
+											"acceleratorMetaInfo": {
+												"briefType": "A100",
+												"acceleratorMemory": {
+													"bytesCapacity": "42949672960"
+												}
+											}
+										}
+									}
+								}
+							]
+						},
+						{
+							"nodeID": "inst-4-replica-3",
+							"CPUSockets": [
+								{
+									"CPUSocketID": "inst-4-replica-3-cpusocket-0",
+									"accelerators": {
+										"inst-4-replica-3-cpusocket-0-acc-0": {
+											"acceleratorID": "inst-4-replica-3-cpusocket-0-acc-0",
+											"acceleratorMetaInfo": {
+												"briefType": "V100",
+												"acceleratorMemory": {
+													"bytesCapacity": "34359738368"
+												}
+											}
+										},
+										"inst-4-replica-3-cpusocket-0-acc-1": {
+											"acceleratorID": "inst-4-replica-3-cpusocket-0-acc-1",
+											"acceleratorMetaInfo": {
+												"briefType": "V100",
+												"acceleratorMemory": {
+													"bytesCapacity": "34359738368"
+												}
+											}
+										},
+										"inst-4-replica-3-cpusocket-0-acc-2": {
+											"acceleratorID": "inst-4-replica-3-cpusocket-0-acc-2",
+											"acceleratorMetaInfo": {
+												"briefType": "A100",
+												"acceleratorMemory": {
+													"bytesCapacity": "42949672960"
+												}
+											}
+										},
+										"inst-4-replica-3-cpusocket-0-acc-3": {
+											"acceleratorID": "inst-4-replica-3-cpusocket-0-acc-3",
+											"acceleratorMetaInfo": {
+												"briefType": "A100",
+												"acceleratorMemory": {
+													"bytesCapacity": "42949672960"
+												}
+											}
+										}
+									}
+								}
+							]
+						},
+						{
+							"nodeID": "inst-5-replica-0",
+							"CPUSockets": [
+								{
+									"CPUSocketID": "inst-5-replica-0-cpusocket-0",
+									"accelerators": {
+										"inst-5-replica-0-cpusocket-0-acc-0": {
+											"acceleratorID": "inst-5-replica-0-cpusocket-0-acc-0",
+											"acceleratorMetaInfo": {
+												"briefType": "A100",
+												"acceleratorMemory": {
+													"bytesCapacity": "42949672960"
+												}
+											}
+										},
+										"inst-5-replica-0-cpusocket-0-acc-1": {
+											"acceleratorID": "inst-5-replica-0-cpusocket-0-acc-1",
+											"acceleratorMetaInfo": {
+												"briefType": "A100",
+												"acceleratorMemory": {
+													"bytesCapacity": "42949672960"
+												}
+											}
+										}
+									}
+								},
+								{
+									"CPUSocketID": "inst-5-replica-0-cpusocket-1",
+									"accelerators": {
+										"inst-5-replica-0-cpusocket-1-acc-0": {
+											"acceleratorID": "inst-5-replica-0-cpusocket-1-acc-0",
+											"acceleratorMetaInfo": {
+												"briefType": "A100",
+												"acceleratorMemory": {
+													"bytesCapacity": "42949672960"
+												}
+											}
+										},
+										"inst-5-replica-0-cpusocket-1-acc-1": {
+											"acceleratorID": "inst-5-replica-0-cpusocket-1-acc-1",
+											"acceleratorMetaInfo": {
+												"briefType": "A100",
+												"acceleratorMemory": {
+													"bytesCapacity": "42949672960"
+												}
+											}
+										}
+									}
+								}
+							]
+						},
+						{
+							"nodeID": "inst-5-replica-1",
+							"CPUSockets": [
+								{
+									"CPUSocketID": "inst-5-replica-1-cpusocket-0",
+									"accelerators": {
+										"inst-5-replica-1-cpusocket-0-acc-0": {
+											"acceleratorID": "inst-5-replica-1-cpusocket-0-acc-0",
+											"acceleratorMetaInfo": {
+												"briefType": "A100",
+												"acceleratorMemory": {
+													"bytesCapacity": "42949672960"
+												}
+											}
+										},
+										"inst-5-replica-1-cpusocket-0-acc-1": {
+											"acceleratorID": "inst-5-replica-1-cpusocket-0-acc-1",
+											"acceleratorMetaInfo": {
+												"briefType": "A100",
+												"acceleratorMemory": {
+													"bytesCapacity": "42949672960"
+												}
+											}
+										}
+									}
+								},
+								{
+									"CPUSocketID": "inst-5-replica-1-cpusocket-1",
+									"accelerators": {
+										"inst-5-replica-1-cpusocket-1-acc-0": {
+											"acceleratorID": "inst-5-replica-1-cpusocket-1-acc-0",
+											"acceleratorMetaInfo": {
+												"briefType": "A100",
+												"acceleratorMemory": {
+													"bytesCapacity": "42949672960"
+												}
+											}
+										},
+										"inst-5-replica-1-cpusocket-1-acc-1": {
+											"acceleratorID": "inst-5-replica-1-cpusocket-1-acc-1",
+											"acceleratorMetaInfo": {
+												"briefType": "A100",
+												"acceleratorMemory": {
+													"bytesCapacity": "42949672960"
+												}
+											}
+										}
+									}
+								}
+							]
+						},
+						{
+							"nodeID": "inst-6-replica-0",
+							"CPUSockets": [
+								{
+									"CPUSocketID": "inst-6-replica-0-cpusocket-0",
+									"accelerators": {
+										"inst-6-replica-0-cpusocket-0-acc-0": {
+											"acceleratorID": "inst-6-replica-0-cpusocket-0-acc-0",
+											"acceleratorMetaInfo": {
+												"briefType": "A100",
+												"acceleratorMemory": {
+													"bytesCapacity": "42949672960"
+												}
+											}
+										},
+										"inst-6-replica-0-cpusocket-0-acc-1": {
+											"acceleratorID": "inst-6-replica-0-cpusocket-0-acc-1",
+											"acceleratorMetaInfo": {
+												"briefType": "A100",
+												"acceleratorMemory": {
+													"bytesCapacity": "42949672960"
+												}
+											}
+										},
+										"inst-6-replica-0-cpusocket-0-acc-2": {
+											"acceleratorID": "inst-6-replica-0-cpusocket-0-acc-2",
+											"acceleratorMetaInfo": {
+												"briefType": "A100",
+												"acceleratorMemory": {
+													"bytesCapacity": "42949672960"
+												}
+											}
+										},
+										"inst-6-replica-0-cpusocket-0-acc-3": {
+											"acceleratorID": "inst-6-replica-0-cpusocket-0-acc-3",
+											"acceleratorMetaInfo": {
+												"briefType": "A100",
+												"acceleratorMemory": {
+													"bytesCapacity": "42949672960"
+												}
+											}
+										}
+									}
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		"schedulersConfiguration": {
+			"partitionID2SchedulerConfiguration": {
+				"PARTITION_ID": {
+					"naiveSchedulerConfiguration": {
+						"SchedulerID": "SCHEDULER_ID",
+						"resourceManagerID": "RESOURCE_MANAGER_ID",
+						"partitionID": "PARTITION_ID",
+						"intervalNano": "10000000000000000",
+						"predictorConfiguration": {
+							"predictorType": "predictorTypeDLTDataOriented",
+							"DLTPredictorDataOrientedConfiguration": {
+								"dataSourcePath": "/Users/purchaser/go/src/UNS/cases/async_predictor_data.json"
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"predictorConfiguration": {
+		"predictorType": "predictorTypeDLTDataOriented",
+		"DLTPredictorDataOrientedConfiguration": {
+			"dataSourcePath": "/Users/purchaser/go/src/UNS/cases/async_predictor_data.json"
+		}
+	},
+	"jobs": [
+		{
+			"jobID": "81749c2e708fc2cd18918846",
+			"jobType": "jobTypeDLT",
+			"taskGroup": {
+				"taskGroupType": "taskGroupTypeSingle",
+				"tasks": [
+					{
+						"taskID": "81749c2e708fc2cd18918846_TASK_0"
+					}
+				],
+				"singleTaskGroupInfo": {
+
+				}
+			},
+			"userGroup": {
+				"user": "74238accb90b"
+			},
+			"deadline": "20154084266"
+		},
+		{
+			"jobID": "6d942b15622d001d9edacb8e",
+			"jobType": "jobTypeDLT",
+			"taskGroup": {
+				"taskGroupType": "taskGroupTypeSingle",
+				"tasks": [
+					{
+						"taskID": "6d942b15622d001d9edacb8e_TASK_0"
+					}
+				],
+				"singleTaskGroupInfo": {
+
+				}
+			},
+			"submitTimeNanoSecond": "491000000",
+			"userGroup": {
+				"user": "74238accb90b"
+			},
+			"deadline": "34024037939"
+		},
+		{
+			"jobID": "f6304007ef3e25fc37150d2c",
+			"jobType": "jobTypeDLT",
+			"taskGroup": {
+				"taskGroupType": "taskGroupTypeSingle",
+				"tasks": [
+					{
+						"taskID": "f6304007ef3e25fc37150d2c_TASK_0"
+					}
+				],
+				"singleTaskGroupInfo": {
+
+				}
+			},
+			"submitTimeNanoSecond": "3272000000",
+			"userGroup": {
+				"user": "74238accb90b"
+			},
+			"deadline": "28960059488"
+		},
+		{
+			"jobID": "c0cb989683049a1f41b8d6d2",
+			"jobType": "jobTypeDLT",
+			"taskGroup": {
+				"taskGroupType": "taskGroupTypeSingle",
+				"tasks": [
+					{
+						"taskID": "c0cb989683049a1f41b8d6d2_TASK_0"
+					}
+				],
+				"singleTaskGroupInfo": {
+
+				}
+			},
+			"submitTimeNanoSecond": "7584000000",
+			"userGroup": {
+				"user": "74238accb90b"
+			},
+			"deadline": "39532389956"
+		},
+		{
+			"jobID": "6ac3373981df75c945f071d8",
+			"jobType": "jobTypeDLT",
+			"taskGroup": {
+				"taskGroupType": "taskGroupTypeSingle",
+				"tasks": [
+					{
+						"taskID": "6ac3373981df75c945f071d8_TASK_0"
+					}
+				],
+				"singleTaskGroupInfo": {
+
+				}
+			},
+			"submitTimeNanoSecond": "7801000000",
+			"userGroup": {
+				"user": "74238accb90b"
+			},
+			"deadline": "23475127979"
+		},
+		{
+			"jobID": "0763f5964484b5acffb99e89",
+			"jobType": "jobTypeDLT",
+			"taskGroup": {
+				"taskGroupType": "taskGroupTypeSingle",
+				"tasks": [
+					{
+						"taskID": "0763f5964484b5acffb99e89_TASK_0"
+					}
+				],
+				"singleTaskGroupInfo": {
+
+				}
+			},
+			"submitTimeNanoSecond": "12132000000",
+			"userGroup": {
+				"user": "74238accb90b"
+			},
+			"deadline": "14366147395"
+		},
+		{
+			"jobID": "6661e092f01b74b115fd4212",
+			"jobType": "jobTypeDLT",
+			"taskGroup": {
+				"taskGroupType": "taskGroupTypeSingle",
+				"tasks": [
+					{
+						"taskID": "6661e092f01b74b115fd4212_TASK_0"
+					}
+				],
+				"singleTaskGroupInfo": {
+
+				}
+			},
+			"submitTimeNanoSecond": "12179000000",
+			"userGroup": {
+				"user": "74238accb90b"
+			},
+			"deadline": "36734801529"
+		},
+		{
+			"jobID": "ae8f84cd2f1c5d138981a8f9",
+			"jobType": "jobTypeDLT",
+			"taskGroup": {
+				"taskGroupType": "taskGroupTypeSingle",
+				"tasks": [
+					{
+						"taskID": "ae8f84cd2f1c5d138981a8f9_TASK_0"
+					}
+				],
+				"singleTaskGroupInfo": {
+
+				}
+			},
+			"submitTimeNanoSecond": "6211000000",
+			"userGroup": {
+				"user": "74238accb90b"
+			},
+			"deadline": "21026186938"
+		},
+		{
+			"jobID": "51d01202d231f9fae85bceab",
+			"jobType": "jobTypeDLT",
+			"taskGroup": {
+				"taskGroupType": "taskGroupTypeSingle",
+				"tasks": [
+					{
+						"taskID": "51d01202d231f9fae85bceab_TASK_0"
+					}
+				],
+				"singleTaskGroupInfo": {
+
+				}
+			},
+			"submitTimeNanoSecond": "8266000000",
+			"userGroup": {
+				"user": "74238accb90b"
+			},
+			"deadline": "35851497892"
+		},
+		{
+			"jobID": "3e6cdf99157dd45eacb23445",
+			"jobType": "jobTypeDLT",
+			"taskGroup": {
+				"taskGroupType": "taskGroupTypeGang",
+				"tasks": [
+					{
+						"taskID": "3e6cdf99157dd45eacb23445_TASK_0"
+					},
+					{
+						"taskID": "3e6cdf99157dd45eacb23445_TASK_1"
+					}
+				],
+				"gangTaskGroupInfo": {
+					"taskGroupType": "taskGroupTypeGang",
+					"extra": "eyJETFRHYW5nVHlwZSI6MX0="
+				}
+			},
+			"submitTimeNanoSecond": "10662000000",
+			"userGroup": {
+				"user": "74238accb90b"
+			},
+			"deadline": "28560233182"
+		}
+	]
+}

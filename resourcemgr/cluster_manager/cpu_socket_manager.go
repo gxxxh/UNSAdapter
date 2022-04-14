@@ -15,8 +15,22 @@ type CpuSocketManager struct {
 	cpuSocketUsing            map[string]bool
 }
 
-func NewCpuSocketManager() *CpuSocketManager {
-	return nil //todo
+func NewCpuSocketManager(nodeID string, partitionID string, clusterID string, cpuSocketInfo []*objects.CPUSocket ) *CpuSocketManager {
+	using := make(map[string]bool, len(cpuSocketInfo))
+	id2info := make(map[string]*objects.CPUSocket, len(cpuSocketInfo))
+	for _,cpuSocket := range cpuSocketInfo{
+		using[cpuSocket.GetCPUSocketID()] = false
+		id2info[cpuSocket.GetCPUSocketID()] = cpuSocket
+	}
+	return &CpuSocketManager{
+		nodeID:                    nodeID,
+		PartitionID:               partitionID,
+		clusterID:                 clusterID,
+		cpuSocketID2CPUSocketInfo: id2info,
+		mu:                        sync.RWMutex{},
+		cpuSocketUsing:            using,
+	}
+	
 }
 
 func (m *CpuSocketManager) GetCpuSocket(cpuSocketID string) (*objects.CPUSocket, error) {
