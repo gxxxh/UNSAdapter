@@ -104,70 +104,77 @@ func (rm *ResourceManager) checkFinishedJobs() {
 
 }
 
-//
-func (rm *ResourceManager) handleSSUpdateAllocation(eo *events2.SSUpdateAllocationsEvent) {
-	alloctions := eo.NewJobAllocations
-	nonPlaceholders := make([]*objects.JobAllocation, 0, len(alloctions))
-	placeholders := make([]*objects.JobAllocation, 0, len(alloctions))
-	for _, allocation := range alloctions {
-
-		if allocation.GetTaskAllocations()[0].GetPlaceholder() {
-			placeholders = append(placeholders, allocation)
-		} else {
-			nonPlaceholders = append(nonPlaceholders, allocation)
+func (rm *ResourceManager)handleSSUpdateAllocation(eo *events2.SSUpdateAllocationsEvent){
+	jobAllocations := eo.NewJobAllocations
+	for _, jobAllocation := range jobAllocations{
+		for _, taskAllocation := range jobAllocation.TaskAllocations{
+			taskAllocation.GetStartExecutionTimeNanoSecond()
 		}
-	}
-	filteredAllocations := make([]*objects.JobAllocation, 0, len(alloctions))
-	now := time.Now()
-nextNonPlaceholderAlloc:
-	for _, nonPlaceholderAllocation := range nonPlaceholders {
-		//check task is runing
-		if rm.GetJobManager().CheckJobRunning(nonPlaceholderAllocation.GetJobID()) {
-			log.Printf("simulator ignores allocation of jobID = %s since it is already allocated", nonPlaceholderAllocation.GetJobID())
-			continue nextNonPlaceholderAlloc
-		}
-		// check resource is free
-		ok, err := rm.GetClusterManager().CheckJobResources(nonPlaceholderAllocation)
-		if err != nil {
-			log.Printf("%v", err)
-		}
-		if ok {
-			//go rm.StartJob(nonPlaceholderAllocation, now)
-			filteredAllocations = append(filteredAllocations, nonPlaceholderAllocation)
-		} else {
-			log.Printf("resources for job %s's alllocation is not free\n", nonPlaceholderAllocation.GetJobID())
-		}
-	}
-nextPlaceholderAlloc:
-	//todo placeholder尚未起到作用
-	for _, placeholderAllocation := range placeholders {
-		if rm.GetJobManager().CheckJobRunning(placeholderAllocation.GetJobID()) {
-			continue nextPlaceholderAlloc
-		}
-		// check resource
-		ok, err := rm.GetClusterManager().CheckJobResources(placeholderAllocation)
-		if err != nil {
-			log.Printf("")
-		}
-		if ok {
-			//rm.StartJob(placeholderAllocation, time.Now())
-			filteredAllocations = append(filteredAllocations, placeholderAllocation)
-		} else {
-			log.Printf("resources for job %s's alllocation is not free\n", placeholderAllocation.GetJobID())
-		}
-	}
-	if len(filteredAllocations) > 0 {
-		for _, jobAC := range filteredAllocations {
-			for _, taskAC := range jobAC.TaskAllocations {
-				taskAC.StartExecutionTimeNanoSecond = &wrappers.Int64Value{Value: int64(now.Nanosecond())}
-			}
-			rm.jobManager.AddJobAllocation(jobAC)
-		}
-		//push UpdateAllocations Event
-		ev := &events2.RMUpdateAllocationsEvent{UpdatedJobAllocations: filteredAllocations}
-
 	}
 }
+//func (rm *ResourceManager) handleSSUpdateAllocation(eo *events2.SSUpdateAllocationsEvent) {
+//	alloctions := eo.NewJobAllocations
+//	nonPlaceholders := make([]*objects.JobAllocation, 0, len(alloctions))
+//	placeholders := make([]*objects.JobAllocation, 0, len(alloctions))
+//	for _, allocation := range alloctions {
+//
+//		if allocation.GetTaskAllocations()[0].GetPlaceholder() {
+//			placeholders = append(placeholders, allocation)
+//		} else {
+//			nonPlaceholders = append(nonPlaceholders, allocation)
+//		}
+//	}
+//	filteredAllocations := make([]*objects.JobAllocation, 0, len(alloctions))
+//	now := time.Now()
+//nextNonPlaceholderAlloc:
+//	for _, nonPlaceholderAllocation := range nonPlaceholders {
+//		//check task is runing
+//		if rm.GetJobManager().CheckJobRunning(nonPlaceholderAllocation.GetJobID()) {
+//			log.Printf("simulator ignores allocation of jobID = %s since it is already allocated", nonPlaceholderAllocation.GetJobID())
+//			continue nextNonPlaceholderAlloc
+//		}
+//		// check resource is free
+//		ok, err := rm.GetClusterManager().CheckJobResources(nonPlaceholderAllocation)
+//		if err != nil {
+//			log.Printf("%v", err)
+//		}
+//		if ok {
+//			//go rm.StartJob(nonPlaceholderAllocation, now)
+//			filteredAllocations = append(filteredAllocations, nonPlaceholderAllocation)
+//		} else {
+//			log.Printf("resources for job %s's alllocation is not free\n", nonPlaceholderAllocation.GetJobID())
+//		}
+//	}
+//nextPlaceholderAlloc:
+//	//todo placeholder尚未起到作用
+//	for _, placeholderAllocation := range placeholders {
+//		if rm.GetJobManager().CheckJobRunning(placeholderAllocation.GetJobID()) {
+//			continue nextPlaceholderAlloc
+//		}
+//		// check resource
+//		ok, err := rm.GetClusterManager().CheckJobResources(placeholderAllocation)
+//		if err != nil {
+//			log.Printf("")
+//		}
+//		if ok {
+//			//rm.StartJob(placeholderAllocation, time.Now())
+//			filteredAllocations = append(filteredAllocations, placeholderAllocation)
+//		} else {
+//			log.Printf("resources for job %s's alllocation is not free\n", placeholderAllocation.GetJobID())
+//		}
+//	}
+//	if len(filteredAllocations) > 0 {
+//		for _, jobAC := range filteredAllocations {
+//			for _, taskAC := range jobAC.TaskAllocations {
+//				taskAC.StartExecutionTimeNanoSecond = &wrappers.Int64Value{Value: int64(now.Nanosecond())}
+//			}
+//			rm.jobManager.AddJobAllocation(jobAC)
+//		}
+//		//push UpdateAllocations Event
+//		ev := &events2.RMUpdateAllocationsEvent{UpdatedJobAllocations: filteredAllocations}
+//
+//	}
+//}
 
 //检查未启动的allocations，若可以执行，则开始执行
 func (rm *ResourceManager) checkNotStartedJob() {
