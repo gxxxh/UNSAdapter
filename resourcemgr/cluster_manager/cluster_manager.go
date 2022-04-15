@@ -12,6 +12,8 @@ type ClusterManager struct {
 	mu sync.RWMutex
 	clusterInfo *objects.Cluster
 	partitionID2PaititionManager map[string]*PartitionManager
+	//for predictor
+	acceleratorID2Accelerator map[string]*objects.Accelerator
 }
 
 
@@ -27,12 +29,25 @@ func NewClusterManager(clusterID string, clusterInfo *objects.Cluster)(*ClusterM
 	for _, partitionInfo := range clusterInfo.GetPartitions(){
 		partitionID2Mgr[partitionInfo.GetPartitionID()] = NewPartitionManager(clusterID, partitionInfo)
 	}
-	return &ClusterManager{
+	cm := &ClusterManager{
 		clusterID:                    clusterID,
 		mu:                           sync.RWMutex{},
 		clusterInfo:                  clusterInfo,
 		partitionID2PaititionManager: partitionID2Mgr,
 	}
+	//add for predictor
+	acceleratorID2Accelerator := make(map[string]*objects.Accelerator)
+	for _,partition := range clusterInfo.GetPartitions(){
+		for _, node := range partition.GetNodes(){
+			for _, cpuSocket := range node.GetCPUSockets(){
+				for _, acc := range cpuSocket.GetAccelerators(){
+					acceleratorID2Accelerator[acc.GetAcceleratorID()] = acc
+				}
+			}
+		}
+	}
+	cm.acceleratorID2Accelerator = acceleratorID2Accelerator
+	return cm
 }
 
 func (cm *ClusterManager)GetPartitionManager(partitionID string)(*PartitionManager, error){
@@ -87,4 +102,22 @@ func (cm *ClusterManager)FreeJobResources(allocation *objects.JobAllocation)(err
 		}
 	}
 	return nil
+}
+
+func (cm *ClusterManager)GetAccelerator(acceleratorID string )*objects.Accelerator{
+	return cm.acceleratorID2Accelerator[acceleratorID]
+}
+
+func (cm *ClusterManager)GetAccelerators(acceleratorIDs []string)[]*objects.Accelerator{
+	accelerators := make([]*objects.Accelerator, 0, len(acceleratorIDs))
+	for _, ID := range(acceleratorIDs){
+		accelerators = append(accelerators, cm.GetAccelerator(ID))
+	}
+	return accelerators
+}
+
+func (cm *ClusterManager)GetNode(partitionID string, nodeID string)*objects.Node{
+	partitionManager, _ := cm.GetPartitionManager(partitionID)
+	nm, _ := partitionManager.GetNodeManager(nodeID)
+	return nm.nodeInfo
 }

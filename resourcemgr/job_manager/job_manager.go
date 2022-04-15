@@ -56,6 +56,15 @@ func NewJobManager() *JobsManager {
 //	return jm.finishedJobIDs
 //}
 
+func (jm *JobsManager)GetJobByJobID(jobID string)(*objects.Job, error){
+	job, ok := jm.jobID2Job[jobID]
+	if !ok{
+		errMsg := fmt.Sprintf("no job for ID %s", jobID)
+		return nil, fmt.Errorf(errMsg)
+	}
+	return job, nil
+}
+
 func (jm *JobsManager) GetNewStartedJobIDs() []string {
 	jm.newStartedJobIDsMu.Lock()
 	defer jm.newStartedJobIDsMu.Unlock()
@@ -208,6 +217,7 @@ func (jm *JobsManager) AddJobAllocation(allocation *objects.JobAllocation) {
 	jm.newAllocationIDsMu.Unlock()
 
 }
+
 
 //delete finish job,
 func (jm *JobsManager) HandleRMUpdateAllocationEvent(finishedIDs []string) {

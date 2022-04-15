@@ -1,7 +1,7 @@
 package pb_gen
 
 import (
-	"UNS/pb_gen/configs"
+	"UNSAdapter/pb_gen/configs"
 )
 
 var extractSchedulerConfigurationMap = map[configs.SchedulerType]func(configuration *configs.SchedulerConfiguration) interface{}{

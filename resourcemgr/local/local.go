@@ -8,8 +8,10 @@ import (
 	"UNSAdapter/resourcemgr/job_manager"
 	"UNSAdapter/resourcemgr/k8s_manager"
 	"UNSAdapter/resourcemgr/simulator"
+	"UNSAdapter/utils"
 	"github.com/golang/protobuf/ptypes/wrappers"
 	"log"
+	"sort"
 	"time"
 )
 
@@ -106,11 +108,25 @@ func (rm *ResourceManager) checkFinishedJobs() {
 
 func (rm *ResourceManager)handleSSUpdateAllocation(eo *events2.SSUpdateAllocationsEvent){
 	jobAllocations := eo.NewJobAllocations
-	for _, jobAllocation := range jobAllocations{
-		for _, taskAllocation := range jobAllocation.TaskAllocations{
-			taskAllocation.GetStartExecutionTimeNanoSecond()
-		}
+	//  sort job allocations by start time
+	sorter := utils.Sorter{
+		LenFunc:  func() int {
+			return len(jobAllocations)
+		},
+		LessFunc: func(i,j int)bool{
+			return jobAllocations[i].GetTaskAllocations()[0].GetStartExecutionTimeNanoSecond().GetValue()<jobAllocations[j].GetTaskAllocations()[0].GetStartExecutionTimeNanoSecond().GetValue()
+		},
+		SwapFunc: func(i, j int){
+			t := jobAllocations[i]
+			jobAllocations[i] = jobAllocations[j]
+			jobAllocations[j] = t
+		},
 	}
+	sort.Sort(sorter)
+	for _, jobAllocation := range jobAllocations{
+		rm.jobManager.AddJobAllocation(jobAllocation)
+	}
+	//todo update job allocation event
 }
 //func (rm *ResourceManager) handleSSUpdateAllocation(eo *events2.SSUpdateAllocationsEvent) {
 //	alloctions := eo.NewJobAllocations

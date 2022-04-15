@@ -626,7 +626,7 @@
 	"predictorConfiguration": {
 		"predictorType": "predictorTypeDLTDataOriented",
 		"DLTPredictorDataOrientedConfiguration": {
-			"dataSourcePath": "/Users/purchaser/go/src/UNS/cases/async_predictor_data.json"
+			"dataSourcePath": "D:\\GolangProjects\\src\\UNSAdapter\\config\\async_predictor_data.json"
 		}
 	},
 	"jobs": [
