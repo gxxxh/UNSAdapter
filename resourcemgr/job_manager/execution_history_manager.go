@@ -75,7 +75,7 @@ func (m *JobExecutionHistoryManager) SetStartExecutionTimeNanoSecond(taskID stri
 	}
 	m.mu.Lock()
 	defer m.mu.Unlock()
-	taskeh.DurationNanoSecond = int64(startTime.Nanosecond())
+	taskeh.DurationNanoSecond = int64(startTime.UnixNano())
 	return nil
 }
 
@@ -86,6 +86,6 @@ func (m *JobExecutionHistoryManager) SetDurationNanoSecond(taskID string, finish
 	}
 	m.mu.Lock()
 	defer m.mu.Unlock()
-	taskeh.DurationNanoSecond = int64(finishTime.Nanosecond()) - taskeh.StartExecutionTimeNanoSecond
+	taskeh.DurationNanoSecond = int64(finishTime.UnixNano()) - taskeh.StartExecutionTimeNanoSecond
 	return nil
 }

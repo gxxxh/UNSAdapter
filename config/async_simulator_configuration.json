@@ -607,7 +607,8 @@
 		"schedulersConfiguration": {
 			"partitionID2SchedulerConfiguration": {
 				"PARTITION_ID": {
-					"naiveSchedulerConfiguration": {
+					"schedulerType": "schedulerTypeHydra",
+					"hydraSchedulerConfiguration": {
 						"SchedulerID": "SCHEDULER_ID",
 						"resourceManagerID": "RESOURCE_MANAGER_ID",
 						"partitionID": "PARTITION_ID",
@@ -615,7 +616,7 @@
 						"predictorConfiguration": {
 							"predictorType": "predictorTypeDLTDataOriented",
 							"DLTPredictorDataOrientedConfiguration": {
-								"dataSourcePath": "/Users/purchaser/go/src/UNS/cases/async_predictor_data.json"
+								"dataSourcePath": "D:\\GolangProjects\\src\\UNSAdapter\\config\\async_predictor_data.json"
 							}
 						}
 					}

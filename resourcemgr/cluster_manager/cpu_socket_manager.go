@@ -15,10 +15,10 @@ type CpuSocketManager struct {
 	cpuSocketUsing            map[string]bool
 }
 
-func NewCpuSocketManager(nodeID string, partitionID string, clusterID string, cpuSocketInfo []*objects.CPUSocket ) *CpuSocketManager {
+func NewCpuSocketManager(nodeID string, partitionID string, clusterID string, cpuSocketInfo []*objects.CPUSocket) *CpuSocketManager {
 	using := make(map[string]bool, len(cpuSocketInfo))
 	id2info := make(map[string]*objects.CPUSocket, len(cpuSocketInfo))
-	for _,cpuSocket := range cpuSocketInfo{
+	for _, cpuSocket := range cpuSocketInfo {
 		using[cpuSocket.GetCPUSocketID()] = false
 		id2info[cpuSocket.GetCPUSocketID()] = cpuSocket
 	}
@@ -30,12 +30,12 @@ func NewCpuSocketManager(nodeID string, partitionID string, clusterID string, cp
 		mu:                        sync.RWMutex{},
 		cpuSocketUsing:            using,
 	}
-	
+
 }
 
 func (m *CpuSocketManager) GetCpuSocket(cpuSocketID string) (*objects.CPUSocket, error) {
-	m.mu.RLock()
-	defer m.mu.RUnlock()
+	//m.mu.RLock()
+	//defer m.mu.RUnlock()
 	cpuSocket, ok := m.cpuSocketID2CPUSocketInfo[cpuSocketID]
 	if !ok {
 		errorMsg := fmt.Sprintf("no CPUSocket %s, ,cluster: %s,Partition: %s, node: %s\n",
@@ -46,8 +46,8 @@ func (m *CpuSocketManager) GetCpuSocket(cpuSocketID string) (*objects.CPUSocket,
 }
 
 func (m *CpuSocketManager) CheckCpuSocketUsing(cpuSocketID string) (bool, error) {
-	m.mu.RLock()
-	defer m.mu.RUnlock()
+	//m.mu.RLock()
+	//defer m.mu.RUnlock()
 	if _, err := m.GetCpuSocket(cpuSocketID); err != nil {
 		return false, err
 	}

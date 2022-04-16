@@ -9,7 +9,7 @@ import (
 	coreinformer "k8s.io/client-go/informers/core/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/cache"
-	"log"
+	"strings"
 	"time"
 )
 
@@ -55,37 +55,38 @@ func (c *PodManager) Run(stopCh chan struct{}) error {
 
 func (c *PodManager) handlePodAddEvent(obj interface{}) {
 	pod := obj.(*v1.Pod)
-	log.Println("PodManager: pod created:", pod.Name)
+	fmt.Println("PodManager: pod created:", pod.Name)
 }
 
 func (c *PodManager) handlePodUpdateEvent(old, new interface{}) {
 	oldPod := old.(*v1.Pod)
 	newPod := new.(*v1.Pod)
-	//log.Printf("PodManager: pod updated:Name: %v, PodPhase: %v", oldPod.Name, newPod.Status.Phase, newPod.Status)
-	log.Printf("old Pod: %v", oldPod.Status.Phase)
-	log.Printf("new Pod: %v", newPod.Status.Phase)
-	//猜测，只有两次事件，old和new都是succeeded时删除
+	//fmt.Printf("PodManager: pod updated:Name: %v, PodPhase: %v", oldPod.Name, newPod.Status.Phase, newPod.Status)
+	//fmt.Printf("old Pod: %v", oldPod.Status.Phase)
+	//fmt.Printf("new Pod: %v", newPod.Status.Phase)
+
 	if newPod.Status.Phase == v1.PodSucceeded && oldPod.Status.Phase == v1.PodSucceeded {
 		//delete pod
+		fmt.Printf("handlePodUpdateEvent: pod %s finished\n", newPod.GetName())
 		c.DeletePod(newPod.GetName(), newPod.GetNamespace(), newPod.GetAnnotations())
 	}
-	//check status delete pod
 }
 
 func (c *PodManager) handlePodDeleteEvent(obj interface{}) {
 	pod := obj.(*v1.Pod)
-	log.Printf("PodManager: pod %v deleted successfully\n", pod.Name)
+	fmt.Printf("handlePodDeleteEvent: pod %v deleted successfully\n", pod.Name)
 }
 
 func (pc *PodManager) StartPod(info map[string]string) error{
 	//pod spec
+
 	pdSpec := &v1.Pod{
 		TypeMeta: metav1.TypeMeta{
 			Kind:       "Pod",
 			APIVersion: "v1",
 		},
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      info["jobID"] + "-" + info["taskID"],
+			Name:     strings.ToLower(info["jobID"] + "-" + strings.Replace(info["taskID"], "_", "-", -1)),
 			Namespace: info["namespace"],
 			Labels:    nil,
 			Annotations: map[string]string{
@@ -109,7 +110,7 @@ func (pc *PodManager) StartPod(info map[string]string) error{
 		Env: []v1.EnvVar{
 			{
 				Name:  "SLEEP_TIME",
-				Value: info["sleepTime"], //todo 运行时间多少?
+				Value: info["sleepTime"],
 			},
 		},
 		ImagePullPolicy: "Never",
@@ -120,8 +121,8 @@ func (pc *PodManager) StartPod(info map[string]string) error{
 		fmt.Println("create pod error, err=", err)
 		return err
 	}
-	log.Printf("Start Task %s from Job %s on Node %s, Pod status: %s \n",
-		info["taskID"], info["jobID"], info["nodeID"], resp.Status.Phase)
+	fmt.Printf("Start Task %s from Job %s on Node %s,sleepTime %s,  Pod status: %s \n",
+		info["taskID"], info["jobID"], info["nodeID"],info["sleepTime"] ,resp.Status.Phase)
 	return nil
 }
 
@@ -138,7 +139,7 @@ func (pc *PodManager) DeletePod(podName string, namespace string, annotations ma
 	}
 	err := pc.clientSet.CoreV1().Pods(namespace).Delete(context.Background(), podName, metav1.DeleteOptions{})
 	if err != nil {
-		log.Println("Delete Pod error, err=", err)
+		fmt.Println("Delete Pod error, err=", err)
 		return
 	}
 	// 通知resourcemgr处理pod对应内容

@@ -3,6 +3,7 @@ package k8s_manager
 import (
 	"context"
 	"flag"
+	"fmt"
 	v1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/kubernetes"
@@ -31,17 +32,20 @@ func NewK8sManager() *K8sManager {
 	if err != nil {
 		panic(err.Error())
 	}
-	var k8sAdapterVar K8sManager
-	k8sAdapterVar.clientSet, err = kubernetes.NewForConfig(config)
+	var k8sManager K8sManager
+	k8sManager.clientSet, err = kubernetes.NewForConfig(config)
 
 	if err != nil {
 		panic(err.Error())
 	}
-	k8sAdapterVar.initNamespace()
+	k8sManager.initNamespace()
 	//init pod controller
-	k8sAdapterVar.podManager = NewPodManager(k8sAdapterVar.clientSet, k8sAdapterVar.namespace)
-	k8sAdapterVar.podManager.Run(make(chan struct{}))
-	return &k8sAdapterVar
+	k8sManager.podManager = NewPodManager(k8sManager.clientSet, k8sManager.namespace)
+	return &k8sManager
+}
+func (k8sManager *K8sManager) Run() {
+	fmt.Println("kubernetes informer started")
+	k8sManager.podManager.Run(make(chan struct{}))
 }
 
 func (k8sAdapterVar *K8sManager) initNamespace() {

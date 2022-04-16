@@ -2,33 +2,33 @@ package cluster_manager
 
 import (
 	"UNSAdapter/pb_gen/objects"
-	"sync"
 )
+
 //管理一个Node
-type NodeManager struct{
-	clusterID string
+type NodeManager struct {
+	clusterID   string
 	partitionID string
-	nodeInfo                         *objects.Node
-	mu sync.RWMutex
-	cpuSocketManager *CpuSocketManager
+	nodeInfo    *objects.Node
+	//mu sync.RWMutex
+	cpuSocketManager   *CpuSocketManager
 	acceleratorManager *AcceleratorManager
 }
 
-func NewNodeManager(clusterID string, partitionID string, nodeInfo *objects.Node)(*NodeManager){
-	accelerators := make([]*objects.Accelerator,0)
-	for _, cpuSocketInfo := range nodeInfo.GetCPUSockets(){
+func NewNodeManager(clusterID string, partitionID string, nodeInfo *objects.Node) *NodeManager {
+	accelerators := make([]*objects.Accelerator, 0)
+	for _, cpuSocketInfo := range nodeInfo.GetCPUSockets() {
 		acceleratorsMap := cpuSocketInfo.GetAccelerators()
-		for acceleratorID := range acceleratorsMap{
+		for acceleratorID := range acceleratorsMap {
 			accelerators = append(accelerators, acceleratorsMap[acceleratorID])
 		}
 	}
 	return &NodeManager{
-		clusterID:          clusterID,
-		partitionID:        partitionID,
-		nodeInfo:           nodeInfo,
-		mu:                 sync.RWMutex{},
-		cpuSocketManager:   NewCpuSocketManager(nodeInfo.GetNodeID(), partitionID, clusterID,nodeInfo.GetCPUSockets()),
-		acceleratorManager: NewAcceleratorManager(nodeInfo.GetNodeID(),partitionID, clusterID, accelerators ),
+		clusterID:   clusterID,
+		partitionID: partitionID,
+		nodeInfo:    nodeInfo,
+		//mu:                 sync.RWMutex{},
+		cpuSocketManager:   NewCpuSocketManager(nodeInfo.GetNodeID(), partitionID, clusterID, nodeInfo.GetCPUSockets()),
+		acceleratorManager: NewAcceleratorManager(nodeInfo.GetNodeID(), partitionID, clusterID, accelerators),
 	}
 }
 
@@ -56,9 +56,9 @@ func NewNodeManager(clusterID string, partitionID string, nodeInfo *objects.Node
 //	return accelerator,nil
 //}
 
-func (m *NodeManager) CheckTaskResources(allocation *objects.TaskAllocation) (bool, error){
+func (m *NodeManager) CheckTaskResources(allocation *objects.TaskAllocation) (bool, error) {
 	res, err := m.CheckAcceleratorUsing(allocation.AcceleratorAllocation.AcceleratorID)
-	if err!=nil||!res{
+	if err != nil || !res {
 		return false, err
 	}
 	//for _, cpuSocketAllocation := range(allocation.CPUSocketAllocations){
@@ -70,8 +70,7 @@ func (m *NodeManager) CheckTaskResources(allocation *objects.TaskAllocation) (bo
 	return true, nil
 }
 
-
-func (m *NodeManager)CheckAcceleratorUsing(acceleratorID string)(bool, error){
+func (m *NodeManager) CheckAcceleratorUsing(acceleratorID string) (bool, error) {
 	//acceleratorMg, err := m.GetAcceleratorManager(acceleratorID)
 	//if err!=nil{
 	//	return false, err
@@ -87,15 +86,14 @@ func (m *NodeManager)CheckAcceleratorUsing(acceleratorID string)(bool, error){
 //	return cpuSocketMg.CheckCpuSocketUsing(cpuSocketID)
 //}
 
-
-func (m *NodeManager)AllocTaskResources(allocation *objects.TaskAllocation)(error){
+func (m *NodeManager) AllocTaskResources(allocation *objects.TaskAllocation) error {
 	//res, err := m.GetAcceleratorManager(allocation.AcceleratorAllocation.AcceleratorID)
 	//if err!=nil{
 	//	return err
 	//}
 
-	err :=m.acceleratorManager.AllocAccelerator(allocation.AcceleratorAllocation.AcceleratorID)
-	if err!=nil{
+	err := m.acceleratorManager.AllocAccelerator(allocation.AcceleratorAllocation.AcceleratorID)
+	if err != nil {
 		return err
 	}
 	//for _, cpuAllocation := range allocation.CPUSocketAllocations{
@@ -111,13 +109,13 @@ func (m *NodeManager)AllocTaskResources(allocation *objects.TaskAllocation)(erro
 	return nil
 	//todo 不成功释放已经获取的资源
 }
-func (m *NodeManager)FreeTaskResources(allocation *objects.TaskAllocation)(error){
+func (m *NodeManager) FreeTaskResources(allocation *objects.TaskAllocation) error {
 	//res, err := m.GetAcceleratorManager(allocation.AcceleratorAllocation.AcceleratorID)
 	//if err!=nil{
 	//	return err
 	//}
-	err:= m.acceleratorManager.FreeAccelerator(allocation.AcceleratorAllocation.AcceleratorID)
-	if err!=nil{
+	err := m.acceleratorManager.FreeAccelerator(allocation.AcceleratorAllocation.AcceleratorID)
+	if err != nil {
 		return err
 	}
 	//for _, cpuAllocation := range allocation.CPUSocketAllocations{

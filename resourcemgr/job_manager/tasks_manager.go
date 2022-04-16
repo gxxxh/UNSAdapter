@@ -64,7 +64,7 @@ func (tm *TasksManager)SetTaskAllocationStartExecutionTime(taskID string, now ti
 	tm.mu.Lock()
 	defer tm.mu.Unlock()
 	taskAl.StartExecutionTimeNanoSecond = &wrappers.Int64Value{
-		Value: int64(now.Nanosecond()),
+		Value: int64(now.UnixNano()),
 	}
 	return nil
 }

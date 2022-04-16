@@ -1,8 +1,10 @@
 package simulator
 
 import (
+	"UNSAdapter/pb_gen/configs"
 	"UNSAdapter/pb_gen/objects"
 	"UNSAdapter/utils"
+	"io/ioutil"
 	"math"
 	"sort"
 )
@@ -50,4 +52,17 @@ func iteratorJobsBySubmitTime(jobs []*objects.Job) func() (int64, []*objects.Job
 			return next(len(nextBatchJobs))
 		}
 	}
+}
+
+func loadDLTJobData(filePath string)(map[string]*configs.DLTJobData){
+	bytes, err := ioutil.ReadFile(filePath)
+	if err!=nil{
+		panic(err)
+	}
+	data := &configs.DLTPredictorDataOrientedDataFormat{}
+	err = utils.Unmarshal(string(bytes), data)
+	if err!=nil{
+		panic(err)
+	}
+	return data.GetJobID2DLTJobData()
 }

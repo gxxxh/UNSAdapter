@@ -19,9 +19,9 @@
 			"totalMiniBatches": "1000",
 			"acceleratorType2MiniBatchDuration": {
 				"AccType2Duration": {
-					"A100": "700000000",
-					"GTX 2080Ti": "1000000000",
-					"V100": "500000000"
+					"A100": "7000000",
+					"GTX 2080Ti": "10000000",
+					"V100": "5000000"
 				}
 			},
 			"minSpaceSharingPenalty": 1.1,
@@ -52,9 +52,9 @@
 			"totalMiniBatches": "1000",
 			"acceleratorType2MiniBatchDuration": {
 				"AccType2Duration": {
-					"A100": "900000000",
-					"GTX 2080Ti": "1000000000",
-					"V100": "300000000"
+					"A100": "9000000",
+					"GTX 2080Ti": "10000000",
+					"V100": "3000000"
 				}
 			},
 			"minSpaceSharingPenalty": 1.1,
@@ -85,9 +85,9 @@
 			"totalMiniBatches": "1000",
 			"acceleratorType2MiniBatchDuration": {
 				"AccType2Duration": {
-					"A100": "1000000000",
-					"GTX 2080Ti": "2000000000",
-					"V100": "500000000"
+					"A100": "10000000",
+					"GTX 2080Ti": "20000000",
+					"V100": "5000000"
 				}
 			},
 			"minSpaceSharingPenalty": 1.1,
@@ -118,9 +118,9 @@
 			"totalMiniBatches": "1000",
 			"acceleratorType2MiniBatchDuration": {
 				"AccType2Duration": {
-					"A100": "1000000000",
-					"GTX 2080Ti": "2700000000",
-					"V100": "300000000"
+					"A100": "10000000",
+					"GTX 2080Ti": "27000000",
+					"V100": "3000000"
 				}
 			},
 			"minSpaceSharingPenalty": 1.1,

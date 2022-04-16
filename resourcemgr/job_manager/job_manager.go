@@ -26,13 +26,12 @@ type JobsManager struct {
 	newAllocationIDsMu sync.RWMutex
 	newAllocationIDs   []string //新获取的allocation,还没开始执行
 	//info for RMUpdateJobs Event
-	updateJobsMu sync.Mutex
+	updateJobsMu sync.RWMutex
 	jobID2Job    map[string]*objects.Job //添加：新任务到来，删除：丢弃或者运行完成
 	newJobIDs    []string
 }
 
 func NewJobManager() *JobsManager {
-	//todo
 	return &JobsManager{
 		updateAllocationsMu:           sync.RWMutex{},
 		jobID2Allocations:             make(map[string]*objects.JobAllocation, 0),
@@ -44,7 +43,7 @@ func NewJobManager() *JobsManager {
 		newStartedJobIDs:              make([]string, 0),
 		newAllocationIDsMu:            sync.RWMutex{},
 		newAllocationIDs:              make([]string, 0),
-		updateJobsMu:                  sync.Mutex{},
+		updateJobsMu:                  sync.RWMutex{},
 		jobID2Job:                     make(map[string]*objects.Job),
 		newJobIDs:                     make([]string, 0),
 	}
@@ -56,9 +55,11 @@ func NewJobManager() *JobsManager {
 //	return jm.finishedJobIDs
 //}
 
-func (jm *JobsManager)GetJobByJobID(jobID string)(*objects.Job, error){
+func (jm *JobsManager) GetJobByJobID(jobID string) (*objects.Job, error) {
+	jm.updateJobsMu.RLock()
+	defer jm.updateJobsMu.RUnlock()
 	job, ok := jm.jobID2Job[jobID]
-	if !ok{
+	if !ok {
 		errMsg := fmt.Sprintf("no job for ID %s", jobID)
 		return nil, fmt.Errorf(errMsg)
 	}
@@ -119,6 +120,13 @@ func (jm *JobsManager) GetJobAllocation(jobID string) (*objects.JobAllocation, e
 	return jobAllocation, nil
 }
 
+func (jm *JobsManager) GetTaskAllocation(jobID string, taskID string) (*objects.TaskAllocation, error) {
+	tasksManager, err := jm.GetTasksManager(jobID)
+	if err != nil {
+		return nil, err
+	}
+	return tasksManager.GetTaskAllocation(taskID)
+}
 func (jm *JobsManager) GetTasksManager(jobID string) (*TasksManager, error) {
 	jm.updateAllocationsMu.RLock()
 	defer jm.updateAllocationsMu.RUnlock()
@@ -203,6 +211,7 @@ func (jm *JobsManager) HandleFinishedTask(annotations map[string]string) error {
 }
 
 func (jm *JobsManager) AddJobAllocation(allocation *objects.JobAllocation) {
+	fmt.Printf("add allocation to job manager for job %s\n", allocation.JobID)
 	//接受一个allocation，一旦接受就意味着开始执行
 	jm.updateAllocationsMu.Lock()
 	jm.jobID2Allocations[allocation.JobID] = allocation
@@ -218,11 +227,9 @@ func (jm *JobsManager) AddJobAllocation(allocation *objects.JobAllocation) {
 
 }
 
-
 //delete finish job,
 func (jm *JobsManager) HandleRMUpdateAllocationEvent(finishedIDs []string) {
 	jm.updateAllocationsMu.Lock()
-	defer jm.updateAllocationsMu.Unlock()
 	for _, jobID := range finishedIDs {
 		//delete execution history
 		delete(jm.jobID2ExecutionHistoryManager, jobID)
@@ -230,15 +237,22 @@ func (jm *JobsManager) HandleRMUpdateAllocationEvent(finishedIDs []string) {
 		delete(jm.jobID2Allocations, jobID)
 		delete(jm.jobID2TasksManager, jobID)
 		//delete job
+		//delete(jm.jobID2Job, jobID)
+	}
+	jm.updateJobsMu.Unlock()
+	//delete job info
+	jm.updateJobsMu.Lock()
+	for _, jobID := range finishedIDs{
 		delete(jm.jobID2Job, jobID)
 	}
+	jm.updateJobsMu.Unlock()
 }
 
 //add new submited job
 func (jm *JobsManager) AddJob(newJobs []*objects.Job) {
 	jm.updateJobsMu.Lock()
 	defer jm.updateJobsMu.Unlock()
-	for _, newJob := range newJobs{
+	for _, newJob := range newJobs {
 		jm.jobID2Job[newJob.JobID] = newJob
 		jm.newJobIDs = append(jm.newJobIDs, newJob.JobID)
 	}
