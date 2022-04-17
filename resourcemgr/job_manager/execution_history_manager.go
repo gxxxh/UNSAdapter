@@ -20,6 +20,7 @@ func NewExecutionHistoryManager(jobID string) *JobExecutionHistoryManager {
 	return &JobExecutionHistoryManager{
 		mu:                          &sync.RWMutex{},
 		jobID:                       jobID,
+		jobExecutionHistory: nil,
 		taskID2TaskExecutionHistory: make(map[string]*objects.TaskExecutionHistory),
 	}
 }
@@ -34,7 +35,8 @@ func (m *JobExecutionHistoryManager) BuildJobExecutionHistory(jobAllocation *obj
 			NodeID:                       taskAllocation.GetNodeID(),
 			JobID:                        taskAllocation.GetJobID(),
 			TaskID:                       taskAllocation.GetTaskID(),
-			StartExecutionTimeNanoSecond: taskAllocation.GetStartExecutionTimeNanoSecond().GetValue(),
+			//StartExecutionTimeNanoSecond: taskAllocation.GetStartExecutionTimeNanoSecond().GetValue(),
+			StartExecutionTimeNanoSecond: 0,
 			DurationNanoSecond:           0,
 			HostMemoryAllocation:         taskAllocation.GetHostMemoryAllocation(),
 			CPUSocketAllocations:         taskAllocation.GetCPUSocketAllocations(),
@@ -75,17 +77,18 @@ func (m *JobExecutionHistoryManager) SetStartExecutionTimeNanoSecond(taskID stri
 	}
 	m.mu.Lock()
 	defer m.mu.Unlock()
-	taskeh.DurationNanoSecond = int64(startTime.UnixNano())
+	fmt.Printf("update task %s executionHistory startTime to %v\n",taskID,startTime)
+	taskeh.StartExecutionTimeNanoSecond = startTime.UnixNano()
 	return nil
 }
 
-func (m *JobExecutionHistoryManager) SetDurationNanoSecond(taskID string, finishTime time.Time) error {
+func (m *JobExecutionHistoryManager) SetDurationNanoSecond(taskID string, finishTime int64) error {
 	taskeh, err := m.GetTaskExecutionHistory(taskID)
 	if err != nil {
 		return err
 	}
 	m.mu.Lock()
 	defer m.mu.Unlock()
-	taskeh.DurationNanoSecond = int64(finishTime.UnixNano()) - taskeh.StartExecutionTimeNanoSecond
+	taskeh.DurationNanoSecond = finishTime - taskeh.StartExecutionTimeNanoSecond
 	return nil
 }

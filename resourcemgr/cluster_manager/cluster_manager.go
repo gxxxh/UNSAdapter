@@ -69,7 +69,7 @@ func (cm *ClusterManager) GetPartitionManager(partitionID string) (*PartitionMan
 }
 
 func (cm *ClusterManager) CheckJobResources(allocation *objects.JobAllocation) (bool, error) {
-	partitionManager, err := cm.GetPartitionManager(allocation.JobID)
+	partitionManager, err := cm.GetPartitionManager(allocation.GetPartitionID())
 	if err != nil {
 		return false, err
 	}
@@ -85,7 +85,7 @@ func (cm *ClusterManager) CheckJobResources(allocation *objects.JobAllocation) (
 
 //所有task都可以执行后才获取资源执行
 func (cm *ClusterManager) AllocJobResources(allocation *objects.JobAllocation) error {
-	fmt.Printf("Alloc job resource for job %s\n", allocation.GetJobID())
+	fmt.Printf("Alloc job resource for job %s, Accelerator ID: %s\n", allocation.GetJobID(),allocation.GetTaskAllocations()[0].AcceleratorAllocation.AcceleratorID)
 	partitionManager, err := cm.GetPartitionManager(allocation.GetPartitionID())
 	if err != nil {
 		return err
@@ -101,6 +101,7 @@ func (cm *ClusterManager) AllocJobResources(allocation *objects.JobAllocation) e
 
 //释放资源应该是只释放一个任务的资源
 func (cm *ClusterManager) FreeTaskResources(taskalloc *objects.TaskAllocation, partitionID string) error {
+	fmt.Printf("Free task resource for task %s in job %s,AcceleratorID is %s\n", taskalloc.GetTaskID(),taskalloc.GetJobID(),taskalloc.AcceleratorAllocation.GetAcceleratorID())
 	partitionManager, err := cm.GetPartitionManager(partitionID)
 	if err != nil {
 		return err
@@ -110,7 +111,8 @@ func (cm *ClusterManager) FreeTaskResources(taskalloc *objects.TaskAllocation, p
 }
 
 func (cm *ClusterManager) FreeJobResources(allocation *objects.JobAllocation) error {
-	partitionManager, err := cm.GetPartitionManager(allocation.JobID)
+	fmt.Printf("free job resource for job %s\n", allocation.GetJobID())
+	partitionManager, err := cm.GetPartitionManager(allocation.GetPartitionID())
 	if err != nil {
 		return err
 	}
@@ -125,6 +127,13 @@ func (cm *ClusterManager) FreeJobResources(allocation *objects.JobAllocation) er
 
 func (cm *ClusterManager) GetAccelerator(acceleratorID string) *objects.Accelerator {
 	return cm.acceleratorID2Accelerator[acceleratorID]
+}
+func (cm *ClusterManager)GetAllAccelerators()map[string]string{
+	accelerators := make(map[string]string)
+	for ID, acc := range cm.acceleratorID2Accelerator{
+		accelerators[ID] = acc.GetAcceleratorMetaInfo().GetBriefType()
+	}
+	return accelerators
 }
 
 func (cm *ClusterManager) GetAccelerators(acceleratorIDs []string) []*objects.Accelerator {

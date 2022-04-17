@@ -3,6 +3,7 @@ package cluster_manager
 import (
 	"UNSAdapter/pb_gen/objects"
 	"fmt"
+	"log"
 )
 
 //管理一个partition
@@ -46,6 +47,7 @@ func (m *PartitionManager) CheckTaskResources(allocation *objects.TaskAllocation
 }
 
 func (m *PartitionManager) AllocTaskResources(allocation *objects.TaskAllocation) error {
+	log.Printf("task %s in job %s alloc accelerator %s\n", allocation.GetTaskID(), allocation.GetJobID(), allocation.GetAcceleratorAllocation().GetAcceleratorID())
 	nodeManager, err := m.GetNodeManager(allocation.NodeID)
 	if err != nil {
 		return err

@@ -20,7 +20,7 @@ func NewAcceleratorManager(nodeID string, partitionID string, clusterID string, 
 	using := make(map[string]bool, len(acceleratroInfo))
 	id2info := make(map[string]*objects.Accelerator, len(acceleratroInfo))
 	for _, accelerator := range acceleratroInfo {
-		using[accelerator.GetAcceleratorID()] = true
+		using[accelerator.GetAcceleratorID()] = false
 		id2info[accelerator.GetAcceleratorID()] = accelerator
 	}
 	return &AcceleratorManager{
@@ -44,14 +44,14 @@ func (m *AcceleratorManager) GetAccelerator(acceleratorID string) (*objects.Acce
 	}
 	return accelerator, nil
 }
-
+//在使用，返会false,否则返回true
 func (m *AcceleratorManager) CheckAcceleratorUsing(acceleratorID string) (bool, error) {
 	//m.mu.RLock()
 	//defer m.mu.RUnlock()
 	if _, err := m.GetAccelerator(acceleratorID); err != nil {
 		return false, err
 	}
-	return m.acceleratorUsing[acceleratorID], nil
+	return !m.acceleratorUsing[acceleratorID], nil
 }
 
 func (m *AcceleratorManager) AllocAccelerator(acceleratorID string) error {
@@ -59,7 +59,7 @@ func (m *AcceleratorManager) AllocAccelerator(acceleratorID string) error {
 	if _, err := m.GetAccelerator(acceleratorID); err != nil {
 		return err
 	}
-	if m.acceleratorUsing[acceleratorID] == false {
+	if m.acceleratorUsing[acceleratorID] == true {
 		errorMsg := fmt.Sprintf("Accelerator %s is using. ,cluster: %s,Partition: %s, node: %s\n",
 			acceleratorID, m.clusterID, m.PartitionID, m.nodeID)
 		return fmt.Errorf(errorMsg)

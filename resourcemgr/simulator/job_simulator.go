@@ -43,6 +43,7 @@ func (js *JobSimulator)AddJobs(filePath string){
 		job.SubmitTimeNanoSecond = now.UnixNano()
 	}
 	js.newJobChan <- js.GetJobs()
+	close(js.newJobChan)
 }
 
 

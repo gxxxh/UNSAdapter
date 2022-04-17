@@ -4,6 +4,7 @@ import (
 	"UNSAdapter/pb_gen/objects"
 	"fmt"
 	"log"
+	"strconv"
 	"time"
 
 	"sync"
@@ -99,6 +100,12 @@ func (jm *JobsManager) DeleteNewAllocationID(jobID string) {
 	}
 	jm.newAllocationIDs = newAllocationIDs
 }
+
+func (jm *JobsManager)GetNewAllocationNums()(int){
+	jm.newAllocationIDsMu.Lock()
+	defer jm.newAllocationIDsMu.Unlock()
+	return len(jm.newAllocationIDs)
+}
 func (jm *JobsManager) GetJobExecutionHistoryManager(jobID string) (*JobExecutionHistoryManager, error) {
 	jm.updateAllocationsMu.RLock()
 	defer jm.updateAllocationsMu.RUnlock()
@@ -139,21 +146,26 @@ func (jm *JobsManager) GetTasksManager(jobID string) (*TasksManager, error) {
 
 }
 
-func (jm *JobsManager) GetFinishedJobInfo() ([]string, []*objects.JobExecutionHistory) {
+func (jm *JobsManager) GetFinishedJobInfo() (bool, []string, []*objects.JobExecutionHistory) {
+	//返回false意味着并不是所有任务都完成
 	jm.finishedJobIDsMu.Lock()
 	defer jm.finishedJobIDsMu.Unlock()
+	if len(jm.finishedJobIDs) < len(jm.jobID2Job) {
+		log.Printf("current finished jobids %v\n", jm.finishedJobIDs)
+		return false, nil, nil
+	}
 	finishedJobIDs := jm.finishedJobIDs
 	jobExecutionHistories := make([]*objects.JobExecutionHistory, 0, len(finishedJobIDs))
 	for _, id := range jm.finishedJobIDs {
 		jeh, err := jm.GetJobExecutionHistoryManager(id)
 		if err != nil {
 			log.Println("GetJobExecutionHistoryManager error, err=%v", err)
-			return nil, nil
+			return false, nil, nil
 		}
 		jobExecutionHistories = append(jobExecutionHistories, jeh.GetJobExecutionHistory())
 	}
-	jm.finishedJobIDs = make([]string, len(finishedJobIDs))
-	return jm.finishedJobIDs, jobExecutionHistories
+	jm.finishedJobIDs = make([]string,0, len(finishedJobIDs))
+	return true, jm.finishedJobIDs, jobExecutionHistories
 }
 
 // if there is job allocatioon, it means the job has already started running
@@ -198,20 +210,25 @@ func (jm *JobsManager) HandleFinishedTask(annotations map[string]string) error {
 	}
 
 	tasksMg.Update(annotations["taskID"])
-	err = ehMg.SetDurationNanoSecond(annotations["tasksID"], time.Now())
+	finishTime, err := strconv.ParseInt(annotations["finishTime"], 10, 64)
+	if err != nil {
+		return err
+	}
+	err = ehMg.SetDurationNanoSecond(annotations["taskID"], finishTime)
 	if err != nil {
 		return err
 	}
 	jm.finishedJobIDsMu.Lock()
 	defer jm.finishedJobIDsMu.Unlock()
 	if tasksMg.IsFinished() {
+		log.Printf("Job %s finished\n", annotations["jobID"])
 		jm.finishedJobIDs = append(jm.finishedJobIDs, annotations["jobID"])
 	}
 	return nil
 }
 
 func (jm *JobsManager) AddJobAllocation(allocation *objects.JobAllocation) {
-	fmt.Printf("add allocation to job manager for job %s\n", allocation.JobID)
+	fmt.Printf("add allocation to job manager for job %s, acceleratorID:%s　\n", allocation.JobID, allocation.GetTaskAllocations()[0].GetAcceleratorAllocation().GetAcceleratorID())
 	//接受一个allocation，一旦接受就意味着开始执行
 	jm.updateAllocationsMu.Lock()
 	jm.jobID2Allocations[allocation.JobID] = allocation
@@ -239,10 +256,10 @@ func (jm *JobsManager) HandleRMUpdateAllocationEvent(finishedIDs []string) {
 		//delete job
 		//delete(jm.jobID2Job, jobID)
 	}
-	jm.updateJobsMu.Unlock()
+	jm.updateAllocationsMu.Unlock()
 	//delete job info
 	jm.updateJobsMu.Lock()
-	for _, jobID := range finishedIDs{
+	for _, jobID := range finishedIDs {
 		delete(jm.jobID2Job, jobID)
 	}
 	jm.updateJobsMu.Unlock()

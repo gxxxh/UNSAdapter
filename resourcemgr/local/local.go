@@ -9,19 +9,19 @@ import (
 	"UNSAdapter/resourcemgr/job_manager"
 	"UNSAdapter/resourcemgr/k8s_manager"
 	"UNSAdapter/resourcemgr/simulator"
+	utils2 "UNSAdapter/resourcemgr/utils"
 	"UNSAdapter/schedulers"
 	"UNSAdapter/schedulers/interfaces"
 	"UNSAdapter/utils"
 	"fmt"
-	"log"
 	"sort"
 	"strconv"
 	"sync"
 	"time"
 )
 
-var CheckFinishedInterval = 1000 * time.Millisecond
-var CheckNotStartedJobInterval = 1000 * time.Millisecond
+var CheckFinishedInterval = 3 * time.Second
+var CheckNotStartedJobInterval = time.Second
 
 type ResourceManager struct {
 	wg             *sync.WaitGroup
@@ -103,7 +103,7 @@ func (rm *ResourceManager) checkSubmitJobs() {
 		newJobIDs := make([]string, 0, len(newJobs))
 		for _, job := range newJobs {
 			newJobIDs = append(newJobIDs, job.GetJobID())
-			log.Printf("Resource Manager find new job %s, submitTime %v\n", job.GetJobID(), time.UnixMicro(job.SubmitTimeNanoSecond/1000))
+			fmt.Printf("Resource Manager find new job %s, submitTime %v\n", job.GetJobID(), time.UnixMicro(job.SubmitTimeNanoSecond/1000))
 		}
 		fmt.Printf("Resource Manager find new Jobs, ids: %v\n", newJobIDs)
 		rm.jobManager.AddJob(newJobs)
@@ -125,25 +125,31 @@ func (rm *ResourceManager) checkFinishedJobs() {
 			}
 			newlyStartedAllocations = append(newlyStartedAllocations, jobAllocation)
 		}
-		finishedJobIDs, jobExecutionHistories := rm.jobManager.GetFinishedJobInfo()
-		if len(newlyStartedAllocations) == 0 && len(finishedJobIDs) == 0 {
+		ok, finishedJobIDs, jobExecutionHistories := rm.jobManager.GetFinishedJobInfo()
+		if len(newlyStartedAllocations) == 0 && !ok {
 			continue
 		}
 		//演示添加
-		for _, jobExecutionHistory := range jobExecutionHistories {
-			jobID := jobExecutionHistory.GetJobID()
-			jobAllocation, _ := rm.jobManager.GetJobAllocation(jobID)
-			accelerator := rm.clusterManager.GetAccelerator(jobAllocation.GetTaskAllocations()[0].GetAcceleratorAllocation().GetAcceleratorID())
-			jobExecutionHistory.GetTaskExecutionHistories()[0].DurationNanoSecond = rm.jobSimulator.GetRuningTime(jobID, accelerator.GetAcceleratorMetaInfo().GetBriefType())
-		}
-		ev := &events2.RMUpdateAllocationsEvent{
-			UpdatedJobAllocations: newlyStartedAllocations,
-			FinishedJobIDs:        finishedJobIDs,
-			JobExecutionHistories: jobExecutionHistories,
-		}
-		rm.pushUpdateAllocations(ev)
+		//for _, jobExecutionHistory := range jobExecutionHistories {
+		//	jobID := jobExecutionHistory.GetJobID()
+		//	jobAllocation, _ := rm.jobManager.GetJobAllocation(jobID)
+		//	accelerator := rm.clusterManager.GetAccelerator(jobAllocation.GetTaskAllocations()[0].GetAcceleratorAllocation().GetAcceleratorID())
+		//	jobExecutionHistory.GetTaskExecutionHistories()[0].DurationNanoSecond = rm.jobSimulator.GetRuningTime(jobID, accelerator.GetAcceleratorMetaInfo().GetBriefType())
+		//}
+		//发送结束的任务的执行历史，调度器重新发送任务调度，理论上只是通知调度器，不应该接收到新的allocations
+		//ev := &events2.RMUpdateAllocationsEvent{
+		//	UpdatedJobAllocations: newlyStartedAllocations,
+		//	FinishedJobIDs:        finishedJobIDs,
+		//	JobExecutionHistories: jobExecutionHistories,
+		//}
+		//rm.pushUpdateAllocations(ev)
+		schedulerType := rm.config.SchedulersConfiguration.PartitionID2SchedulerConfiguration[rm.clusterManager.GetPratitionID()].SchedulerType.String()
+		//save to file
+		utils2.SaveFinishedJobInfo(schedulerType, jobExecutionHistories, rm.clusterManager.GetAllAccelerators())
+
 		//update job info
 		rm.jobManager.HandleRMUpdateAllocationEvent(finishedJobIDs)
+		break
 	}
 	rm.wg.Done()
 }
@@ -154,19 +160,34 @@ func (rm *ResourceManager) checkNotStartedJob() {
 		time.Sleep(CheckNotStartedJobInterval)
 		now := time.Now()
 		notStartedJobIDS := rm.jobManager.GetNewAllocationIDs()
+
 		for _, jobID := range notStartedJobIDS {
 			jobAllocation, err := rm.jobManager.GetJobAllocation(jobID)
 			if err != nil {
+				fmt.Printf("CheckNotStartedJob err, err=%v\n", err)
 				continue
 			}
+
 			startTime := jobAllocation.GetTaskAllocations()[0].GetStartExecutionTimeNanoSecond().GetValue()
 			cur := now.UnixNano()
-			fmt.Printf("job %s startExecutionTime: %v, cur time %v\n", jobAllocation.GetJobID(),time.UnixMicro(startTime/1000), time.UnixMicro(cur/1000))
+			//fmt.Printf("job %s startExecutionTime: %v, cur time %v\n", jobAllocation.GetJobID(),time.UnixMicro(startTime/1000), time.UnixMicro(cur/1000))
 			if cur > startTime {
-				// remove from newAllocationID
-				rm.jobManager.DeleteNewAllocationID(jobID)
-				go rm.StartJob(jobAllocation, now)
+				ok, err := rm.clusterManager.CheckJobResources(jobAllocation)
+				if err != nil {
+					fmt.Printf("CheckNotStartedJob err, err=%v\n", err)
+					continue
+				}
+				if ok {
+					rm.jobManager.DeleteNewAllocationID(jobID)
+					//go rm.StartJob(jobAllocation, now)//如果开启协程，两个任务资源冲突无法被发现
+					//解决方式是每个GPU有一个队列，检测当前队列最靠前的任务是否可以执行
+					rm.StartJob(jobAllocation, time.Now())
+				}
 			}
+			////启动了最后一个任务
+			//if(finished&&rm.jobManager.GetNewAllocationNums()==0){
+			//	break
+			//}
 		}
 	}
 	rm.wg.Done()
@@ -312,7 +333,7 @@ func (rm *ResourceManager) handleSSUpdateAllocation(eo *events2.SSUpdateAllocati
 //}
 
 func (rm *ResourceManager) StartJob(jobAllocation *objects.JobAllocation, now time.Time) {
-	fmt.Printf("Resource Manager: start job %s at time %v \n", jobAllocation.GetJobID(), jobAllocation.GetTaskAllocations()[0].StartExecutionTimeNanoSecond)
+	fmt.Printf("Resource Manager: start job %s at time %v \n", jobAllocation.GetJobID(), now)
 	// acqurie resources
 	err := rm.GetClusterManager().AllocJobResources(jobAllocation)
 	if err != nil {
@@ -321,9 +342,10 @@ func (rm *ResourceManager) StartJob(jobAllocation *objects.JobAllocation, now ti
 		//todo panic
 		return
 	}
+	rm.jobManager.UpdateJobStartExecutionTime(jobAllocation.JobID, now)
 	//start task
 	for _, taskAllocation := range jobAllocation.GetTaskAllocations() {
-		err := rm.StartTask(taskAllocation, now)
+		err := rm.StartTask(taskAllocation)
 		if err != nil {
 			errMsg := fmt.Sprintf("start pod for task %s in job %s error, err=[%v]\n", taskAllocation.TaskID, jobAllocation.JobID, err)
 			fmt.Printf(errMsg)
@@ -332,7 +354,7 @@ func (rm *ResourceManager) StartJob(jobAllocation *objects.JobAllocation, now ti
 	}
 }
 
-func (rm *ResourceManager) StartTask(taskAllocation *objects.TaskAllocation, now time.Time) error {
+func (rm *ResourceManager) StartTask(taskAllocation *objects.TaskAllocation) error {
 	accelerator := rm.clusterManager.GetAccelerator(taskAllocation.GetAcceleratorAllocation().GetAcceleratorID())
 	// start Pod
 	sleepTime := strconv.FormatInt(rm.jobSimulator.GetRuningTime(taskAllocation.JobID, accelerator.GetAcceleratorMetaInfo().GetBriefType()), 10)
@@ -355,9 +377,13 @@ func (rm *ResourceManager) checkFinishedTasks() {
 
 //podmanager发现任务完成，写入channel, checkFinishedJobs检查到channel中信息，进行处理
 func (rm *ResourceManager) handleTaskFinish(annotations map[string]string) {
-	fmt.Printf("Resource Manager: task %s in job %s finished\n", annotations["jobID"], annotations["taskID"])
+	finishTime, _ := strconv.ParseInt(annotations["finishTime"], 10, 64)
+	fmt.Printf("Resource Manager: task %s in job %s finished, time is %v\n", annotations["jobID"], annotations["taskID"], time.UnixMicro(finishTime/1000))
 	//job manager
-	rm.jobManager.HandleFinishedTask(annotations)
+	err := rm.jobManager.HandleFinishedTask(annotations)
+	if err != nil {
+		fmt.Printf("handleTaskFinish error, err=[%v]\n", err)
+	}
 	// relearse resources
 	taskAlloc, err := rm.jobManager.GetTaskAllocation(annotations["jobID"], annotations["taskID"])
 	if err != nil {

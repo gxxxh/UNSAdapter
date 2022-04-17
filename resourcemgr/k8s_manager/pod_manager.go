@@ -9,6 +9,7 @@ import (
 	coreinformer "k8s.io/client-go/informers/core/v1"
 	"k8s.io/client-go/kubernetes"
 	"k8s.io/client-go/tools/cache"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -68,7 +69,9 @@ func (c *PodManager) handlePodUpdateEvent(old, new interface{}) {
 	if newPod.Status.Phase == v1.PodSucceeded && oldPod.Status.Phase == v1.PodSucceeded {
 		//delete pod
 		fmt.Printf("handlePodUpdateEvent: pod %s finished\n", newPod.GetName())
-		c.DeletePod(newPod.GetName(), newPod.GetNamespace(), newPod.GetAnnotations())
+		annotations := newPod.GetAnnotations()
+		annotations["finishTime"] = strconv.FormatInt(time.Now().UnixNano(), 10)
+		c.DeletePod(newPod.GetName(), newPod.GetNamespace(), annotations)
 	}
 }
 
