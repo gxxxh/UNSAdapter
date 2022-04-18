@@ -1,6 +1,6 @@
 package resourcemgr
 
-import "UNSAdapter/events"
+import "github.com/MLSched/UNS/events"
 
 type Interface interface{
 	GetResourceManagerID() string

@@ -1,19 +1,19 @@
 package local
 
 import (
-	"UNSAdapter/events"
-	"UNSAdapter/pb_gen/configs"
-	events2 "UNSAdapter/pb_gen/events"
-	"UNSAdapter/pb_gen/objects"
 	"UNSAdapter/resourcemgr/cluster_manager"
 	"UNSAdapter/resourcemgr/job_manager"
 	"UNSAdapter/resourcemgr/k8s_manager"
 	"UNSAdapter/resourcemgr/simulator"
 	utils2 "UNSAdapter/resourcemgr/utils"
-	"UNSAdapter/schedulers"
-	"UNSAdapter/schedulers/interfaces"
 	"UNSAdapter/utils"
 	"fmt"
+	"github.com/MLSched/UNS/events"
+	"github.com/MLSched/UNS/pb_gen/configs"
+	events2 "github.com/MLSched/UNS/pb_gen/events"
+	"github.com/MLSched/UNS/pb_gen/objects"
+	"github.com/MLSched/UNS/schedulers"
+	"github.com/MLSched/UNS/schedulers/interfaces"
 	"log"
 	"sort"
 	"strconv"
@@ -55,6 +55,9 @@ func (rm *ResourceManager) GetJobManager() (manager *job_manager.JobsManager) {
 	return rm.jobManager
 }
 
+func (rm *ResourceManager)GetJobSimulator()(js *simulator.JobSimulator){
+	return rm.jobSimulator
+}
 func (rm *ResourceManager) GetClusterManager() (manager *cluster_manager.ClusterManager) {
 	return rm.clusterManager
 }
@@ -64,7 +67,6 @@ func (rm *ResourceManager) GetResourceManagerID() string {
 }
 
 func (rm *ResourceManager) RegisterResourceManager() {
-
 	result := rm.serviceInst.RegisterRM(&events2.RMRegisterResourceManagerEvent{Configuration: rm.config}, rm)
 	if !result.Succeeded {
 		panic(result.Reason)
@@ -144,6 +146,7 @@ func (rm *ResourceManager) checkFinishedJobs() {
 		//	JobExecutionHistories: jobExecutionHistories,
 		//}
 		//rm.pushUpdateAllocations(ev)
+
 		schedulerType := rm.config.SchedulersConfiguration.PartitionID2SchedulerConfiguration[rm.clusterManager.GetPratitionID()].SchedulerType.String()
 		//save to file
 		dltJobs := rm.jobSimulator.GetDLTJobs()
@@ -216,8 +219,12 @@ func (rm *ResourceManager) HandleEvent(event *events.Event) {
 	}
 }
 func (rm *ResourceManager) handleSSUpdateAllocation(eo *events2.SSUpdateAllocationsEvent) error {
-	fmt.Printf("Resource Manager Receive update allocations\n")
+	fmt.Printf("Resource Manager Receive update allocations, time is %v\n", time.Now())
 	jobAllocations := eo.NewJobAllocations
+	schedulerType := rm.config.SchedulersConfiguration.PartitionID2SchedulerConfiguration[rm.clusterManager.GetPratitionID()].SchedulerType.String()
+	//save to file
+	dltJobs := rm.jobSimulator.GetDLTJobs()
+	utils2.SaveJobAllocations(schedulerType, jobAllocations, dltJobs, rm.clusterManager.GetAllAccelerators(), rm.jobSimulator.GetSubmitTime())
 	//  sort job allocations by start time
 	sorter := utils.Sorter{
 		LenFunc: func() int {
@@ -413,7 +420,7 @@ func (rm *ResourceManager) pushNewJobs(newJobs ...*objects.Job) {
 	for _, newJob := range newJobs {
 		jobIDs = append(jobIDs, newJob.GetJobID())
 	}
-	fmt.Printf("ResourceManager pushNewJobs newJobs = %+v\n", jobIDs)
+	fmt.Printf("ResourceManager pushNewJobs newJobs, time is %v\n", time.Now())
 }
 
 func (rm *ResourceManager) push(event *events.Event) {

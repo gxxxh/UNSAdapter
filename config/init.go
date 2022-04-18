@@ -1,14 +1,13 @@
 package config
 
 import (
-	"UNSAdapter/pb_gen/configs"
+	"github.com/MLSched/UNS/pb_gen/configs"
 	"UNSAdapter/utils"
 	"io/ioutil"
 )
 
-var configPath = "D:\\GolangProjects\\src\\UNSAdapter\\config\\async_simulator_configuration_edfFast.json"
 
-func ReadSimulatorConfig() *configs.DLTSimulatorConfiguration {
+func ReadSimulatorConfig(configPath string) *configs.DLTSimulatorConfiguration {
 	config := &configs.DLTSimulatorConfiguration{}
 
 	bytes, err := ioutil.ReadFile(configPath)

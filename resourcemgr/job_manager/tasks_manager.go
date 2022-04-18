@@ -1,7 +1,7 @@
 package job_manager
 
 import (
-	"UNSAdapter/pb_gen/objects"
+	"github.com/MLSched/UNS/pb_gen/objects"
 	"fmt"
 	"github.com/golang/protobuf/ptypes/wrappers"
 	"sync"

@@ -1,8 +1,8 @@
 package job_manager
 
 import (
-	"UNSAdapter/pb_gen/objects"
 	"fmt"
+	"github.com/MLSched/UNS/pb_gen/objects"
 	"strconv"
 	"sync"
 	"time"

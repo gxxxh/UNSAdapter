@@ -1,12 +1,12 @@
 package config
 
 import (
-	"UNSAdapter/pb_gen/configs"
-	"UNSAdapter/pb_gen/objects"
 	"UNSAdapter/utils"
 	"encoding/csv"
 	"encoding/json"
 	"fmt"
+	"github.com/MLSched/UNS/pb_gen/configs"
+	"github.com/MLSched/UNS/pb_gen/objects"
 	"github.com/golang/protobuf/proto"
 	"hash/crc32"
 	"io/ioutil"
@@ -34,7 +34,7 @@ var simulatorConfigurationPath = "D:\\GolangProjects\\src\\UNSAdapter\\config\\a
 
 var gpuTypes = []string{A100, V100, GTX2080Ti}
 
-var jobCount = 50
+var jobCount = 20
 var miniBatchDurationNanoSecondDistribution = []int{0.1 * 1e9, 3 * 1e9}
 var BaseGPU = A100
 var GPUEfficiencyRatio = map[string][]float64{
@@ -113,13 +113,13 @@ var instance2Count = map[*Instance]int64{
 	//}): 4,
 	NewInstance(map[int64][]string{
 		0: {V100},
-	}): 4,
+	}): 2,
 	//NewInstance(map[int64][]string{
 	//	0: {A100},
 	//}): 25,
 	NewInstance(map[int64][]string{
 		0: {GTX2080Ti},
-	}): 3,
+	}): 2,
 	//NewInstance(map[int64][]string{
 	//	0: {GTX2080Ti, GTX2080Ti},
 	//	1: {GTX2080Ti, GTX2080Ti},
@@ -183,6 +183,7 @@ var hydraSchedulerConfiguration = &configs.SchedulersConfiguration{PartitionID2S
 				},
 			},
 			NonSpaceSharing: true,
+			ReturnAllScheduleDecisions: true,
 		}},
 	},
 }}
@@ -277,19 +278,19 @@ var unsSchedulerConfiguration = &configs.SchedulersConfiguration{PartitionID2Sch
 
 //var schedulerConfiguration = unsSchedulerConfiguration
 
-//var schedulerConfiguration = hydraSchedulerConfiguration
+var schedulerConfiguration = hydraSchedulerConfiguration
 
 //var schedulerConfiguration = sjfSchedulerConfiguration
 
 //var schedulerConfiguration = edfSchedulerConfiguration
 
-var schedulerConfiguration = edfFastSchedulerConfiguration
+//var schedulerConfiguration = edfFastSchedulerConfiguration
 
 func init() {
 	rand.Seed(1)
 }
 
-func main() {
+func Generate() {
 	generator := &CaseGenerator{}
 	jobHeader, jobRecords := generator.ReadTable("pai_job_table.header", "pai_job_table.csv")
 	taskHeader, taskRecords := generator.ReadTable("pai_task_table.header", "pai_task_table.csv")

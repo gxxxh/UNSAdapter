@@ -1,8 +1,8 @@
 package simulator
 
 import (
-	"UNSAdapter/pb_gen/configs"
-	"UNSAdapter/pb_gen/objects"
+	"github.com/MLSched/UNS/pb_gen/configs"
+	"github.com/MLSched/UNS/pb_gen/objects"
 	"UNSAdapter/utils"
 	"io/ioutil"
 	"math"
