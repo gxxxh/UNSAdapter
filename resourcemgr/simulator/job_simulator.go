@@ -26,12 +26,20 @@ func NewJobSimulator()(*JobSimulator){
 	}
 }
 
+func (js *JobSimulator)GetDLTJobs()map[string]*configs.DLTJobData{
+	return js.jobID2DLTData
+}
+
+func (js *JobSimulator)GetSubmitTime()int64{
+	return js.startSimulationTime.UnixNano()
+}
 func (js *JobSimulator)AddJobs(filePath string){
 	fmt.Printf("Job simulator add jobs...")
 	js.jobID2DLTData = loadDLTJobData(filePath)
 	jobs := js.GetJobs()
 	//reset submit time
 	now := time.Now()
+	js.startSimulationTime = now//基础提交时间
 	//minTime := int64(now.UnixNano())
 	//for _, job := range(jobs){
 	//	if(job.SubmitTimeNanoSecond<minTime){

@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 )
 
-var configPath = "D:\\GolangProjects\\src\\UNSAdapter\\config\\async_simulator_configuration.json"
+var configPath = "D:\\GolangProjects\\src\\UNSAdapter\\config\\async_simulator_configuration_edfFast.json"
 
 func ReadSimulatorConfig() *configs.DLTSimulatorConfiguration {
 	config := &configs.DLTSimulatorConfiguration{}

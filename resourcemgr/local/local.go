@@ -14,6 +14,7 @@ import (
 	"UNSAdapter/schedulers/interfaces"
 	"UNSAdapter/utils"
 	"fmt"
+	"log"
 	"sort"
 	"strconv"
 	"sync"
@@ -97,7 +98,6 @@ func (rm *ResourceManager) checkSubmitJobs() {
 	for {
 		newJobs, isClose := rm.jobSimulator.GetNewJob()
 		if !isClose {
-			fmt.Printf("CheckSubmitJobs done!\n")
 			break
 		}
 		newJobIDs := make([]string, 0, len(newJobs))
@@ -109,6 +109,7 @@ func (rm *ResourceManager) checkSubmitJobs() {
 		rm.jobManager.AddJob(newJobs)
 		rm.pushNewJobs(newJobs...)
 	}
+	fmt.Printf("check Submit Jobs done!\n")
 	rm.wg.Done()
 }
 
@@ -145,22 +146,24 @@ func (rm *ResourceManager) checkFinishedJobs() {
 		//rm.pushUpdateAllocations(ev)
 		schedulerType := rm.config.SchedulersConfiguration.PartitionID2SchedulerConfiguration[rm.clusterManager.GetPratitionID()].SchedulerType.String()
 		//save to file
-		utils2.SaveFinishedJobInfo(schedulerType, jobExecutionHistories, rm.clusterManager.GetAllAccelerators())
+		dltJobs := rm.jobSimulator.GetDLTJobs()
+		utils2.SaveFinishedJobInfo(schedulerType, jobExecutionHistories, dltJobs,rm.clusterManager.GetAllAccelerators(), rm.jobSimulator.GetSubmitTime())
 
 		//update job info
 		rm.jobManager.HandleRMUpdateAllocationEvent(finishedJobIDs)
 		break
 	}
+	log.Printf("check finished jobs done\n")
 	rm.wg.Done()
 }
 
 //检查未启动的allocations，若可以执行，则开始执行
 func (rm *ResourceManager) checkNotStartedJob() {
+	i:= 0
 	for {
 		time.Sleep(CheckNotStartedJobInterval)
 		now := time.Now()
 		notStartedJobIDS := rm.jobManager.GetNewAllocationIDs()
-
 		for _, jobID := range notStartedJobIDS {
 			jobAllocation, err := rm.jobManager.GetJobAllocation(jobID)
 			if err != nil {
@@ -178,18 +181,19 @@ func (rm *ResourceManager) checkNotStartedJob() {
 					continue
 				}
 				if ok {
+					i = i+1
 					rm.jobManager.DeleteNewAllocationID(jobID)
 					//go rm.StartJob(jobAllocation, now)//如果开启协程，两个任务资源冲突无法被发现
 					//解决方式是每个GPU有一个队列，检测当前队列最靠前的任务是否可以执行
 					rm.StartJob(jobAllocation, time.Now())
 				}
 			}
-			////启动了最后一个任务
-			//if(finished&&rm.jobManager.GetNewAllocationNums()==0){
-			//	break
-			//}
+		}
+		if i>=rm.jobManager.GetJobNums()&&rm.jobManager.GetJobNums()>0{
+			break
 		}
 	}
+	fmt.Printf("check not start job done\n")
 	rm.wg.Done()
 }
 func (rm *ResourceManager) HandleEvent(event *events.Event) {

@@ -1155,8 +1155,8 @@
 		"schedulersConfiguration": {
 			"partitionID2SchedulerConfiguration": {
 				"PARTITION_ID": {
-					"schedulerType": "schedulerTypeHydra",
-					"hydraSchedulerConfiguration": {
+					"schedulerType": "schedulerTypeEDFFast",
+					"edfFastSchedulerConfiguration": {
 						"SchedulerID": "SCHEDULER_ID",
 						"resourceManagerID": "RESOURCE_MANAGER_ID",
 						"partitionID": "PARTITION_ID",

@@ -13,7 +13,8 @@ import (
 //todo lock
 type JobsManager struct {
 	// info for updateAllocations Event
-	updateAllocationsMu           sync.RWMutex
+	updateAllocationsMu sync.RWMutex
+
 	jobID2Allocations             map[string]*objects.JobAllocation      //添加：接收到调度
 	jobID2TasksManager            map[string]*TasksManager               //添加：接收到调度
 	jobID2ExecutionHistoryManager map[string]*JobExecutionHistoryManager //添加：接收到调度
@@ -30,11 +31,13 @@ type JobsManager struct {
 	updateJobsMu sync.RWMutex
 	jobID2Job    map[string]*objects.Job //添加：新任务到来，删除：丢弃或者运行完成
 	newJobIDs    []string
+	jobNums      int
 }
 
 func NewJobManager() *JobsManager {
 	return &JobsManager{
 		updateAllocationsMu:           sync.RWMutex{},
+		jobNums:                       0,
 		jobID2Allocations:             make(map[string]*objects.JobAllocation, 0),
 		jobID2TasksManager:            make(map[string]*TasksManager),
 		jobID2ExecutionHistoryManager: make(map[string]*JobExecutionHistoryManager),
@@ -55,7 +58,11 @@ func NewJobManager() *JobsManager {
 //	defer jm.updateAllocationsMu.RUnlock()
 //	return jm.finishedJobIDs
 //}
-
+func (jm *JobsManager)GetJobNums()int{
+	jm.updateJobsMu.Lock()
+	defer jm.updateJobsMu.Unlock()
+	return jm.jobNums
+}
 func (jm *JobsManager) GetJobByJobID(jobID string) (*objects.Job, error) {
 	jm.updateJobsMu.RLock()
 	defer jm.updateJobsMu.RUnlock()
@@ -101,7 +108,7 @@ func (jm *JobsManager) DeleteNewAllocationID(jobID string) {
 	jm.newAllocationIDs = newAllocationIDs
 }
 
-func (jm *JobsManager)GetNewAllocationNums()(int){
+func (jm *JobsManager) GetNewAllocationNums() int {
 	jm.newAllocationIDsMu.Lock()
 	defer jm.newAllocationIDsMu.Unlock()
 	return len(jm.newAllocationIDs)
@@ -164,7 +171,7 @@ func (jm *JobsManager) GetFinishedJobInfo() (bool, []string, []*objects.JobExecu
 		}
 		jobExecutionHistories = append(jobExecutionHistories, jeh.GetJobExecutionHistory())
 	}
-	jm.finishedJobIDs = make([]string,0, len(finishedJobIDs))
+	jm.finishedJobIDs = make([]string, 0, len(finishedJobIDs))
 	return true, jm.finishedJobIDs, jobExecutionHistories
 }
 
@@ -236,6 +243,7 @@ func (jm *JobsManager) AddJobAllocation(allocation *objects.JobAllocation) {
 	//job execution history manager
 	jm.jobID2ExecutionHistoryManager[allocation.JobID] = NewExecutionHistoryManager(allocation.JobID)
 	jm.jobID2ExecutionHistoryManager[allocation.JobID].BuildJobExecutionHistory(allocation)
+
 	jm.updateAllocationsMu.Unlock()
 
 	jm.newAllocationIDsMu.Lock()
@@ -271,6 +279,7 @@ func (jm *JobsManager) AddJob(newJobs []*objects.Job) {
 	defer jm.updateJobsMu.Unlock()
 	for _, newJob := range newJobs {
 		jm.jobID2Job[newJob.JobID] = newJob
+		jm.jobNums = jm.jobNums + 1
 		jm.newJobIDs = append(jm.newJobIDs, newJob.JobID)
 	}
 }
