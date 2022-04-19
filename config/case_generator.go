@@ -34,7 +34,7 @@ var simulatorConfigurationPath = "D:\\GolangProjects\\src\\UNSAdapter\\config\\a
 
 var gpuTypes = []string{A100, V100, GTX2080Ti}
 
-var jobCount = 20
+var jobCount = 50
 var miniBatchDurationNanoSecondDistribution = []int{0.1 * 1e9, 3 * 1e9}
 var BaseGPU = A100
 var GPUEfficiencyRatio = map[string][]float64{
@@ -113,13 +113,13 @@ var instance2Count = map[*Instance]int64{
 	//}): 4,
 	NewInstance(map[int64][]string{
 		0: {V100},
-	}): 2,
+	}): 4,
 	//NewInstance(map[int64][]string{
 	//	0: {A100},
 	//}): 25,
 	NewInstance(map[int64][]string{
 		0: {GTX2080Ti},
-	}): 2,
+	}): 3,
 	//NewInstance(map[int64][]string{
 	//	0: {GTX2080Ti, GTX2080Ti},
 	//	1: {GTX2080Ti, GTX2080Ti},

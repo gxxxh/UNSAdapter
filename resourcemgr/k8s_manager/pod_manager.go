@@ -66,7 +66,7 @@ func (c *PodManager) handlePodUpdateEvent(old, new interface{}) {
 	//fmt.Printf("old Pod: %v", oldPod.Status.Phase)
 	//fmt.Printf("new Pod: %v", newPod.Status.Phase)
 
-	if newPod.Status.Phase == v1.PodSucceeded && oldPod.Status.Phase == v1.PodSucceeded {
+	if newPod.Status.Phase == v1.PodSucceeded || oldPod.Status.Phase == v1.PodSucceeded {
 		//delete pod
 		fmt.Printf("handlePodUpdateEvent: pod %s finished\n", newPod.GetName())
 		annotations := newPod.GetAnnotations()

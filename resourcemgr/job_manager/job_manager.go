@@ -1,8 +1,8 @@
 package job_manager
 
 import (
-	"github.com/MLSched/UNS/pb_gen/objects"
 	"fmt"
+	"github.com/MLSched/UNS/pb_gen/objects"
 	"log"
 	"strconv"
 	"time"
@@ -158,7 +158,7 @@ func (jm *JobsManager) GetFinishedJobInfo() (bool, []string, []*objects.JobExecu
 	jm.finishedJobIDsMu.Lock()
 	defer jm.finishedJobIDsMu.Unlock()
 	if len(jm.finishedJobIDs) < len(jm.jobID2Job) {
-		log.Printf("current finished jobids %v\n", jm.finishedJobIDs)
+		log.Printf("current finished job %d, id is  %v\n",len(jm.finishedJobIDs), jm.finishedJobIDs)
 		return false, nil, nil
 	}
 	finishedJobIDs := jm.finishedJobIDs

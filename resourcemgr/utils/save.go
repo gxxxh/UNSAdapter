@@ -45,20 +45,22 @@ func SaveJobAllocations(schedulerType string, jobAllocations []*objects.JobAlloc
 	for _, jobAlloc := range(jobAllocations){
 		for _, taskAlloc := range(jobAlloc.TaskAllocations){
 			acceleratorType :=accelerators[taskAlloc.AcceleratorAllocation.AcceleratorID]
-			duration := dltJobs[taskAlloc.JobID].GetAcceleratorType2MiniBatchDuration().GetAccType2Duration()[acceleratorType]
+			duration := dltJobs[taskAlloc.JobID].GetAcceleratorType2MiniBatchDuration().GetAccType2Duration()[acceleratorType]*dltJobs[taskAlloc.JobID].TotalMiniBatches
 			accID := taskAlloc.AcceleratorAllocation.AcceleratorID
+			ddlViolated := duration>dltJobs[taskAlloc.JobID].Job.Deadline
+			//ddlViolated := taskAlloc.StartExecutionTimeNanoSecond.Value+duration>dltJobs[taskAlloc.JobID].Job.Deadline
 			info[accID] = append(info[accID], AcceleratorUsingInfo{
 				JobID:       taskAlloc.JobID,
 				TaskID:      taskAlloc.TaskID,
 				StartTime:   taskAlloc.StartExecutionTimeNanoSecond.Value,
 				EndTime:     taskAlloc.StartExecutionTimeNanoSecond.Value+duration,
 				Duration:    duration,
-				DDLViolated: taskAlloc.StartExecutionTimeNanoSecond.Value+duration>dltJobs[taskAlloc.JobID].Job.Deadline,
+				DDLViolated: ddlViolated,
 			})
 			totalRunnintTime += duration
-			if(duration>dltJobs[taskAlloc.JobID].Job.Deadline){
+			if(ddlViolated){
 				fmt.Printf("job %s violated ddl\n", jobAlloc.JobID)
-				ddlViolationNum += 1
+				ddlViolationNum = ddlViolationNum+1
 				totalViolationTime += (duration-dltJobs[taskAlloc.JobID].Job.Deadline)
 			}
 		}
@@ -112,22 +114,40 @@ func SaveFinishedJobInfo(schedulerType string, jobExecutionHistories []*objects.
 	for _, jobExecutionHistory := range jobExecutionHistories {
 		for _, taskExecutionHistory := range jobExecutionHistory.TaskExecutionHistories {
 			accID := taskExecutionHistory.AcceleratorAllocation.AcceleratorID
+			ddlViolated := taskExecutionHistory.DurationNanoSecond > dltJobs[taskExecutionHistory.JobID].Job.Deadline
 			info[accID] = append(info[accID], AcceleratorUsingInfo{
 				JobID:     taskExecutionHistory.JobID,
 				TaskID:    taskExecutionHistory.JobID,
 				StartTime: taskExecutionHistory.StartExecutionTimeNanoSecond,
 				Duration:  taskExecutionHistory.DurationNanoSecond,
 				EndTime:   taskExecutionHistory.StartExecutionTimeNanoSecond + taskExecutionHistory.DurationNanoSecond,
-				DDLViolated: taskExecutionHistory.DurationNanoSecond +taskExecutionHistory.StartExecutionTimeNanoSecond> dltJobs[taskExecutionHistory.JobID].Job.Deadline,
+				DDLViolated: ddlViolated,
 			})
 
 			totalRunnintTime += taskExecutionHistory.DurationNanoSecond
-			if(taskExecutionHistory.DurationNanoSecond>dltJobs[taskExecutionHistory.JobID].Job.Deadline){
+			if(ddlViolated){
 				fmt.Printf("job %s violated dll\n", taskExecutionHistory.JobID)
 				ddlViolationNum = ddlViolationNum+1
 				totalViolationTime += (taskExecutionHistory.DurationNanoSecond-dltJobs[taskExecutionHistory.JobID].Job.Deadline)
 			}
 		}
+	}
+	for accID,_:= range accelerators{
+		usingInfos := info[accID]
+		sorter := utils.Sorter{
+			LenFunc:  func() int {
+				return len(usingInfos)
+			},
+			LessFunc:func(i,j int)bool{
+				return usingInfos[i].StartTime<usingInfos[j].StartTime
+			},
+			SwapFunc: func(i, j int){
+				t := usingInfos[i]
+				usingInfos[i] = usingInfos[j]
+				usingInfos[j] = t
+			},
+		}
+		sort.Sort(sorter)
 	}
 	result := ScheduleResult{
 		SchedulerType:         schedulerType,

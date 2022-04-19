@@ -3,7 +3,7 @@ module UNSAdapter
 go 1.14
 
 require (
-	github.com/MLSched/UNS v0.0.0-20220418154407-4cc490656e4b
+	github.com/MLSched/UNS v0.0.0-20220419064608-2193d9ddc81b
 	github.com/deckarep/golang-set v1.8.0
 	github.com/gin-gonic/gin v1.7.7
 	github.com/golang/protobuf v1.5.2

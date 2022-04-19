@@ -1,1 +1,423 @@
-{"SchedulerType":"schedulerTypeHydra","TotalRunningTime":"35190099602","TotalJobNum":20,"DDLViolationJobNums":0,"TotalViolationTime":35190099602,"AcceleratorUsingInfos":{"inst-1-replica-0-cpusocket-0-acc-0":[{"JobID":"6103c3f5b9cba56317e22e9b","TaskID":"6103c3f5b9cba56317e22e9b_TASK_0","startTime":1650299071479129200,"EndTime":1650299071602457349,"duration":123328149,"DDLViolated":true},{"JobID":"d436f8106a02a2ddb385947d","TaskID":"d436f8106a02a2ddb385947d_TASK_0","startTime":1650299072712410690,"EndTime":1650299072844403574,"duration":131992884,"DDLViolated":true},{"JobID":"0763f5964484b5acffb99e89","TaskID":"0763f5964484b5acffb99e89_TASK_0","startTime":1650299074032339530,"EndTime":1650299074675353224,"duration":643013694,"DDLViolated":true},{"JobID":"c0cb989683049a1f41b8d6d2","TaskID":"c0cb989683049a1f41b8d6d2_TASK_0","startTime":1650299080462476470,"EndTime":1650299081262870226,"duration":800393756,"DDLViolated":true},{"JobID":"e6fbc0b25267595b15fd9ce0","TaskID":"e6fbc0b25267595b15fd9ce0_TASK_0","startTime":1650299088466414030,"EndTime":1650299089311082387,"duration":844668357,"DDLViolated":false},{"JobID":"9e66e03fb57432ff484838d3","TaskID":"9e66e03fb57432ff484838d3_TASK_0","startTime":1650299096913097600,"EndTime":1650299098153525497,"duration":1240427897,"DDLViolated":true},{"JobID":"c86fa3a41c9fcf9611d4f6e6","TaskID":"c86fa3a41c9fcf9611d4f6e6_TASK_0","startTime":1650299109317376570,"EndTime":1650299110667190707,"duration":1349814137,"DDLViolated":false},{"JobID":"6661e092f01b74b115fd4212","TaskID":"6661e092f01b74b115fd4212_TASK_0","startTime":1650299122815517940,"EndTime":1650299124179428236,"duration":1363910296,"DDLViolated":true},{"JobID":"6d942b15622d001d9edacb8e","TaskID":"6d942b15622d001d9edacb8e_TASK_0","startTime":1650299136454620900,"EndTime":1650299137876932668,"duration":1422311768,"DDLViolated":false},{"JobID":"250d4489b2b142c27cd9f723","TaskID":"250d4489b2b142c27cd9f723_TASK_0","startTime":1650299150677738580,"EndTime":1650299152164783402,"duration":1487044822,"DDLViolated":false},{"JobID":"6ac3373981df75c945f071d8","TaskID":"6ac3373981df75c945f071d8_TASK_0","startTime":1650299165548186800,"EndTime":1650299167078298593,"duration":1530111793,"DDLViolated":false},{"JobID":"ae8f84cd2f1c5d138981a8f9","TaskID":"ae8f84cd2f1c5d138981a8f9_TASK_0","startTime":1650299180849304730,"EndTime":1650299182425647089,"duration":1576342359,"DDLViolated":false},{"JobID":"81749c2e708fc2cd18918846","TaskID":"81749c2e708fc2cd18918846_TASK_0","startTime":1650299196612728320,"EndTime":1650299198206844942,"duration":1594116622,"DDLViolated":false},{"JobID":"695ff54bb17951f7a9468608","TaskID":"695ff54bb17951f7a9468608_TASK_0","startTime":1650299212553894540,"EndTime":1650299214461945437,"duration":1908050897,"DDLViolated":false},{"JobID":"d19357ab93a751e353923655","TaskID":"d19357ab93a751e353923655_TASK_0","startTime":1650299231634403510,"EndTime":1650299234135394988,"duration":2500991478,"DDLViolated":false},{"JobID":"10ff84e15b2c42a736f4e3e5","TaskID":"10ff84e15b2c42a736f4e3e5_TASK_0","startTime":1650299256644318290,"EndTime":1650299259498979587,"duration":2854661297,"DDLViolated":true},{"JobID":"27d29764ca70365e92cb1ccb","TaskID":"27d29764ca70365e92cb1ccb_TASK_0","startTime":1650299285190931260,"EndTime":1650299288115188694,"duration":2924257434,"DDLViolated":true},{"JobID":"f6304007ef3e25fc37150d2c","TaskID":"f6304007ef3e25fc37150d2c_TASK_0","startTime":1650299314433505600,"EndTime":1650299317361706294,"duration":2928200694,"DDLViolated":true},{"JobID":"a049f5da99868e3ee3e91835","TaskID":"a049f5da99868e3ee3e91835_TASK_0","startTime":1650299343715512540,"EndTime":1650299346671141821,"duration":2955629281,"DDLViolated":false},{"JobID":"51d01202d231f9fae85bceab","TaskID":"51d01202d231f9fae85bceab_TASK_0","startTime":1650299373271805350,"EndTime":1650299378282637337,"duration":5010831987,"DDLViolated":false}],"inst-1-replica-1-cpusocket-0-acc-0":[],"inst-2-replica-0-cpusocket-0-acc-0":[],"inst-2-replica-1-cpusocket-0-acc-0":[]}}
+{
+  "SchedulerType": "schedulerTypeHydra",
+  "TotalRunningTime": "1052482147077",
+  "TotalJobNum": 50,
+  "DDLViolationJobNums": 6,
+  "TotalViolationTime": 1052482147077,
+  "AcceleratorUsingInfos": {
+    "inst-1-replica-0-cpusocket-0-acc-0": [
+      {
+        "JobID": "75d4449ddbce70f3f0f6c372",
+        "TaskID": "75d4449ddbce70f3f0f6c372_TASK_0",
+        "startTime": 1650372944327784400,
+        "EndTime": 1650372945754592824,
+        "duration": 1426808424,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "c0cb989683049a1f41b8d6d2",
+        "TaskID": "c0cb989683049a1f41b8d6d2_TASK_0",
+        "startTime": 1650372945754592824,
+        "EndTime": 1650372953758530384,
+        "duration": 8003937560,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "27d29764ca70365e92cb1ccb",
+        "TaskID": "27d29764ca70365e92cb1ccb_TASK_0",
+        "startTime": 1650372953758530384,
+        "EndTime": 1650372983001104724,
+        "duration": 29242574340,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "42005e84987617a523683f4c",
+        "TaskID": "42005e84987617a523683f4c_TASK_0",
+        "startTime": 1650372983001104724,
+        "EndTime": 1650373002104216984,
+        "duration": 19103112260,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "c86fa3a41c9fcf9611d4f6e6",
+        "TaskID": "c86fa3a41c9fcf9611d4f6e6_TASK_0",
+        "startTime": 1650373002104216984,
+        "EndTime": 1650373015602358354,
+        "duration": 13498141370,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "250d4489b2b142c27cd9f723",
+        "TaskID": "250d4489b2b142c27cd9f723_TASK_0",
+        "startTime": 1650373015602358354,
+        "EndTime": 1650373030472806574,
+        "duration": 14870448220,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "08a810cdd7e103f5a30f72ab",
+        "TaskID": "08a810cdd7e103f5a30f72ab_TASK_0",
+        "startTime": 1650373030472806574,
+        "EndTime": 1650373049727705344,
+        "duration": 19254898770,
+        "DDLViolated": false
+      }
+    ],
+    "inst-1-replica-1-cpusocket-0-acc-0": [
+      {
+        "JobID": "6103c3f5b9cba56317e22e9b",
+        "TaskID": "6103c3f5b9cba56317e22e9b_TASK_0",
+        "startTime": 1650372944327784400,
+        "EndTime": 1650372945561065890,
+        "duration": 1233281490,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "83d58b667f5fe071cd2c6c43",
+        "TaskID": "83d58b667f5fe071cd2c6c43_TASK_0",
+        "startTime": 1650372945561065890,
+        "EndTime": 1650372950637749230,
+        "duration": 5076683340,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "af7db60c9394f83832699e5a",
+        "TaskID": "af7db60c9394f83832699e5a_TASK_0",
+        "startTime": 1650372950637749230,
+        "EndTime": 1650372986133584580,
+        "duration": 35495835350,
+        "DDLViolated": true
+      },
+      {
+        "JobID": "a2eb1050f6cbb6ac041a07d5",
+        "TaskID": "a2eb1050f6cbb6ac041a07d5_TASK_0",
+        "startTime": 1650372986133584580,
+        "EndTime": 1650373013570382070,
+        "duration": 27436797490,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "e6fbc0b25267595b15fd9ce0",
+        "TaskID": "e6fbc0b25267595b15fd9ce0_TASK_0",
+        "startTime": 1650373013570382070,
+        "EndTime": 1650373022017065640,
+        "duration": 8446683570,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "6d942b15622d001d9edacb8e",
+        "TaskID": "6d942b15622d001d9edacb8e_TASK_0",
+        "startTime": 1650373022017065640,
+        "EndTime": 1650373036240183320,
+        "duration": 14223117680,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "6ac3373981df75c945f071d8",
+        "TaskID": "6ac3373981df75c945f071d8_TASK_0",
+        "startTime": 1650373036240183320,
+        "EndTime": 1650373051541301250,
+        "duration": 15301117930,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "a049f5da99868e3ee3e91835",
+        "TaskID": "a049f5da99868e3ee3e91835_TASK_0",
+        "startTime": 1650373051541301250,
+        "EndTime": 1650373081097594060,
+        "duration": 29556292810,
+        "DDLViolated": false
+      }
+    ],
+    "inst-1-replica-2-cpusocket-0-acc-0": [
+      {
+        "JobID": "d436f8106a02a2ddb385947d",
+        "TaskID": "d436f8106a02a2ddb385947d_TASK_0",
+        "startTime": 1650372944327784400,
+        "EndTime": 1650372945647713240,
+        "duration": 1319928840,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "0763f5964484b5acffb99e89",
+        "TaskID": "0763f5964484b5acffb99e89_TASK_0",
+        "startTime": 1650372945647713240,
+        "EndTime": 1650372952077850180,
+        "duration": 6430136940,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "aace3b456d48182eea77a570",
+        "TaskID": "aace3b456d48182eea77a570_TASK_0",
+        "startTime": 1650372952077850180,
+        "EndTime": 1650372978635978140,
+        "duration": 26558127960,
+        "DDLViolated": true
+      },
+      {
+        "JobID": "10ff84e15b2c42a736f4e3e5",
+        "TaskID": "10ff84e15b2c42a736f4e3e5_TASK_0",
+        "startTime": 1650372978635978140,
+        "EndTime": 1650373007182591110,
+        "duration": 28546612970,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "d7135d32f9e011a16ccc39ec",
+        "TaskID": "d7135d32f9e011a16ccc39ec_TASK_0",
+        "startTime": 1650373007182591110,
+        "EndTime": 1650373015637196450,
+        "duration": 8454605340,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "b6bac06ff84c086206171e87",
+        "TaskID": "b6bac06ff84c086206171e87_TASK_0",
+        "startTime": 1650373015637196450,
+        "EndTime": 1650373030475137180,
+        "duration": 14837940730,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "ae8f84cd2f1c5d138981a8f9",
+        "TaskID": "ae8f84cd2f1c5d138981a8f9_TASK_0",
+        "startTime": 1650373030475137180,
+        "EndTime": 1650373046238560770,
+        "duration": 15763423590,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "dd3a0a978475dfd449bdd136",
+        "TaskID": "dd3a0a978475dfd449bdd136_TASK_0",
+        "startTime": 1650373046238560770,
+        "EndTime": 1650373082493872110,
+        "duration": 36255311340,
+        "DDLViolated": false
+      }
+    ],
+    "inst-1-replica-3-cpusocket-0-acc-0": [
+      {
+        "JobID": "d71111659c45b2132bc08797",
+        "TaskID": "d71111659c45b2132bc08797_TASK_0",
+        "startTime": 1650372944327784400,
+        "EndTime": 1650372945663900203,
+        "duration": 1336115803,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "9e66e03fb57432ff484838d3",
+        "TaskID": "9e66e03fb57432ff484838d3_TASK_0",
+        "startTime": 1650372945663900203,
+        "EndTime": 1650372958068179173,
+        "duration": 12404278970,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "6661e092f01b74b115fd4212",
+        "TaskID": "6661e092f01b74b115fd4212_TASK_0",
+        "startTime": 1650372958068179173,
+        "EndTime": 1650372971707282133,
+        "duration": 13639102960,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "abcfb3bdc06c8bc16f294e31",
+        "TaskID": "abcfb3bdc06c8bc16f294e31_TASK_0",
+        "startTime": 1650372971707282133,
+        "EndTime": 1650373004102632833,
+        "duration": 32395350700,
+        "DDLViolated": true
+      },
+      {
+        "JobID": "3ed06aae456a3ddadf87ffdb",
+        "TaskID": "3ed06aae456a3ddadf87ffdb_TASK_0",
+        "startTime": 1650373004102632833,
+        "EndTime": 1650373011184930093,
+        "duration": 7082297260,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "98708db96ca1a1575c6e788d",
+        "TaskID": "98708db96ca1a1575c6e788d_TASK_0",
+        "startTime": 1650373011184930093,
+        "EndTime": 1650373024006283373,
+        "duration": 12821353280,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "5945a8f652a75895a9b2c98c",
+        "TaskID": "5945a8f652a75895a9b2c98c_TASK_0",
+        "startTime": 1650373024006283373,
+        "EndTime": 1650373041188765443,
+        "duration": 17182482070,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "51d01202d231f9fae85bceab",
+        "TaskID": "51d01202d231f9fae85bceab_TASK_0",
+        "startTime": 1650373041188765443,
+        "EndTime": 1650373091297085313,
+        "duration": 50108319870,
+        "DDLViolated": false
+      }
+    ],
+    "inst-2-replica-0-cpusocket-0-acc-0": [
+      {
+        "JobID": "3a3eb6b50b2a77baf5636d67",
+        "TaskID": "3a3eb6b50b2a77baf5636d67_TASK_0",
+        "startTime": 1650372944327784400,
+        "EndTime": 1650372951581221740,
+        "duration": 7253437340,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "f6304007ef3e25fc37150d2c",
+        "TaskID": "f6304007ef3e25fc37150d2c_TASK_0",
+        "startTime": 1650372951581221740,
+        "EndTime": 1650372988444371230,
+        "duration": 36863149490,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "25eb24bd12fadeccd1880d68",
+        "TaskID": "25eb24bd12fadeccd1880d68_TASK_0",
+        "startTime": 1650372988444371230,
+        "EndTime": 1650373048312056960,
+        "duration": 59867685730,
+        "DDLViolated": true
+      },
+      {
+        "JobID": "ad0c7808ff9d0d4fdb1fabae",
+        "TaskID": "ad0c7808ff9d0d4fdb1fabae_TASK_0",
+        "startTime": 1650373048312056960,
+        "EndTime": 1650373062740202520,
+        "duration": 14428145560,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "81749c2e708fc2cd18918846",
+        "TaskID": "81749c2e708fc2cd18918846_TASK_0",
+        "startTime": 1650373062740202520,
+        "EndTime": 1650373085084477860,
+        "duration": 22344275340,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "32a3571ab783865e2c0fe33c",
+        "TaskID": "32a3571ab783865e2c0fe33c_TASK_0",
+        "startTime": 1650373085084477860,
+        "EndTime": 1650373112193171080,
+        "duration": 27108693220,
+        "DDLViolated": false
+      }
+    ],
+    "inst-2-replica-1-cpusocket-0-acc-0": [
+      {
+        "JobID": "af891555f285b94e2dcd12a0",
+        "TaskID": "af891555f285b94e2dcd12a0_TASK_0",
+        "startTime": 1650372944327784400,
+        "EndTime": 1650372958299576580,
+        "duration": 13971792180,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "273447ce5444db25dadb3e46",
+        "TaskID": "273447ce5444db25dadb3e46_TASK_0",
+        "startTime": 1650372958299576580,
+        "EndTime": 1650372980014189080,
+        "duration": 21714612500,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "e77a35158cd6afad191ce35b",
+        "TaskID": "e77a35158cd6afad191ce35b_TASK_0",
+        "startTime": 1650372980014189080,
+        "EndTime": 1650373050746494680,
+        "duration": 70732305600,
+        "DDLViolated": true
+      },
+      {
+        "JobID": "8054ca5587e06275bf4e6160",
+        "TaskID": "8054ca5587e06275bf4e6160_TASK_0",
+        "startTime": 1650373050746494680,
+        "EndTime": 1650373062302772090,
+        "duration": 11556277410,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "058a19e3095578771546d72b",
+        "TaskID": "058a19e3095578771546d72b_TASK_0",
+        "startTime": 1650373062302772090,
+        "EndTime": 1650373085911480060,
+        "duration": 23608707970,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "d19357ab93a751e353923655",
+        "TaskID": "d19357ab93a751e353923655_TASK_0",
+        "startTime": 1650373085911480060,
+        "EndTime": 1650373115550323930,
+        "duration": 29638843870,
+        "DDLViolated": false
+      }
+    ],
+    "inst-2-replica-2-cpusocket-0-acc-0": [
+      {
+        "JobID": "f92eff9824837558a972da2c",
+        "TaskID": "f92eff9824837558a972da2c_TASK_0",
+        "startTime": 1650372944327784400,
+        "EndTime": 1650372959123008240,
+        "duration": 14795223840,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "9a4e91d99ee6c5f0df8db2da",
+        "TaskID": "9a4e91d99ee6c5f0df8db2da_TASK_0",
+        "startTime": 1650372959123008240,
+        "EndTime": 1650373009464067460,
+        "duration": 50341059220,
+        "DDLViolated": true
+      },
+      {
+        "JobID": "963e14597a569879dec92537",
+        "TaskID": "963e14597a569879dec92537_TASK_0",
+        "startTime": 1650373009464067460,
+        "EndTime": 1650373014352508170,
+        "duration": 4888440710,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "51afe47a8177fd7add97156f",
+        "TaskID": "51afe47a8177fd7add97156f_TASK_0",
+        "startTime": 1650373014352508170,
+        "EndTime": 1650373027030300610,
+        "duration": 12677792440,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "7e4b45b7f77d08b193831669",
+        "TaskID": "7e4b45b7f77d08b193831669_TASK_0",
+        "startTime": 1650373027030300610,
+        "EndTime": 1650373046934394140,
+        "duration": 19904093530,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "695ff54bb17951f7a9468608",
+        "TaskID": "695ff54bb17951f7a9468608_TASK_0",
+        "startTime": 1650373046934394140,
+        "EndTime": 1650373073434109050,
+        "duration": 26499714910,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "2d91199618980980723f3d89",
+        "TaskID": "2d91199618980980723f3d89_TASK_0",
+        "startTime": 1650373073434109050,
+        "EndTime": 1650373130416886040,
+        "duration": 56982776990,
+        "DDLViolated": false
+      }
+    ]
+  }
+}

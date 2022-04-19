@@ -1,5 +1,43 @@
 {
 	"jobID2DLTJobData": {
+		"058a19e3095578771546d72b": {
+			"job": {
+				"jobID": "058a19e3095578771546d72b",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "058a19e3095578771546d72b_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "9223372036854775807"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "1030548250",
+					"GTX 2080Ti": "2360870797",
+					"V100": "1560111691"
+				}
+			},
+			"minSpaceSharingPenalty": 1.0944414,
+			"maxSpaceSharingPenalty": 3.5873687,
+			"consolidationLevel2Penalties": {
+				"1": 1.0003841,
+				"2": 1.089975,
+				"3": 1.1740535,
+				"4": 1.1500998
+			},
+			"maximumAcceleratorMemoryCostBytes": "11241714414"
+		},
 		"0763f5964484b5acffb99e89": {
 			"job": {
 				"jobID": "0763f5964484b5acffb99e89",
@@ -37,6 +75,44 @@
 				"4": 1.515267
 			},
 			"maximumAcceleratorMemoryCostBytes": "545422342"
+		},
+		"08a810cdd7e103f5a30f72ab": {
+			"job": {
+				"jobID": "08a810cdd7e103f5a30f72ab",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "08a810cdd7e103f5a30f72ab_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "9223372036854775807"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "1221898167",
+					"GTX 2080Ti": "2933345479",
+					"V100": "1925489877"
+				}
+			},
+			"minSpaceSharingPenalty": 1.0595684,
+			"maxSpaceSharingPenalty": 2.778348,
+			"consolidationLevel2Penalties": {
+				"1": 1.0497303,
+				"2": 1.0635953,
+				"3": 1.2454638,
+				"4": 1.3061577
+			},
+			"maximumAcceleratorMemoryCostBytes": "9091764279"
 		},
 		"10ff84e15b2c42a736f4e3e5": {
 			"job": {
@@ -114,6 +190,82 @@
 			},
 			"maximumAcceleratorMemoryCostBytes": "14430541736"
 		},
+		"25eb24bd12fadeccd1880d68": {
+			"job": {
+				"jobID": "25eb24bd12fadeccd1880d68",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "25eb24bd12fadeccd1880d68_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "33687574553"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "2400322113",
+					"GTX 2080Ti": "5986768573",
+					"V100": "4590714248"
+				}
+			},
+			"minSpaceSharingPenalty": 1.065099,
+			"maxSpaceSharingPenalty": 1.5553278,
+			"consolidationLevel2Penalties": {
+				"1": 1.0039123,
+				"2": 1.0563844,
+				"3": 1.145715,
+				"4": 1.2837868
+			},
+			"maximumAcceleratorMemoryCostBytes": "5064513334"
+		},
+		"273447ce5444db25dadb3e46": {
+			"job": {
+				"jobID": "273447ce5444db25dadb3e46",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "273447ce5444db25dadb3e46_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "21736150944"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "789240082",
+					"GTX 2080Ti": "2171461250",
+					"V100": "1617011540"
+				}
+			},
+			"minSpaceSharingPenalty": 1.0789444,
+			"maxSpaceSharingPenalty": 1.7275447,
+			"consolidationLevel2Penalties": {
+				"1": 1.0197244,
+				"2": 1.0188955,
+				"3": 1.2511706,
+				"4": 1.4206818
+			},
+			"maximumAcceleratorMemoryCostBytes": "5840702293"
+		},
 		"27d29764ca70365e92cb1ccb": {
 			"job": {
 				"jobID": "27d29764ca70365e92cb1ccb",
@@ -152,6 +304,234 @@
 			},
 			"maximumAcceleratorMemoryCostBytes": "15520148632"
 		},
+		"2d91199618980980723f3d89": {
+			"job": {
+				"jobID": "2d91199618980980723f3d89",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "2d91199618980980723f3d89_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "9223372036854775807"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "2332678360",
+					"GTX 2080Ti": "5698277699",
+					"V100": "3866249098"
+				}
+			},
+			"minSpaceSharingPenalty": 1.2466279,
+			"maxSpaceSharingPenalty": 2.0366342,
+			"consolidationLevel2Penalties": {
+				"1": 1.0175567,
+				"2": 1.0599195,
+				"3": 1.2156702,
+				"4": 1.3067905
+			},
+			"maximumAcceleratorMemoryCostBytes": "2531542724"
+		},
+		"32a3571ab783865e2c0fe33c": {
+			"job": {
+				"jobID": "32a3571ab783865e2c0fe33c",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "32a3571ab783865e2c0fe33c_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "9223372036854775807"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "1079343488",
+					"GTX 2080Ti": "2710869322",
+					"V100": "1790123189"
+				}
+			},
+			"minSpaceSharingPenalty": 1.001988,
+			"maxSpaceSharingPenalty": 2.4110003,
+			"consolidationLevel2Penalties": {
+				"1": 1.0103087,
+				"2": 1.0782455,
+				"3": 1.2532862,
+				"4": 1.5041208
+			},
+			"maximumAcceleratorMemoryCostBytes": "5328547988"
+		},
+		"3a3eb6b50b2a77baf5636d67": {
+			"job": {
+				"jobID": "3a3eb6b50b2a77baf5636d67",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "3a3eb6b50b2a77baf5636d67_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "9999883143"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "351663130",
+					"GTX 2080Ti": "725343734",
+					"V100": "581482948"
+				}
+			},
+			"minSpaceSharingPenalty": 1.1069613,
+			"maxSpaceSharingPenalty": 3.9010713,
+			"consolidationLevel2Penalties": {
+				"1": 1.0465406,
+				"2": 1.0615404,
+				"3": 1.2351041,
+				"4": 1.4912208
+			},
+			"maximumAcceleratorMemoryCostBytes": "1632452701"
+		},
+		"3ed06aae456a3ddadf87ffdb": {
+			"job": {
+				"jobID": "3ed06aae456a3ddadf87ffdb",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "3ed06aae456a3ddadf87ffdb_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "9223372036854775807"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "370471664",
+					"GTX 2080Ti": "1062962648",
+					"V100": "708229726"
+				}
+			},
+			"minSpaceSharingPenalty": 1.2499726,
+			"maxSpaceSharingPenalty": 3.9177358,
+			"consolidationLevel2Penalties": {
+				"1": 1.0154774,
+				"2": 1.0805871,
+				"3": 1.1834651,
+				"4": 1.4592652
+			},
+			"maximumAcceleratorMemoryCostBytes": "7306190362"
+		},
+		"42005e84987617a523683f4c": {
+			"job": {
+				"jobID": "42005e84987617a523683f4c",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "42005e84987617a523683f4c_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "44851462898"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "1009287648",
+					"GTX 2080Ti": "2674596862",
+					"V100": "1910311226"
+				}
+			},
+			"minSpaceSharingPenalty": 1.0244424,
+			"maxSpaceSharingPenalty": 1.6648371,
+			"consolidationLevel2Penalties": {
+				"1": 1.0167758,
+				"2": 1.0490634,
+				"3": 1.2238059,
+				"4": 1.4138293
+			},
+			"maximumAcceleratorMemoryCostBytes": "5939922244"
+		},
+		"51afe47a8177fd7add97156f": {
+			"job": {
+				"jobID": "51afe47a8177fd7add97156f",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "51afe47a8177fd7add97156f_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "9223372036854775807"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "534087896",
+					"GTX 2080Ti": "1267779244",
+					"V100": "1046466784"
+				}
+			},
+			"minSpaceSharingPenalty": 1.2099367,
+			"maxSpaceSharingPenalty": 2.63861,
+			"consolidationLevel2Penalties": {
+				"1": 1.0040984,
+				"2": 1.0512272,
+				"3": 1.1532763,
+				"4": 1.4110008
+			},
+			"maximumAcceleratorMemoryCostBytes": "2185695670"
+		},
 		"51d01202d231f9fae85bceab": {
 			"job": {
 				"jobID": "51d01202d231f9fae85bceab",
@@ -189,6 +569,44 @@
 				"4": 1.2184113
 			},
 			"maximumAcceleratorMemoryCostBytes": "9445566492"
+		},
+		"5945a8f652a75895a9b2c98c": {
+			"job": {
+				"jobID": "5945a8f652a75895a9b2c98c",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "5945a8f652a75895a9b2c98c_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "9223372036854775807"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "1219027782",
+					"GTX 2080Ti": "2697829476",
+					"V100": "1718248207"
+				}
+			},
+			"minSpaceSharingPenalty": 1.1298095,
+			"maxSpaceSharingPenalty": 1.5379531,
+			"consolidationLevel2Penalties": {
+				"1": 1.0452389,
+				"2": 1.0855705,
+				"3": 1.1085843,
+				"4": 1.4295152
+			},
+			"maximumAcceleratorMemoryCostBytes": "6326288365"
 		},
 		"6103c3f5b9cba56317e22e9b": {
 			"job": {
@@ -380,6 +798,120 @@
 			},
 			"maximumAcceleratorMemoryCostBytes": "10643388857"
 		},
+		"75d4449ddbce70f3f0f6c372": {
+			"job": {
+				"jobID": "75d4449ddbce70f3f0f6c372",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "75d4449ddbce70f3f0f6c372_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "3608522211"
+			},
+			"totalMiniBatches": "12",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "68339723",
+					"GTX 2080Ti": "153371710",
+					"V100": "118900702"
+				}
+			},
+			"minSpaceSharingPenalty": 1.1214211,
+			"maxSpaceSharingPenalty": 2.8634665,
+			"consolidationLevel2Penalties": {
+				"1": 1.0101156,
+				"2": 1.0318168,
+				"3": 1.2902344,
+				"4": 1.4956036
+			},
+			"maximumAcceleratorMemoryCostBytes": "16591869437"
+		},
+		"7e4b45b7f77d08b193831669": {
+			"job": {
+				"jobID": "7e4b45b7f77d08b193831669",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "7e4b45b7f77d08b193831669_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "9223372036854775807"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "856077736",
+					"GTX 2080Ti": "1990409353",
+					"V100": "1470226951"
+				}
+			},
+			"minSpaceSharingPenalty": 1.226863,
+			"maxSpaceSharingPenalty": 3.474293,
+			"consolidationLevel2Penalties": {
+				"1": 1.0328735,
+				"2": 1.0220999,
+				"3": 1.2315011,
+				"4": 1.2954212
+			},
+			"maximumAcceleratorMemoryCostBytes": "15836021966"
+		},
+		"8054ca5587e06275bf4e6160": {
+			"job": {
+				"jobID": "8054ca5587e06275bf4e6160",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "8054ca5587e06275bf4e6160_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "9223372036854775807"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "480450754",
+					"GTX 2080Ti": "1155627741",
+					"V100": "964274757"
+				}
+			},
+			"minSpaceSharingPenalty": 1.0425336,
+			"maxSpaceSharingPenalty": 3.4457595,
+			"consolidationLevel2Penalties": {
+				"1": 1.032719,
+				"2": 1.0631348,
+				"3": 1.1787931,
+				"4": 1.1007057
+			},
+			"maximumAcceleratorMemoryCostBytes": "9954587998"
+		},
 		"81749c2e708fc2cd18918846": {
 			"job": {
 				"jobID": "81749c2e708fc2cd18918846",
@@ -417,6 +949,158 @@
 				"4": 1.2015934
 			},
 			"maximumAcceleratorMemoryCostBytes": "6542853279"
+		},
+		"83d58b667f5fe071cd2c6c43": {
+			"job": {
+				"jobID": "83d58b667f5fe071cd2c6c43",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "83d58b667f5fe071cd2c6c43_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "9925992582"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "270196461",
+					"GTX 2080Ti": "886623727",
+					"V100": "507668334"
+				}
+			},
+			"minSpaceSharingPenalty": 1.1014544,
+			"maxSpaceSharingPenalty": 2.8424516,
+			"consolidationLevel2Penalties": {
+				"1": 1.0335834,
+				"2": 1.0837466,
+				"3": 1.246771,
+				"4": 1.3511105
+			},
+			"maximumAcceleratorMemoryCostBytes": "7584744295"
+		},
+		"963e14597a569879dec92537": {
+			"job": {
+				"jobID": "963e14597a569879dec92537",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "963e14597a569879dec92537_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "9223372036854775807"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "184566593",
+					"GTX 2080Ti": "488844071",
+					"V100": "338581182"
+				}
+			},
+			"minSpaceSharingPenalty": 1.2828273,
+			"maxSpaceSharingPenalty": 1.9539771,
+			"consolidationLevel2Penalties": {
+				"1": 1.0415621,
+				"2": 1.049468,
+				"3": 1.271062,
+				"4": 1.455372
+			},
+			"maximumAcceleratorMemoryCostBytes": "5088643668"
+		},
+		"98708db96ca1a1575c6e788d": {
+			"job": {
+				"jobID": "98708db96ca1a1575c6e788d",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "98708db96ca1a1575c6e788d_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "9223372036854775807"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "620396582",
+					"GTX 2080Ti": "1711752014",
+					"V100": "1282135328"
+				}
+			},
+			"minSpaceSharingPenalty": 1.1357753,
+			"maxSpaceSharingPenalty": 3.939738,
+			"consolidationLevel2Penalties": {
+				"1": 1.0022495,
+				"2": 1.0315362,
+				"3": 1.2903812,
+				"4": 1.4757816
+			},
+			"maximumAcceleratorMemoryCostBytes": "9454039582"
+		},
+		"9a4e91d99ee6c5f0df8db2da": {
+			"job": {
+				"jobID": "9a4e91d99ee6c5f0df8db2da",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "9a4e91d99ee6c5f0df8db2da_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "42673456340"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "2278597831",
+					"GTX 2080Ti": "5034105922",
+					"V100": "3731760275"
+				}
+			},
+			"minSpaceSharingPenalty": 1.2698114,
+			"maxSpaceSharingPenalty": 3.8748436,
+			"consolidationLevel2Penalties": {
+				"1": 1.0481312,
+				"2": 1.0043,
+				"3": 1.2425325,
+				"4": 1.125547
+			},
+			"maximumAcceleratorMemoryCostBytes": "7319427028"
 		},
 		"9e66e03fb57432ff484838d3": {
 			"job": {
@@ -494,6 +1178,158 @@
 			},
 			"maximumAcceleratorMemoryCostBytes": "1785715070"
 		},
+		"a2eb1050f6cbb6ac041a07d5": {
+			"job": {
+				"jobID": "a2eb1050f6cbb6ac041a07d5",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "a2eb1050f6cbb6ac041a07d5_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "37948769363"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "1619163564",
+					"GTX 2080Ti": "3921129166",
+					"V100": "2743679749"
+				}
+			},
+			"minSpaceSharingPenalty": 1.2906239,
+			"maxSpaceSharingPenalty": 2.2595053,
+			"consolidationLevel2Penalties": {
+				"1": 1.0335764,
+				"2": 1.0207943,
+				"3": 1.2926279,
+				"4": 1.2511011
+			},
+			"maximumAcceleratorMemoryCostBytes": "13983432926"
+		},
+		"aace3b456d48182eea77a570": {
+			"job": {
+				"jobID": "aace3b456d48182eea77a570",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "aace3b456d48182eea77a570_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "17248219924"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "1347846161",
+					"GTX 2080Ti": "3457839165",
+					"V100": "2655812796"
+				}
+			},
+			"minSpaceSharingPenalty": 1.2544861,
+			"maxSpaceSharingPenalty": 1.7554697,
+			"consolidationLevel2Penalties": {
+				"1": 1.0081929,
+				"2": 1.0565404,
+				"3": 1.1242394,
+				"4": 1.2376772
+			},
+			"maximumAcceleratorMemoryCostBytes": "17152126625"
+		},
+		"abcfb3bdc06c8bc16f294e31": {
+			"job": {
+				"jobID": "abcfb3bdc06c8bc16f294e31",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "abcfb3bdc06c8bc16f294e31_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "25812757337"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "1868854181",
+					"GTX 2080Ti": "4434426957",
+					"V100": "3239535070"
+				}
+			},
+			"minSpaceSharingPenalty": 1.0460427,
+			"maxSpaceSharingPenalty": 1.5188211,
+			"consolidationLevel2Penalties": {
+				"1": 1.0002245,
+				"2": 1.0909203,
+				"3": 1.1475682,
+				"4": 1.2636316
+			},
+			"maximumAcceleratorMemoryCostBytes": "13737375110"
+		},
+		"ad0c7808ff9d0d4fdb1fabae": {
+			"job": {
+				"jobID": "ad0c7808ff9d0d4fdb1fabae",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "ad0c7808ff9d0d4fdb1fabae_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "9223372036854775807"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "530280652",
+					"GTX 2080Ti": "1442814556",
+					"V100": "944668749"
+				}
+			},
+			"minSpaceSharingPenalty": 1.1271106,
+			"maxSpaceSharingPenalty": 3.2997139,
+			"consolidationLevel2Penalties": {
+				"1": 1.0371295,
+				"2": 1.0656848,
+				"3": 1.2365043,
+				"4": 1.4183954
+			},
+			"maximumAcceleratorMemoryCostBytes": "4674034614"
+		},
 		"ae8f84cd2f1c5d138981a8f9": {
 			"job": {
 				"jobID": "ae8f84cd2f1c5d138981a8f9",
@@ -531,6 +1367,120 @@
 				"4": 1.2111447
 			},
 			"maximumAcceleratorMemoryCostBytes": "11872056088"
+		},
+		"af7db60c9394f83832699e5a": {
+			"job": {
+				"jobID": "af7db60c9394f83832699e5a",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "af7db60c9394f83832699e5a_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "28250634319"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "1922350554",
+					"GTX 2080Ti": "4805450762",
+					"V100": "3549583535"
+				}
+			},
+			"minSpaceSharingPenalty": 1.1040398,
+			"maxSpaceSharingPenalty": 1.7762256,
+			"consolidationLevel2Penalties": {
+				"1": 1.0190492,
+				"2": 1.0804993,
+				"3": 1.2766074,
+				"4": 1.2886468
+			},
+			"maximumAcceleratorMemoryCostBytes": "3530046339"
+		},
+		"af891555f285b94e2dcd12a0": {
+			"job": {
+				"jobID": "af891555f285b94e2dcd12a0",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "af891555f285b94e2dcd12a0_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "17871070979"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "603469371",
+					"GTX 2080Ti": "1397179218",
+					"V100": "1190702185"
+				}
+			},
+			"minSpaceSharingPenalty": 1.0551279,
+			"maxSpaceSharingPenalty": 3.4586813,
+			"consolidationLevel2Penalties": {
+				"1": 1.0487567,
+				"2": 1.0731238,
+				"3": 1.188529,
+				"4": 1.2256298
+			},
+			"maximumAcceleratorMemoryCostBytes": "10729654731"
+		},
+		"b6bac06ff84c086206171e87": {
+			"job": {
+				"jobID": "b6bac06ff84c086206171e87",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "b6bac06ff84c086206171e87_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "9223372036854775807"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "861222921",
+					"GTX 2080Ti": "2141511386",
+					"V100": "1483794073"
+				}
+			},
+			"minSpaceSharingPenalty": 1.0291785,
+			"maxSpaceSharingPenalty": 2.5393798,
+			"consolidationLevel2Penalties": {
+				"1": 1.0450814,
+				"2": 1.0004444,
+				"3": 1.1547849,
+				"4": 1.1546533
+			},
+			"maximumAcceleratorMemoryCostBytes": "14774097369"
 		},
 		"c0cb989683049a1f41b8d6d2": {
 			"job": {
@@ -684,6 +1634,120 @@
 			},
 			"maximumAcceleratorMemoryCostBytes": "6051832295"
 		},
+		"d71111659c45b2132bc08797": {
+			"job": {
+				"jobID": "d71111659c45b2132bc08797",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "d71111659c45b2132bc08797_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "2906634465"
+			},
+			"totalMiniBatches": "11",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "69777059",
+					"GTX 2080Ti": "165143740",
+					"V100": "121465073"
+				}
+			},
+			"minSpaceSharingPenalty": 1.0616388,
+			"maxSpaceSharingPenalty": 3.7887075,
+			"consolidationLevel2Penalties": {
+				"1": 1.0351458,
+				"2": 1.0470179,
+				"3": 1.2883356,
+				"4": 1.1447788
+			},
+			"maximumAcceleratorMemoryCostBytes": "13339587374"
+		},
+		"d7135d32f9e011a16ccc39ec": {
+			"job": {
+				"jobID": "d7135d32f9e011a16ccc39ec",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "d7135d32f9e011a16ccc39ec_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "9223372036854775807"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "411246845",
+					"GTX 2080Ti": "1272870080",
+					"V100": "845460534"
+				}
+			},
+			"minSpaceSharingPenalty": 1.0529469,
+			"maxSpaceSharingPenalty": 2.8336287,
+			"consolidationLevel2Penalties": {
+				"1": 1.0406796,
+				"2": 1.0705137,
+				"3": 1.1514415,
+				"4": 1.2251844
+			},
+			"maximumAcceleratorMemoryCostBytes": "6113845881"
+		},
+		"dd3a0a978475dfd449bdd136": {
+			"job": {
+				"jobID": "dd3a0a978475dfd449bdd136",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "dd3a0a978475dfd449bdd136_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "9223372036854775807"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "2042172307",
+					"GTX 2080Ti": "5319829517",
+					"V100": "3625531134"
+				}
+			},
+			"minSpaceSharingPenalty": 1.1651847,
+			"maxSpaceSharingPenalty": 2.7038245,
+			"consolidationLevel2Penalties": {
+				"1": 1.0475311,
+				"2": 1.0509865,
+				"3": 1.248503,
+				"4": 1.345397
+			},
+			"maximumAcceleratorMemoryCostBytes": "1637828795"
+		},
 		"e6fbc0b25267595b15fd9ce0": {
 			"job": {
 				"jobID": "e6fbc0b25267595b15fd9ce0",
@@ -722,6 +1786,44 @@
 			},
 			"maximumAcceleratorMemoryCostBytes": "1041529023"
 		},
+		"e77a35158cd6afad191ce35b": {
+			"job": {
+				"jobID": "e77a35158cd6afad191ce35b",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "e77a35158cd6afad191ce35b_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "38254660886"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "2794969545",
+					"GTX 2080Ti": "7073230560",
+					"V100": "4720016232"
+				}
+			},
+			"minSpaceSharingPenalty": 1.1126435,
+			"maxSpaceSharingPenalty": 1.8581673,
+			"consolidationLevel2Penalties": {
+				"1": 1.0343902,
+				"2": 1.0787901,
+				"3": 1.1065632,
+				"4": 1.1481946
+			},
+			"maximumAcceleratorMemoryCostBytes": "6109252950"
+		},
 		"f6304007ef3e25fc37150d2c": {
 			"job": {
 				"jobID": "f6304007ef3e25fc37150d2c",
@@ -759,6 +1861,44 @@
 				"4": 1.3652929
 			},
 			"maximumAcceleratorMemoryCostBytes": "4756545023"
+		},
+		"f92eff9824837558a972da2c": {
+			"job": {
+				"jobID": "f92eff9824837558a972da2c",
+				"jobType": "jobTypeDLT",
+				"taskGroup": {
+					"taskGroupType": "taskGroupTypeSingle",
+					"tasks": [
+						{
+							"taskID": "f92eff9824837558a972da2c_TASK_0"
+						}
+					],
+					"singleTaskGroupInfo": {
+
+					}
+				},
+				"userGroup": {
+					"user": "74238accb90b"
+				},
+				"deadline": "18236237094"
+			},
+			"totalMiniBatches": "10",
+			"acceleratorType2MiniBatchDuration": {
+				"AccType2Duration": {
+					"A100": "565070637",
+					"GTX 2080Ti": "1479522384",
+					"V100": "1242028761"
+				}
+			},
+			"minSpaceSharingPenalty": 1.2810123,
+			"maxSpaceSharingPenalty": 3.9012437,
+			"consolidationLevel2Penalties": {
+				"1": 1.011466,
+				"2": 1.0720313,
+				"3": 1.2512965,
+				"4": 1.3250769
+			},
+			"maximumAcceleratorMemoryCostBytes": "6178471001"
 		}
 	}
 }

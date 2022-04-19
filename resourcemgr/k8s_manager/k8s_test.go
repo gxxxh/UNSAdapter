@@ -1,12 +1,12 @@
 package k8s_manager
 
 import (
-	"log"
 	"testing"
 )
 
 func TestDeployment_manager_StartDeployment(t *testing.T) {
-	//Initk8sAdapter()
+	k8sManager := NewK8sManager()
+	go k8sManager.Run()
 	//var dm Deployment_manager
 	//err := dm.StartDeployment(map[string]string{
 	//	"name":"test-dp",
@@ -19,18 +19,5 @@ func TestDeployment_manager_StartDeployment(t *testing.T) {
 	//if err!=nil{
 	//	t.Errorf("%v", err)
 	//}
-	c := make (chan int, 10)
-	c <- 1
-	c <- 2
-	c <- 3
-	close(c)
 
-	for{
-		i, isClose := <-c
-		if !isClose{
-			log.Println(i, isClose)
-			break
-		}
-		log.Println(i, isClose)
-	}
 }
