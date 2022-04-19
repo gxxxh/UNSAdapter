@@ -109,14 +109,14 @@ func (pc *PodManager) StartPod(info map[string]string) error{
 	}
 	pdSpec.Spec.Containers = append(pdSpec.Spec.Containers, v1.Container{
 		Name:  "test-container",
-		Image: "sleeptask:latest",
+		Image: "gxxxh/sleeptask:v1",
 		Env: []v1.EnvVar{
 			{
 				Name:  "SLEEP_TIME",
 				Value: info["sleepTime"],
 			},
 		},
-		ImagePullPolicy: "Never",
+		ImagePullPolicy: "IfNotPresent",
 	})
 	resp, err := pc.clientSet.CoreV1().Pods(pdSpec.Namespace).
 		Create(context.Background(), pdSpec, metav1.CreateOptions{})

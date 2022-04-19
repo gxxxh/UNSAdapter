@@ -14,24 +14,25 @@ import (
 )
 
 type AcceleratorUsingInfo struct {
-	JobID     string `json:"JobID"`
-	TaskID    string `json:"TaskID"`
-	StartTime int64  `json:"startTime"`
-	EndTime   int64  `json:"EndTime"`
-	Duration  int64  `json:"duration"`
-	DDLViolated bool `json:"DDLViolated"`
+	JobID       string `json:"JobID"`
+	TaskID      string `json:"TaskID"`
+	StartTime   int64  `json:"startTime"`
+	EndTime     int64  `json:"EndTime"`
+	Duration    int64  `json:"duration"`
+	DDLViolated bool   `json:"DDLViolated"`
 }
 type ScheduleResult struct {
-	SchedulerType         string  `json:"SchedulerType"`
-	TotalRunningTime      string  `json:"TotalRunningTime"`
-	TotalJobNum				int `json:"TotalJobNum"`
-	DDLViolation          int  `json:"DDLViolationJobNums"`
-	TotalViolationTime    int64 `json:"TotalViolationTime"`
+	SchedulerType         string `json:"SchedulerType"`
+	TotalRunningTime      string `json:"TotalRunningTime"`
+	TotalJobNum           int    `json:"TotalJobNum"`
+	DDLViolation          int    `json:"DDLViolationJobNums"`
+	TotalViolationTime    int64  `json:"TotalViolationTime"`
 	AcceleratorUsingInfos map[string][]AcceleratorUsingInfo
 }
 
 var savePath = "D:\\GolangProjects\\src\\UNSAdapter\\result\\"
-func SaveJobAllocations(schedulerType string, jobAllocations []*objects.JobAllocation, dltJobs map[string]*configs.DLTJobData, accelerators map[string]string,submitTime int64){
+
+func SaveJobAllocations(schedulerType string, jobAllocations []*objects.JobAllocation, dltJobs map[string]*configs.DLTJobData, accelerators map[string]string, submitTime int64) {
 
 	info := make(map[string][]AcceleratorUsingInfo)
 	for ID, _ := range accelerators {
@@ -42,39 +43,41 @@ func SaveJobAllocations(schedulerType string, jobAllocations []*objects.JobAlloc
 	ddlViolationNum := 0
 	var totalViolationTime int64
 	totalViolationTime = 0
-	for _, jobAlloc := range(jobAllocations){
-		for _, taskAlloc := range(jobAlloc.TaskAllocations){
-			acceleratorType :=accelerators[taskAlloc.AcceleratorAllocation.AcceleratorID]
-			duration := dltJobs[taskAlloc.JobID].GetAcceleratorType2MiniBatchDuration().GetAccType2Duration()[acceleratorType]*dltJobs[taskAlloc.JobID].TotalMiniBatches
+	for _, jobAlloc := range jobAllocations {
+		for _, taskAlloc := range jobAlloc.TaskAllocations {
+			acceleratorType := accelerators[taskAlloc.AcceleratorAllocation.AcceleratorID]
+			duration := dltJobs[taskAlloc.JobID].GetAcceleratorType2MiniBatchDuration().GetAccType2Duration()[acceleratorType] * dltJobs[taskAlloc.JobID].TotalMiniBatches
 			accID := taskAlloc.AcceleratorAllocation.AcceleratorID
-			ddlViolated := duration>dltJobs[taskAlloc.JobID].Job.Deadline
+			ddlViolated := taskAlloc.StartExecutionTimeNanoSecond.Value+duration-submitTime > dltJobs[taskAlloc.JobID].Job.Deadline
+
 			//ddlViolated := taskAlloc.StartExecutionTimeNanoSecond.Value+duration>dltJobs[taskAlloc.JobID].Job.Deadline
 			info[accID] = append(info[accID], AcceleratorUsingInfo{
 				JobID:       taskAlloc.JobID,
 				TaskID:      taskAlloc.TaskID,
-				StartTime:   taskAlloc.StartExecutionTimeNanoSecond.Value,
-				EndTime:     taskAlloc.StartExecutionTimeNanoSecond.Value+duration,
+				StartTime:   taskAlloc.StartExecutionTimeNanoSecond.Value - submitTime,
+				EndTime:     taskAlloc.StartExecutionTimeNanoSecond.Value - submitTime,
 				Duration:    duration,
 				DDLViolated: ddlViolated,
 			})
-			totalRunnintTime += duration
-			if(ddlViolated){
+			totalRunnintTime += taskAlloc.StartExecutionTimeNanoSecond.Value + duration - submitTime
+			if ddlViolated {
 				fmt.Printf("job %s violated ddl\n", jobAlloc.JobID)
-				ddlViolationNum = ddlViolationNum+1
-				totalViolationTime += (duration-dltJobs[taskAlloc.JobID].Job.Deadline)
+				ddlViolationNum = ddlViolationNum + 1
+				totalViolationTime += taskAlloc.StartExecutionTimeNanoSecond.Value + duration - submitTime - dltJobs[taskAlloc.JobID].Job.Deadline
 			}
+
 		}
 	}
-	for accID,_:= range accelerators{
+	for accID, _ := range accelerators {
 		usingInfos := info[accID]
 		sorter := utils.Sorter{
-			LenFunc:  func() int {
+			LenFunc: func() int {
 				return len(usingInfos)
 			},
-			LessFunc:func(i,j int)bool{
-				return usingInfos[i].StartTime<usingInfos[j].StartTime
+			LessFunc: func(i, j int) bool {
+				return usingInfos[i].StartTime < usingInfos[j].StartTime
 			},
-			SwapFunc: func(i, j int){
+			SwapFunc: func(i, j int) {
 				t := usingInfos[i]
 				usingInfos[i] = usingInfos[j]
 				usingInfos[j] = t
@@ -85,10 +88,10 @@ func SaveJobAllocations(schedulerType string, jobAllocations []*objects.JobAlloc
 
 	result := ScheduleResult{
 		SchedulerType:         schedulerType,
-		TotalRunningTime: strconv.FormatInt(totalRunnintTime, 10),
-		TotalJobNum: len(jobAllocations),
-		DDLViolation:         ddlViolationNum,
-		TotalViolationTime: totalRunnintTime,
+		TotalRunningTime:      strconv.FormatInt(totalRunnintTime, 10),
+		TotalJobNum:           len(jobAllocations),
+		DDLViolation:          ddlViolationNum,
+		TotalViolationTime:    totalRunnintTime,
 		AcceleratorUsingInfos: info,
 	}
 	infoJson, err := json.Marshal(result)
@@ -101,7 +104,7 @@ func SaveJobAllocations(schedulerType string, jobAllocations []*objects.JobAlloc
 	}
 }
 
-func SaveFinishedJobInfo(schedulerType string, jobExecutionHistories []*objects.JobExecutionHistory,dltJobs map[string]*configs.DLTJobData, accelerators map[string]string, submitTime int64) {
+func SaveFinishedJobInfo(schedulerType string, jobExecutionHistories []*objects.JobExecutionHistory, dltJobs map[string]*configs.DLTJobData, accelerators map[string]string, submitTime int64) {
 	info := make(map[string][]AcceleratorUsingInfo)
 	for ID, _ := range accelerators {
 		info[ID] = make([]AcceleratorUsingInfo, 0)
@@ -114,34 +117,35 @@ func SaveFinishedJobInfo(schedulerType string, jobExecutionHistories []*objects.
 	for _, jobExecutionHistory := range jobExecutionHistories {
 		for _, taskExecutionHistory := range jobExecutionHistory.TaskExecutionHistories {
 			accID := taskExecutionHistory.AcceleratorAllocation.AcceleratorID
-			ddlViolated := taskExecutionHistory.DurationNanoSecond > dltJobs[taskExecutionHistory.JobID].Job.Deadline
+			//ddlViolated := taskExecutionHistory.DurationNanoSecond > dltJobs[taskExecutionHistory.JobID].Job.Deadline
+			ddlViolated := taskExecutionHistory.StartExecutionTimeNanoSecond+taskExecutionHistory.DurationNanoSecond-submitTime > dltJobs[taskExecutionHistory.JobID].Job.Deadline
 			info[accID] = append(info[accID], AcceleratorUsingInfo{
-				JobID:     taskExecutionHistory.JobID,
-				TaskID:    taskExecutionHistory.JobID,
-				StartTime: taskExecutionHistory.StartExecutionTimeNanoSecond,
-				Duration:  taskExecutionHistory.DurationNanoSecond,
-				EndTime:   taskExecutionHistory.StartExecutionTimeNanoSecond + taskExecutionHistory.DurationNanoSecond,
+				JobID:       taskExecutionHistory.JobID,
+				TaskID:      taskExecutionHistory.JobID,
+				StartTime:   taskExecutionHistory.StartExecutionTimeNanoSecond - submitTime,
+				Duration:    taskExecutionHistory.DurationNanoSecond,
+				EndTime:     taskExecutionHistory.StartExecutionTimeNanoSecond + taskExecutionHistory.DurationNanoSecond - submitTime,
 				DDLViolated: ddlViolated,
 			})
 
-			totalRunnintTime += taskExecutionHistory.DurationNanoSecond
-			if(ddlViolated){
+			totalRunnintTime += (taskExecutionHistory.DurationNanoSecond + taskExecutionHistory.StartExecutionTimeNanoSecond - submitTime)
+			if ddlViolated {
 				fmt.Printf("job %s violated dll\n", taskExecutionHistory.JobID)
-				ddlViolationNum = ddlViolationNum+1
-				totalViolationTime += (taskExecutionHistory.DurationNanoSecond-dltJobs[taskExecutionHistory.JobID].Job.Deadline)
+				ddlViolationNum = ddlViolationNum + 1
+				totalViolationTime += ((taskExecutionHistory.DurationNanoSecond + taskExecutionHistory.StartExecutionTimeNanoSecond) - (dltJobs[taskExecutionHistory.JobID].Job.Deadline + submitTime))
 			}
 		}
 	}
-	for accID,_:= range accelerators{
+	for accID, _ := range accelerators {
 		usingInfos := info[accID]
 		sorter := utils.Sorter{
-			LenFunc:  func() int {
+			LenFunc: func() int {
 				return len(usingInfos)
 			},
-			LessFunc:func(i,j int)bool{
-				return usingInfos[i].StartTime<usingInfos[j].StartTime
+			LessFunc: func(i, j int) bool {
+				return usingInfos[i].StartTime < usingInfos[j].StartTime
 			},
-			SwapFunc: func(i, j int){
+			SwapFunc: func(i, j int) {
 				t := usingInfos[i]
 				usingInfos[i] = usingInfos[j]
 				usingInfos[j] = t
@@ -151,10 +155,10 @@ func SaveFinishedJobInfo(schedulerType string, jobExecutionHistories []*objects.
 	}
 	result := ScheduleResult{
 		SchedulerType:         schedulerType,
-		TotalRunningTime: strconv.FormatInt(totalRunnintTime, 10),
-		TotalJobNum: len(jobExecutionHistories),
-		DDLViolation:         ddlViolationNum,
-		TotalViolationTime: totalRunnintTime,
+		TotalRunningTime:      strconv.FormatInt(totalRunnintTime, 10),
+		TotalJobNum:           len(jobExecutionHistories),
+		DDLViolation:          ddlViolationNum,
+		TotalViolationTime:    totalRunnintTime,
 		AcceleratorUsingInfos: info,
 	}
 	infoJson, err := json.Marshal(result)
@@ -166,4 +170,3 @@ func SaveFinishedJobInfo(schedulerType string, jobExecutionHistories []*objects.
 		fmt.Println("SaveFinishedJobInfo:Marshal failed: ", err)
 	}
 }
-
