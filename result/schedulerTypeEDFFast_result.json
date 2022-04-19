@@ -1,97 +1,81 @@
 {
   "SchedulerType": "schedulerTypeEDFFast",
-  "TotalRunningTime": "4942108021500",
+  "TotalRunningTime": "4829974319200",
   "TotalJobNum": 50,
   "DDLViolationJobNums": 24,
-  "TotalViolationTime": 4942108021500,
+  "TotalViolationTime": 4829974319200,
   "AcceleratorUsingInfos": {
     "inst-1-replica-0-cpusocket-0-acc-0": [
       {
         "JobID": "d436f8106a02a2ddb385947d",
         "TaskID": "d436f8106a02a2ddb385947d",
-        "startTime": 1254006600,
-        "EndTime": 9091257600,
-        "duration": 7837251000,
+        "startTime": 1114172600,
+        "EndTime": 9310886100,
+        "duration": 8196713500,
         "DDLViolated": true
       },
       {
         "JobID": "9e66e03fb57432ff484838d3",
         "TaskID": "9e66e03fb57432ff484838d3",
-        "startTime": 9580439600,
-        "EndTime": 24901075000,
-        "duration": 15320635400,
+        "startTime": 10290240200,
+        "EndTime": 25752986900,
+        "duration": 15462746700,
         "DDLViolated": true
       },
       {
         "JobID": "27d29764ca70365e92cb1ccb",
         "TaskID": "27d29764ca70365e92cb1ccb",
-        "startTime": 25114316500,
-        "EndTime": 57016468400,
-        "duration": 31902151900,
+        "startTime": 26606847300,
+        "EndTime": 58030951200,
+        "duration": 31424103900,
         "DDLViolated": true
       },
       {
         "JobID": "42005e84987617a523683f4c",
         "TaskID": "42005e84987617a523683f4c",
-        "startTime": 57775446200,
-        "EndTime": 79915674200,
-        "duration": 22140228000,
+        "startTime": 59059319000,
+        "EndTime": 80792222700,
+        "duration": 21732903700,
         "DDLViolated": true
       },
       {
-        "JobID": "ad0c7808ff9d0d4fdb1fabae",
-        "TaskID": "ad0c7808ff9d0d4fdb1fabae",
-        "startTime": 80776779600,
-        "EndTime": 92399540000,
-        "duration": 11622760400,
+        "JobID": "963e14597a569879dec92537",
+        "TaskID": "963e14597a569879dec92537",
+        "startTime": 81478197700,
+        "EndTime": 87562900000,
+        "duration": 6084702300,
         "DDLViolated": false
       },
       {
-        "JobID": "6d942b15622d001d9edacb8e",
-        "TaskID": "6d942b15622d001d9edacb8e",
-        "startTime": 92896222200,
-        "EndTime": 109778899400,
-        "duration": 16882677200,
-        "DDLViolated": false
-      },
-      {
-        "JobID": "6ac3373981df75c945f071d8",
-        "TaskID": "6ac3373981df75c945f071d8",
-        "startTime": 110643692200,
-        "EndTime": 128690192900,
-        "duration": 18046500700,
+        "JobID": "7e4b45b7f77d08b193831669",
+        "TaskID": "7e4b45b7f77d08b193831669",
+        "startTime": 88547193000,
+        "EndTime": 105155568800,
+        "duration": 16608375800,
         "DDLViolated": false
       },
       {
         "JobID": "3ed06aae456a3ddadf87ffdb",
         "TaskID": "3ed06aae456a3ddadf87ffdb",
-        "startTime": 129526806000,
-        "EndTime": 139075036500,
-        "duration": 9548230500,
+        "startTime": 105934419400,
+        "EndTime": 115423609700,
+        "duration": 9489190300,
         "DDLViolated": false
       },
       {
-        "JobID": "250d4489b2b142c27cd9f723",
-        "TaskID": "250d4489b2b142c27cd9f723",
-        "startTime": 139749452300,
-        "EndTime": 157561682100,
-        "duration": 17812229800,
+        "JobID": "6d942b15622d001d9edacb8e",
+        "TaskID": "6d942b15622d001d9edacb8e",
+        "startTime": 116058543400,
+        "EndTime": 132370419600,
+        "duration": 16311876200,
         "DDLViolated": false
       },
       {
-        "JobID": "e6fbc0b25267595b15fd9ce0",
-        "TaskID": "e6fbc0b25267595b15fd9ce0",
-        "startTime": 158352321400,
-        "EndTime": 169841521400,
-        "duration": 11489200000,
-        "DDLViolated": false
-      },
-      {
-        "JobID": "c86fa3a41c9fcf9611d4f6e6",
-        "TaskID": "c86fa3a41c9fcf9611d4f6e6",
-        "startTime": 170598280400,
-        "EndTime": 186437463500,
-        "duration": 15839183100,
+        "JobID": "2d91199618980980723f3d89",
+        "TaskID": "2d91199618980980723f3d89",
+        "startTime": 133234961900,
+        "EndTime": 173897339600,
+        "duration": 40662377700,
         "DDLViolated": false
       }
     ],
@@ -99,57 +83,57 @@
       {
         "JobID": "6103c3f5b9cba56317e22e9b",
         "TaskID": "6103c3f5b9cba56317e22e9b",
-        "startTime": 1218317900,
-        "EndTime": 6504957200,
-        "duration": 5286639300,
+        "startTime": 1021270300,
+        "EndTime": 7327483100,
+        "duration": 6306212800,
         "DDLViolated": true
       },
       {
         "JobID": "c0cb989683049a1f41b8d6d2",
         "TaskID": "c0cb989683049a1f41b8d6d2",
-        "startTime": 7400908300,
-        "EndTime": 17204970500,
-        "duration": 9804062200,
+        "startTime": 8206922500,
+        "EndTime": 19969408600,
+        "duration": 11762486100,
         "DDLViolated": true
       },
       {
         "JobID": "abcfb3bdc06c8bc16f294e31",
         "TaskID": "abcfb3bdc06c8bc16f294e31",
-        "startTime": 17927575800,
-        "EndTime": 52815202400,
-        "duration": 34887626600,
+        "startTime": 20513774900,
+        "EndTime": 55585258400,
+        "duration": 35071483500,
         "DDLViolated": true
       },
       {
         "JobID": "9a4e91d99ee6c5f0df8db2da",
         "TaskID": "9a4e91d99ee6c5f0df8db2da",
-        "startTime": 53684518600,
-        "EndTime": 93134201300,
-        "duration": 39449682700,
+        "startTime": 56007929400,
+        "EndTime": 95765652900,
+        "duration": 39757723500,
         "DDLViolated": true
       },
       {
-        "JobID": "ae8f84cd2f1c5d138981a8f9",
-        "TaskID": "ae8f84cd2f1c5d138981a8f9",
-        "startTime": 94086758800,
-        "EndTime": 112960401600,
-        "duration": 18873642800,
+        "JobID": "a049f5da99868e3ee3e91835",
+        "TaskID": "a049f5da99868e3ee3e91835",
+        "startTime": 96686101600,
+        "EndTime": 128292706300,
+        "duration": 31606604700,
         "DDLViolated": false
       },
       {
-        "JobID": "2d91199618980980723f3d89",
-        "TaskID": "2d91199618980980723f3d89",
-        "startTime": 113967089200,
-        "EndTime": 156069680200,
-        "duration": 42102591000,
+        "JobID": "c86fa3a41c9fcf9611d4f6e6",
+        "TaskID": "c86fa3a41c9fcf9611d4f6e6",
+        "startTime": 129187349100,
+        "EndTime": 145118164100,
+        "duration": 15930815000,
         "DDLViolated": false
       },
       {
-        "JobID": "d19357ab93a751e353923655",
-        "TaskID": "d19357ab93a751e353923655",
-        "startTime": 156265052700,
-        "EndTime": 184079651000,
-        "duration": 27814598300,
+        "JobID": "5945a8f652a75895a9b2c98c",
+        "TaskID": "5945a8f652a75895a9b2c98c",
+        "startTime": 145399284800,
+        "EndTime": 165351816600,
+        "duration": 19952531800,
         "DDLViolated": false
       }
     ],
@@ -157,65 +141,73 @@
       {
         "JobID": "d71111659c45b2132bc08797",
         "TaskID": "d71111659c45b2132bc08797",
-        "startTime": 1144428100,
-        "EndTime": 7691620500,
-        "duration": 6547192400,
+        "startTime": 1086268500,
+        "EndTime": 9706907600,
+        "duration": 8620639100,
         "DDLViolated": true
       },
       {
         "JobID": "aace3b456d48182eea77a570",
         "TaskID": "aace3b456d48182eea77a570",
-        "startTime": 8484381600,
-        "EndTime": 37535937700,
-        "duration": 29051556100,
+        "startTime": 10313995300,
+        "EndTime": 40128302800,
+        "duration": 29814307500,
         "DDLViolated": true
       },
       {
         "JobID": "a2eb1050f6cbb6ac041a07d5",
         "TaskID": "a2eb1050f6cbb6ac041a07d5",
-        "startTime": 38370236000,
-        "EndTime": 67896302200,
-        "duration": 29526066200,
+        "startTime": 40857463400,
+        "EndTime": 70402994600,
+        "duration": 29545531200,
         "DDLViolated": true
       },
       {
         "JobID": "f6304007ef3e25fc37150d2c",
         "TaskID": "f6304007ef3e25fc37150d2c",
-        "startTime": 68581693400,
-        "EndTime": 100568628800,
-        "duration": 31986935400,
+        "startTime": 71326279200,
+        "EndTime": 103070688100,
+        "duration": 31744408900,
         "DDLViolated": true
       },
       {
-        "JobID": "695ff54bb17951f7a9468608",
-        "TaskID": "695ff54bb17951f7a9468608",
-        "startTime": 101342327700,
-        "EndTime": 123696426100,
-        "duration": 22354098400,
+        "JobID": "51afe47a8177fd7add97156f",
+        "TaskID": "51afe47a8177fd7add97156f",
+        "startTime": 103812613100,
+        "EndTime": 116490891300,
+        "duration": 12678278200,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "32a3571ab783865e2c0fe33c",
+        "TaskID": "32a3571ab783865e2c0fe33c",
+        "startTime": 117083694300,
+        "EndTime": 137477786700,
+        "duration": 20394092400,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "b6bac06ff84c086206171e87",
+        "TaskID": "b6bac06ff84c086206171e87",
+        "startTime": 138306150700,
+        "EndTime": 155547973900,
+        "duration": 17241823200,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "d7135d32f9e011a16ccc39ec",
+        "TaskID": "d7135d32f9e011a16ccc39ec",
+        "startTime": 155612113600,
+        "EndTime": 166369911200,
+        "duration": 10757797600,
         "DDLViolated": false
       },
       {
         "JobID": "98708db96ca1a1575c6e788d",
         "TaskID": "98708db96ca1a1575c6e788d",
-        "startTime": 124310337100,
-        "EndTime": 139774518500,
-        "duration": 15464181400,
-        "DDLViolated": false
-      },
-      {
-        "JobID": "51afe47a8177fd7add97156f",
-        "TaskID": "51afe47a8177fd7add97156f",
-        "startTime": 140815446400,
-        "EndTime": 153542765200,
-        "duration": 12727318800,
-        "DDLViolated": false
-      },
-      {
-        "JobID": "08a810cdd7e103f5a30f72ab",
-        "TaskID": "08a810cdd7e103f5a30f72ab",
-        "startTime": 154145093200,
-        "EndTime": 176152944500,
-        "duration": 22007851300,
+        "startTime": 166748372800,
+        "EndTime": 182484823900,
+        "duration": 15736451100,
         "DDLViolated": false
       }
     ],
@@ -223,65 +215,73 @@
       {
         "JobID": "75d4449ddbce70f3f0f6c372",
         "TaskID": "75d4449ddbce70f3f0f6c372",
-        "startTime": 1178678800,
-        "EndTime": 8844420800,
-        "duration": 7665742000,
+        "startTime": 1038225500,
+        "EndTime": 7450938000,
+        "duration": 6412712500,
         "DDLViolated": true
       },
       {
         "JobID": "af891555f285b94e2dcd12a0",
         "TaskID": "af891555f285b94e2dcd12a0",
-        "startTime": 9677614700,
-        "EndTime": 24774724100,
-        "duration": 15097109400,
+        "startTime": 8218431800,
+        "EndTime": 22699316700,
+        "duration": 14480884900,
         "DDLViolated": true
       },
       {
         "JobID": "25eb24bd12fadeccd1880d68",
         "TaskID": "25eb24bd12fadeccd1880d68",
-        "startTime": 25048929800,
-        "EndTime": 74342159200,
-        "duration": 49293229400,
+        "startTime": 23562460600,
+        "EndTime": 71517029000,
+        "duration": 47954568400,
         "DDLViolated": true
+      },
+      {
+        "JobID": "e6fbc0b25267595b15fd9ce0",
+        "TaskID": "e6fbc0b25267595b15fd9ce0",
+        "startTime": 72348600200,
+        "EndTime": 82837487600,
+        "duration": 10488887400,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "6ac3373981df75c945f071d8",
+        "TaskID": "6ac3373981df75c945f071d8",
+        "startTime": 83506724800,
+        "EndTime": 100954758400,
+        "duration": 17448033600,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "08a810cdd7e103f5a30f72ab",
+        "TaskID": "08a810cdd7e103f5a30f72ab",
+        "startTime": 101777683600,
+        "EndTime": 123194026600,
+        "duration": 21416343000,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "81749c2e708fc2cd18918846",
+        "TaskID": "81749c2e708fc2cd18918846",
+        "startTime": 124144945500,
+        "EndTime": 142607553700,
+        "duration": 18462608200,
+        "DDLViolated": false
+      },
+      {
+        "JobID": "ad0c7808ff9d0d4fdb1fabae",
+        "TaskID": "ad0c7808ff9d0d4fdb1fabae",
+        "startTime": 143348400300,
+        "EndTime": 155488957600,
+        "duration": 12140557300,
+        "DDLViolated": false
       },
       {
         "JobID": "51d01202d231f9fae85bceab",
         "TaskID": "51d01202d231f9fae85bceab",
-        "startTime": 74680185200,
-        "EndTime": 126983544700,
-        "duration": 52303359500,
-        "DDLViolated": false
-      },
-      {
-        "JobID": "b6bac06ff84c086206171e87",
-        "TaskID": "b6bac06ff84c086206171e87",
-        "startTime": 127435005600,
-        "EndTime": 145166062800,
-        "duration": 17731057200,
-        "DDLViolated": false
-      },
-      {
-        "JobID": "963e14597a569879dec92537",
-        "TaskID": "963e14597a569879dec92537",
-        "startTime": 145920876400,
-        "EndTime": 152854432400,
-        "duration": 6933556000,
-        "DDLViolated": false
-      },
-      {
-        "JobID": "d7135d32f9e011a16ccc39ec",
-        "TaskID": "d7135d32f9e011a16ccc39ec",
-        "startTime": 153108187400,
-        "EndTime": 164043353700,
-        "duration": 10935166300,
-        "DDLViolated": false
-      },
-      {
-        "JobID": "dd3a0a978475dfd449bdd136",
-        "TaskID": "dd3a0a978475dfd449bdd136",
-        "startTime": 164457489800,
-        "EndTime": 203429722800,
-        "duration": 38972233000,
+        "startTime": 155600774400,
+        "EndTime": 208506762400,
+        "duration": 52905988000,
         "DDLViolated": false
       }
     ],
@@ -289,41 +289,41 @@
       {
         "JobID": "83d58b667f5fe071cd2c6c43",
         "TaskID": "83d58b667f5fe071cd2c6c43",
-        "startTime": 1302334400,
-        "EndTime": 16239036900,
-        "duration": 14936702500,
+        "startTime": 998805300,
+        "EndTime": 14992906600,
+        "duration": 13994101300,
         "DDLViolated": true
       },
       {
         "JobID": "273447ce5444db25dadb3e46",
         "TaskID": "273447ce5444db25dadb3e46",
-        "startTime": 16864255000,
-        "EndTime": 40819059900,
-        "duration": 23954804900,
+        "startTime": 15434423600,
+        "EndTime": 39083171200,
+        "duration": 23648747600,
         "DDLViolated": true
       },
       {
         "JobID": "e77a35158cd6afad191ce35b",
         "TaskID": "e77a35158cd6afad191ce35b",
-        "startTime": 41492892600,
-        "EndTime": 114015108400,
-        "duration": 72522215800,
+        "startTime": 39811465300,
+        "EndTime": 113275811400,
+        "duration": 73464346100,
         "DDLViolated": true
       },
       {
-        "JobID": "32a3571ab783865e2c0fe33c",
-        "TaskID": "32a3571ab783865e2c0fe33c",
-        "startTime": 115069085600,
-        "EndTime": 145055292000,
-        "duration": 29986206400,
+        "JobID": "ae8f84cd2f1c5d138981a8f9",
+        "TaskID": "ae8f84cd2f1c5d138981a8f9",
+        "startTime": 114015219400,
+        "EndTime": 142661423500,
+        "duration": 28646204100,
         "DDLViolated": false
       },
       {
-        "JobID": "8054ca5587e06275bf4e6160",
-        "TaskID": "8054ca5587e06275bf4e6160",
-        "startTime": 146014148500,
-        "EndTime": 160133377000,
-        "duration": 14119228500,
+        "JobID": "058a19e3095578771546d72b",
+        "TaskID": "058a19e3095578771546d72b",
+        "startTime": 143361190600,
+        "EndTime": 170836306600,
+        "duration": 27475116000,
         "DDLViolated": false
       }
     ],
@@ -331,49 +331,49 @@
       {
         "JobID": "3a3eb6b50b2a77baf5636d67",
         "TaskID": "3a3eb6b50b2a77baf5636d67",
-        "startTime": 1081716000,
-        "EndTime": 12746182800,
-        "duration": 11664466800,
+        "startTime": 1075593500,
+        "EndTime": 14096791200,
+        "duration": 13021197700,
         "DDLViolated": true
       },
       {
         "JobID": "f92eff9824837558a972da2c",
         "TaskID": "f92eff9824837558a972da2c",
-        "startTime": 13751858800,
-        "EndTime": 31194171300,
-        "duration": 17442312500,
+        "startTime": 15404729300,
+        "EndTime": 32960385300,
+        "duration": 17555656000,
         "DDLViolated": true
       },
       {
         "JobID": "6661e092f01b74b115fd4212",
         "TaskID": "6661e092f01b74b115fd4212",
-        "startTime": 32207834100,
-        "EndTime": 56889077900,
-        "duration": 24681243800,
+        "startTime": 33696849300,
+        "EndTime": 59128817100,
+        "duration": 25431967800,
         "DDLViolated": true
       },
       {
         "JobID": "10ff84e15b2c42a736f4e3e5",
         "TaskID": "10ff84e15b2c42a736f4e3e5",
-        "startTime": 58359090400,
-        "EndTime": 110855852000,
-        "duration": 52496761600,
+        "startTime": 60166894300,
+        "EndTime": 112264675500,
+        "duration": 52097781200,
         "DDLViolated": true
       },
       {
-        "JobID": "7e4b45b7f77d08b193831669",
-        "TaskID": "7e4b45b7f77d08b193831669",
-        "startTime": 111813343100,
-        "EndTime": 134816234100,
-        "duration": 23002891000,
+        "JobID": "d19357ab93a751e353923655",
+        "TaskID": "d19357ab93a751e353923655",
+        "startTime": 112997727600,
+        "EndTime": 144868508500,
+        "duration": 31870780900,
         "DDLViolated": false
       },
       {
-        "JobID": "81749c2e708fc2cd18918846",
-        "TaskID": "81749c2e708fc2cd18918846",
-        "startTime": 135604003100,
-        "EndTime": 159966188100,
-        "duration": 24362185000,
+        "JobID": "695ff54bb17951f7a9468608",
+        "TaskID": "695ff54bb17951f7a9468608",
+        "startTime": 145420966700,
+        "EndTime": 174947901100,
+        "duration": 29526934400,
         "DDLViolated": false
       }
     ],
@@ -381,41 +381,41 @@
       {
         "JobID": "0763f5964484b5acffb99e89",
         "TaskID": "0763f5964484b5acffb99e89",
-        "startTime": 1010576500,
-        "EndTime": 14635869400,
-        "duration": 13625292900,
+        "startTime": 1055234200,
+        "EndTime": 17799883100,
+        "duration": 16744648900,
         "DDLViolated": true
       },
       {
         "JobID": "af7db60c9394f83832699e5a",
         "TaskID": "af7db60c9394f83832699e5a",
-        "startTime": 14800630100,
-        "EndTime": 65956861700,
-        "duration": 51156231600,
+        "startTime": 18480625100,
+        "EndTime": 69379957500,
+        "duration": 50899332400,
         "DDLViolated": true
       },
       {
-        "JobID": "5945a8f652a75895a9b2c98c",
-        "TaskID": "5945a8f652a75895a9b2c98c",
-        "startTime": 66478532300,
-        "EndTime": 95448735100,
-        "duration": 28970202800,
+        "JobID": "250d4489b2b142c27cd9f723",
+        "TaskID": "250d4489b2b142c27cd9f723",
+        "startTime": 70294707200,
+        "EndTime": 97807826000,
+        "duration": 27513118800,
         "DDLViolated": false
       },
       {
-        "JobID": "058a19e3095578771546d72b",
-        "TaskID": "058a19e3095578771546d72b",
-        "startTime": 96217082300,
-        "EndTime": 121599061900,
-        "duration": 25381979600,
+        "JobID": "dd3a0a978475dfd449bdd136",
+        "TaskID": "dd3a0a978475dfd449bdd136",
+        "startTime": 98719619800,
+        "EndTime": 154452469900,
+        "duration": 55732850100,
         "DDLViolated": false
       },
       {
-        "JobID": "a049f5da99868e3ee3e91835",
-        "TaskID": "a049f5da99868e3ee3e91835",
-        "startTime": 122168239900,
-        "EndTime": 176962473800,
-        "duration": 54794233900,
+        "JobID": "8054ca5587e06275bf4e6160",
+        "TaskID": "8054ca5587e06275bf4e6160",
+        "startTime": 154574042600,
+        "EndTime": 168773000000,
+        "duration": 14198957400,
         "DDLViolated": false
       }
     ]
