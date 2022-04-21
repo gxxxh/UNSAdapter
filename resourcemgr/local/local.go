@@ -36,17 +36,20 @@ type ResourceManager struct {
 	serviceInst  interfaces.Service
 }
 
-func NewResourceManager(simulatorConfig *configs.DLTSimulatorConfiguration) *ResourceManager {
+func NewResourceManager(simulatorConfig *configs.DLTSimulatorConfiguration, withPod bool) *ResourceManager {
 	schedulers.InitLocalSchedulersService()
 	rm := &ResourceManager{
 		wg:             &sync.WaitGroup{},
 		RMID:           simulatorConfig.GetResourceManagerID(),
 		config:         simulatorConfig.GetRmConfiguration(),
 		clusterManager: cluster_manager.NewClusterManager("Cluster-ID", simulatorConfig.GetRmConfiguration().GetCluster()),
-		k8sManager:     k8s_manager.NewK8sManager(),
+		k8sManager:     nil,
 		jobManager:     job_manager.NewJobManager(),
 		jobSimulator:   simulator.NewJobSimulator(),
 		serviceInst:    schedulers.GetServiceInstance(),
+	}
+	if withPod{
+		rm.k8sManager = k8s_manager.NewK8sManager()
 	}
 	return rm
 }
@@ -82,18 +85,31 @@ func (rm *ResourceManager) initEnvironment() {
 	// register resource manager
 	rm.RegisterResourceManager()
 	//start k8s manager
-	go rm.k8sManager.Run()
+	if rm.k8sManager!=nil{
+		go rm.k8sManager.Run()
+	}
 	//start accept jobs
 	//go rm.jobSimulator.Run()
 }
 func (rm *ResourceManager) Run() {
 	rm.initEnvironment()
-	rm.wg.Add(3)
-	go rm.checkFinishedTasks()
-	go rm.checkSubmitJobs()
-	go rm.checkNotStartedJob()
-	go rm.checkFinishedJobs()
-	rm.wg.Wait()
+	if rm.k8sManager!=nil{
+		rm.wg.Add(3)
+		go rm.checkFinishedTasks()
+		go rm.checkSubmitJobs()
+		go rm.checkNotStartedJob()
+		go rm.checkFinishedJobs()
+		rm.wg.Wait()
+	}else{
+		rm.wg.Add(2)
+		//go rm.checkFinishedTasks()
+		go rm.checkSubmitJobs()
+		//go rm.checkNotStartedJob()
+		go rm.checkFinishedJobs()
+		rm.wg.Wait()
+	}
+
+
 }
 
 func (rm *ResourceManager) checkSubmitJobs() {
@@ -118,6 +134,13 @@ func (rm *ResourceManager) checkSubmitJobs() {
 func (rm *ResourceManager) checkFinishedJobs() {
 	for {
 		time.Sleep(CheckFinishedInterval)
+		if rm.k8sManager==nil{
+			if rm.jobManager.GetNewAllocationNums()>0{
+				break
+			}else{
+				continue
+			}
+		}
 		newStartedJobIDs := rm.jobManager.GetNewStartedJobIDs()
 		newlyStartedAllocations := make([]*objects.JobAllocation, 0, len(newStartedJobIDs))
 		for _, jobID := range newStartedJobIDs {
@@ -132,21 +155,6 @@ func (rm *ResourceManager) checkFinishedJobs() {
 		if len(newlyStartedAllocations) == 0 && !ok {
 			continue
 		}
-		//演示添加
-		//for _, jobExecutionHistory := range jobExecutionHistories {
-		//	jobID := jobExecutionHistory.GetJobID()
-		//	jobAllocation, _ := rm.jobManager.GetJobAllocation(jobID)
-		//	accelerator := rm.clusterManager.GetAccelerator(jobAllocation.GetTaskAllocations()[0].GetAcceleratorAllocation().GetAcceleratorID())
-		//	jobExecutionHistory.GetTaskExecutionHistories()[0].DurationNanoSecond = rm.jobSimulator.GetRuningTime(jobID, accelerator.GetAcceleratorMetaInfo().GetBriefType())
-		//}
-		//发送结束的任务的执行历史，调度器重新发送任务调度，理论上只是通知调度器，不应该接收到新的allocations
-		//ev := &events2.RMUpdateAllocationsEvent{
-		//	UpdatedJobAllocations: newlyStartedAllocations,
-		//	FinishedJobIDs:        finishedJobIDs,
-		//	JobExecutionHistories: jobExecutionHistories,
-		//}
-		//rm.pushUpdateAllocations(ev)
-
 		schedulerType := rm.config.SchedulersConfiguration.PartitionID2SchedulerConfiguration[rm.clusterManager.GetPratitionID()].SchedulerType.String()
 		//save to file
 		dltJobs := rm.jobSimulator.GetDLTJobs()

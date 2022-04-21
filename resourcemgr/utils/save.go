@@ -48,14 +48,14 @@ func SaveJobAllocations(schedulerType string, jobAllocations []*objects.JobAlloc
 			acceleratorType := accelerators[taskAlloc.AcceleratorAllocation.AcceleratorID]
 			duration := dltJobs[taskAlloc.JobID].GetAcceleratorType2MiniBatchDuration().GetAccType2Duration()[acceleratorType] * dltJobs[taskAlloc.JobID].TotalMiniBatches
 			accID := taskAlloc.AcceleratorAllocation.AcceleratorID
-			ddlViolated := taskAlloc.StartExecutionTimeNanoSecond.Value+duration-submitTime > dltJobs[taskAlloc.JobID].Job.Deadline
+			ddlViolated := taskAlloc.StartExecutionTimeNanoSecond.Value-submitTime+duration > dltJobs[taskAlloc.JobID].Job.Deadline
 
 			//ddlViolated := taskAlloc.StartExecutionTimeNanoSecond.Value+duration>dltJobs[taskAlloc.JobID].Job.Deadline
 			info[accID] = append(info[accID], AcceleratorUsingInfo{
 				JobID:       taskAlloc.JobID,
 				TaskID:      taskAlloc.TaskID,
 				StartTime:   taskAlloc.StartExecutionTimeNanoSecond.Value - submitTime,
-				EndTime:     taskAlloc.StartExecutionTimeNanoSecond.Value - submitTime,
+				EndTime:     taskAlloc.StartExecutionTimeNanoSecond.Value - submitTime + duration,
 				Duration:    duration,
 				DDLViolated: ddlViolated,
 			})
@@ -63,7 +63,7 @@ func SaveJobAllocations(schedulerType string, jobAllocations []*objects.JobAlloc
 			if ddlViolated {
 				fmt.Printf("job %s violated ddl\n", jobAlloc.JobID)
 				ddlViolationNum = ddlViolationNum + 1
-				totalViolationTime += taskAlloc.StartExecutionTimeNanoSecond.Value + duration - submitTime - dltJobs[taskAlloc.JobID].Job.Deadline
+				totalViolationTime += taskAlloc.StartExecutionTimeNanoSecond.Value - submitTime + duration - dltJobs[taskAlloc.JobID].Job.Deadline
 			}
 
 		}
@@ -124,11 +124,11 @@ func SaveFinishedJobInfo(schedulerType string, jobExecutionHistories []*objects.
 				TaskID:      taskExecutionHistory.JobID,
 				StartTime:   taskExecutionHistory.StartExecutionTimeNanoSecond - submitTime,
 				Duration:    taskExecutionHistory.DurationNanoSecond,
-				EndTime:     taskExecutionHistory.StartExecutionTimeNanoSecond + taskExecutionHistory.DurationNanoSecond - submitTime,
+				EndTime:     taskExecutionHistory.StartExecutionTimeNanoSecond - submitTime + taskExecutionHistory.DurationNanoSecond,
 				DDLViolated: ddlViolated,
 			})
 
-			totalRunnintTime += (taskExecutionHistory.DurationNanoSecond + taskExecutionHistory.StartExecutionTimeNanoSecond - submitTime)
+			totalRunnintTime += (taskExecutionHistory.DurationNanoSecond - submitTime + taskExecutionHistory.StartExecutionTimeNanoSecond)
 			if ddlViolated {
 				fmt.Printf("job %s violated dll\n", taskExecutionHistory.JobID)
 				ddlViolationNum = ddlViolationNum + 1
